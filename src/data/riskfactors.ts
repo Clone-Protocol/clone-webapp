@@ -1,0 +1,1 @@
+export const RISK_RATIO_VAL = 25
