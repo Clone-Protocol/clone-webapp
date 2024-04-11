@@ -1,6 +1,5 @@
-import { Query, useQuery } from '@tanstack/react-query'
-// import { REFETCH_CYCLE } from '~/components/Markets/TradingBox/RateLoadingIndicator'
-import { PythObj, PythResponseData } from '~/pages/api/points_pythlist'
+import { useQuery } from '@tanstack/react-query'
+import { PythObj } from '~/pages/api/points_pythlist';
 import { fetchAllUserPoints, UserPointsView } from '~/utils/fetch_netlify'
 
 export const fetchRanking = async () => {

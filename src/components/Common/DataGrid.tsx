@@ -16,6 +16,12 @@ interface GridProps {
   onRowClick?: GridEventListener<'rowClick'>
 }
 
+export const enum GridType {
+  Normal = 'normal',
+  SingleComet = 'singleComet',
+  Borrow = 'borrow'
+}
+
 export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverlay, isBorderTopRadius = true, minHeight = 260, noAutoHeight = false, columnVisibilityModel, onRowClick }) => (
   <DataGrid
     columnVisibilityModel={columnVisibilityModel}

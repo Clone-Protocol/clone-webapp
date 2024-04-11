@@ -1,23 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
-// import { REFETCH_CYCLE } from '~/components/Markets/TradingBox/RateLoadingIndicator'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
-import { fetchCheckReferralCode, fetchGenerateReferralCode, fetchUserPoints, UserPointsView } from '~/utils/fetch_netlify'
-
-// export const fetchCheckReferral = async ({ userPubKey }: { userPubKey: PublicKey | null }) => {
-//   if (!userPubKey) return null
-
-//   console.log('fetchCheckReferral')
-//   const result = await fetchCheckReferralCode(userPubKey.toString())
-//   console.log('ref', result)
-
-//   // if (result.length === 0) return null
-
-//   return {
-//     successful: result
-//   }
-// }
-
+import { fetchGenerateReferralCode, fetchUserPoints, UserPointsView } from '~/utils/fetch_netlify'
 
 export const fetchReferralCode = async ({ userPubKey }: { userPubKey: PublicKey | null }) => {
   if (!userPubKey) return null

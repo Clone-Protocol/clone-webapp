@@ -5,7 +5,7 @@ import PieChartAlt from '../Charts/PieChartAlt'
 import { useAtom } from 'jotai'
 import { DEFAULT_ALL_INDEX, STABLE_COIN_INDEX, filterState } from '~/features/Portfolio/filterAtom'
 import { useEffect, useState } from 'react'
-import { FilterTypeColorMap, FilterTypeMap, PieItem } from '~/data/filter'
+import { PieItem } from '~/data/filter'
 import { ASSETS } from '~/data/assets';
 import { formatLocaleAmount } from '~/utils/numbers';
 

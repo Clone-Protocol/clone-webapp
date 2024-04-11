@@ -9,8 +9,16 @@ export interface StatsData {
     pool_index: number | undefined;
 }
 
-export const fetchStatsData = async (interval: string, filter: string): Promise<StatsData[]> => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-pool-stats?interval=${interval}&filter=${filter}`)
+export const fetchStatsData = async (interval: string, filter: string, aggregated: boolean = false): Promise<StatsData[]> => {
+    let endpoint = (() => {
+        if (aggregated) {
+            return `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-aggregated-stats?interval=${interval}&filter=${filter}`
+        } else {
+            return `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-pool-stats?interval=${interval}&filter=${filter}`
+        }
+    })()
+
+    const response = await axios.get(endpoint)
     return response.data as StatsData[]
 }
 
@@ -33,6 +41,39 @@ export const fetchOHLCV = async (interval: string, filter: string, pool?: number
 
     const response = await axios.get(endpoint)
     return response.data as OHLCVResponse[]
+}
+
+export interface BorrowStats {
+    pool_index: number,
+    time_interval: string,
+    cumulative_collateral_delta: number,
+    cumulative_borrowed_delta: number
+}
+
+export const fetchBorrowStats = async (): Promise<BorrowStats[]> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-borrow-stats`)
+    return response.data as BorrowStats[]
+}
+
+export const fetchPoolApy = async (): Promise<{ pool_index: number, apy_24hr?: number }[]> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-pool-apy`)
+    return response.data as { pool_index: number, apy_24hr?: number }[]
+}
+
+export type UserApy = {
+    apy: number
+    avgCollateral: number
+    poolApy: number[]
+}
+
+export const fetchUserApy = async (user_address: string, poolIndexes: number[]): Promise<UserApy> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-user-apy?user_address=${user_address}&pool_indexes=${poolIndexes.join(',')}`)
+    return response.data as UserApy
+}
+
+export const fetchTotalLiquidity = async (interval: string, filter: string): Promise<{ time_interval: string, total_liquidity: number }[]> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-total-liquidity?interval=${interval}&filter=${filter}`)
+    return response.data as { time_interval: string, total_liquidity: number }[]
 }
 
 export const fetchFromSupabaseNotice = async () => {
@@ -122,6 +163,11 @@ export type PriorityFeeEstimateResponse = {
 export const getHeliusPriorityFeeEstimate = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-priority-fee-estimate`)
     return response.data.priorityFeeLevels as PriorityFeeEstimate
+}
+
+export const fetchTotalCumulativeVolume = async (interval: string): Promise<{ time_interval: string, cumulative_volume: number }[]> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-cumulative-volume?interval=${interval}`)
+    return response.data as { time_interval: string, cumulative_volume: number }[]
 }
 
 

@@ -1,4 +1,4 @@
-import { Clone as CloneAccount, Pools } from 'clone-protocol-sdk/sdk/generated/clone'
+import { Clone as CloneAccount } from 'clone-protocol-sdk/sdk/generated/clone'
 import { PublicKey, Connection, Commitment } from "@solana/web3.js";
 import fetchRetry from "fetch-retry";
 import fetch from "cross-fetch";

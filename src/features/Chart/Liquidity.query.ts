@@ -1,161 +1,172 @@
-import { Query, useQuery } from '@tanstack/react-query'
-import { FilterTime } from '~/components/Charts/TimeTabs'
-import { CLONE_TOKEN_SCALE } from 'clone-protocol-sdk/sdk/src/clone'
-import { fetchStatsData, Interval, ResponseValue, generateDates, Filter } from 'src/utils/assets'
+import { useQuery } from "@tanstack/react-query"
+import { FilterTime } from "~/components/Charts/TimeTabs"
+import { Interval } from "src/utils/assets"
+import {
+  fetchTotalCumulativeVolume,
+  fetchTotalLiquidity as netlifyFetchTotalLiquidity,
+} from "src/utils/fetch_netlify"
+import { Pools } from "clone-protocol-sdk/sdk/generated/clone"
+import { useAtomValue } from "jotai"
+import { cloneClient, rpcEndpoint } from "../globalAtom"
+import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
+import { getCloneClient } from "../baseQuery"
 
 export interface ChartElem {
   time: string
   value: number
 }
 
-type TimeSeriesValue = { time: string, value: number }
+type TimeSeriesValue = { time: string; value: number }
 
-const filterHistoricalData = (data: TimeSeriesValue[], numDays: number): TimeSeriesValue[] => {
-  const today = new Date(); // get the current date
-  const numMilliseconds = numDays * 86400 * 1000; // calculate the number of milliseconds in the specified number of days
-  const historicalDate = new Date(today.getTime() - numMilliseconds); // calculate the historical date
-
-  const filteredData = data.filter(({ time }) => {
-    const currentDatetime = new Date(time);
-    return currentDatetime >= historicalDate; // include values within the historical range
-  });
-
-  return filteredData;
-};
-
-
-type AggregatedData = {
-  datetime: string;
-  total_liquidity: number;
-  trading_volume: number;
-  total_trading_fees: number;
-  total_treasury_fees: number;
+const getTimeFrames = (timeframe: FilterTime): [number, string, string, number] => {
+  switch (timeframe) {
+    case "1y":
+      return [365, "year", "day" as Interval, 86400000]
+    case "30d":
+      return [30, "month", "day" as Interval, 86400000]
+    case "7d":
+      return [7, "week", "hour" as Interval, 3600000]
+    case "24h":
+      return [1, "day", "hour" as Interval, 3600000]
+    default:
+      throw new Error(`Unexpected timeframe: ${timeframe}`)
+  }
 }
 
-const aggregatePoolData = (poolDataArray: ResponseValue[], interval: Interval): AggregatedData[] => {
-  const groupedByDtAndPool: Record<string, Record<string, ResponseValue>> = {};
-
-  const setDatetime = (dt: Date) => {
-    if (interval === 'hour') {
-      dt.setMinutes(0, 0, 0);
-    } else {
-      dt.setHours(0, 0, 0, 0);
-    }
-  }
-  const getDTKeys = (dt: Date) => {
-    setDatetime(dt)
-    return dt.toISOString();
-  }
-  const convertToNumber = (val: string) => {
-    return Number(val) * Math.pow(10, -CLONE_TOKEN_SCALE)
-  }
-
-  const poolIndices: Set<string> = new Set()
-  poolDataArray.forEach(d => poolIndices.add(d.pool_index))
-
-  for (const data of poolDataArray) {
-    poolIndices.add(data.pool_index)
-    const dt = new Date(data.datetime)
-    const datetimeKey = getDTKeys(dt)
-    if (!groupedByDtAndPool[datetimeKey]) {
-      groupedByDtAndPool[datetimeKey] = {}
-    }
-    groupedByDtAndPool[datetimeKey][data.pool_index] = data
+export const fetchTotalLiquidity = async ({
+  mainCloneClient,
+  timeframe,
+  networkEndpoint,
+}: {
+  mainCloneClient?: CloneClient | null
+  timeframe: FilterTime
+  networkEndpoint: string
+}) => {
+  let program
+  if (mainCloneClient) {
+    program = mainCloneClient
+  } else {
+    const { cloneClient: cloneProgram } = await getCloneClient(networkEndpoint)
+    program = cloneProgram
   }
 
-  const recentLiquidityByPool: Record<string, number> = {}
-  poolIndices.forEach((index) => {
-    recentLiquidityByPool[index] = 0
+  const [_, filter, interval, intervalMs] = getTimeFrames(timeframe)
+  const aggregatedData = await netlifyFetchTotalLiquidity(interval, filter)
+  const dataMap = new Map<number, number>()
+  aggregatedData.forEach((item) => {
+    dataMap.set(new Date(item.time_interval).getTime(), 2 * item.total_liquidity * Math.pow(10, -6))
   })
 
-  // Create the first entry of the result
-  let result: AggregatedData[] = []
+  const now = new Date()
+  const currentIntervalDt = new Date(now.getTime() - (now.getTime() % intervalMs))
+  const startDate = new Date(aggregatedData[0].time_interval)
 
-  let startingDate = new Date(poolDataArray.at(0)!.datetime);
-  setDatetime(startingDate)
-  const dates = generateDates(startingDate, interval)
-
-  for (let i = 0; i < dates.length; i++) {
-
-    const currentDate = getDTKeys(dates[i])
-    let record: AggregatedData = {
-      datetime: currentDate, total_liquidity: 0, trading_volume: 0, total_trading_fees: 0, total_treasury_fees: 0
+  let chartData = backfillWithZeroValue(startDate, currentIntervalDt, intervalMs)
+  let currentValue = 0
+  for (const item of chartData) {
+    const value = dataMap.get(new Date(item.time).getTime())
+    if (value) {
+      currentValue = value
     }
-
-    const currentGBData = groupedByDtAndPool[currentDate]
-    if (!currentGBData) {
-      poolIndices.forEach((index) => {
-        record.total_liquidity += recentLiquidityByPool[index]
-      })
-    } else {
-      poolIndices.forEach((index) => {
-        let data = currentGBData[index]
-        if (data) {
-          record.total_liquidity += convertToNumber(data.total_liquidity)
-          record.trading_volume += convertToNumber(data.trading_volume)
-          record.total_trading_fees += convertToNumber(data.total_trading_fees)
-          record.total_treasury_fees += convertToNumber(data.total_treasury_fees)
-          recentLiquidityByPool[index] = convertToNumber(data.total_liquidity)
-        } else {
-          record.total_liquidity += recentLiquidityByPool[index]
-        }
-      })
-    }
-    result.push(record)
+    item.value = currentValue
   }
+  // Fetch latest record
+  // const connection = new Connection(networkEndpoint, 'confirmed')
+  const connection = program.provider.connection
+  const poolAddress = program.getPoolsAddress()
+  const pools = await Pools.fromAccountAddress(connection, poolAddress)
+  let latestLiquidity = 0
+  pools.pools.forEach((pool) => {
+    latestLiquidity += pool.committedCollateralLiquidity * Math.pow(10, -6) * 2
+  })
+  chartData.push({ time: now.toISOString(), value: latestLiquidity })
 
-  return result;
-}
-
-export const fetchTotalLiquidity = async ({ timeframe }: { timeframe: FilterTime }) => {
-
-  const [daysLookback, filter, interval] = (() => {
-    switch (timeframe) {
-      case '1y':
-        return [365, 'year', 'day']
-      case '30d':
-        return [30, 'month', 'day']
-      case '7d':
-        return [7, 'week', 'hour']
-      case '24h':
-        return [1, 'day', 'hour']
-      default:
-        throw new Error(`Unexpected timeframe: ${timeframe}`)
-    }
-  })()
-
-  const rawData = await fetchStatsData(filter as Filter, interval as Interval)
-  const aggregatedData = aggregatePoolData(rawData, interval as Interval)
-  const chartData = aggregatedData.map(data => { return { time: data.datetime, value: data.total_liquidity } })
+  const sumAllValue = chartData.reduce((a, b) => a + b.value, 0)
+  const allValues = chartData.map((elem) => elem.value!)
+  const maxValue = Math.floor(Math.max(...allValues))
+  const minValue = Math.floor(Math.min(...allValues))
 
   return {
-    chartData: filterHistoricalData(chartData, daysLookback)
+    chartData,
+    maxValue,
+    minValue,
+    sumAllValue,
   }
 }
 
 export const fetchTotalVolume = async ({ timeframe }: { timeframe: FilterTime }) => {
-  const [daysLookback, filter, interval] = (() => {
-    switch (timeframe) {
-      case '1y':
-        return [365, 'year', 'day']
-      case '30d':
-        return [30, 'month', 'day']
-      case '7d':
-        return [7, 'week', 'hour']
-      case '24h':
-        return [1, 'day', 'hour']
-      default:
-        throw new Error(`Unexpected timeframe: ${timeframe}`)
-    }
-  })()
+  const [daysLookback, filter, interval, intervalMs] = getTimeFrames(timeframe)
+  const nowInMs = new Date().getTime()
+  const lookbackInMs = nowInMs - daysLookback * 86400000
 
-  const rawData = await fetchStatsData(filter as Filter, interval as Interval)
-  const aggregatedData = aggregatePoolData(rawData, interval as Interval)
-  const chartData = aggregatedData.map(data => { return { time: data.datetime, value: data.trading_volume } })
+  const aggregatedData = (await fetchTotalCumulativeVolume(interval)).map((item) => {
+    return {
+      ms: new Date(item.time_interval).getTime(),
+      cumulativeVolume: item.cumulative_volume,
+    }
+  })
+
+  let chartData: TimeSeriesValue[] = []
+
+  let currentVolume = 0
+  let currentTimeMs = lookbackInMs
+  for (let i = 0; i < aggregatedData.length; i++) {
+    const item = aggregatedData[i]
+    while (currentTimeMs < item.ms) {
+      chartData.push({ time: new Date(currentTimeMs).toISOString(), value: currentVolume })
+      currentTimeMs += intervalMs
+    }
+    currentVolume = item.cumulativeVolume
+  }
+
+  while (currentTimeMs < nowInMs) {
+    chartData.push({ time: new Date(currentTimeMs).toISOString(), value: currentVolume })
+    currentTimeMs += intervalMs
+  }
+
+  const sumAllValue = chartData.reduce((a, b) => a + b.value, 0)
+  const allValues = chartData.map((elem) => elem.value!)
+  const maxValue = Math.floor(Math.max(...allValues))
+  const minValue = Math.floor(Math.min(...allValues))
 
   return {
-    chartData: filterHistoricalData(chartData, daysLookback)
+    chartData,
+    maxValue,
+    minValue,
+    sumAllValue,
   }
+}
+
+export const fetchCurrentTVL = async ({
+  mainCloneClient,
+  networkEndpoint,
+}: {
+  mainCloneClient: CloneClient
+  networkEndpoint: string
+}) => {
+  let program
+  if (mainCloneClient) {
+    program = mainCloneClient
+  } else {
+    const { cloneClient: cloneProgram } = await getCloneClient(networkEndpoint)
+    program = cloneProgram
+  }
+  const vault = program.clone.collateral.vault
+  const tvl = (await program.provider.connection.getTokenAccountBalance(vault, "confirmed")).value
+    .uiAmount!
+  return tvl
+}
+
+const backfillWithZeroValue = (start: Date, end: Date, intervalMs: number): TimeSeriesValue[] => {
+  const value = 0
+  let result = [{ time: start.toISOString(), value }]
+  let currentDate = start
+  while (currentDate.getTime() < end.getTime()) {
+    currentDate = new Date(currentDate.getTime() + intervalMs)
+    result.push({ time: currentDate.toISOString(), value })
+  }
+
+  return result
 }
 
 interface GetProps {
@@ -165,19 +176,33 @@ interface GetProps {
 }
 
 export function useTotalLiquidityQuery({ timeframe, refetchOnMount, enabled = true }: GetProps) {
+  const mainCloneClient = useAtomValue(cloneClient)
+  const networkEndpoint = useAtomValue(rpcEndpoint)
   return useQuery({
-    queryKey: ['totalLiquidity', timeframe],
-    queryFn: () => fetchTotalLiquidity({ timeframe }),
+    queryKey: ["totalLiquidity", timeframe],
+    queryFn: () => fetchTotalLiquidity({ mainCloneClient, timeframe, networkEndpoint }),
     refetchOnMount,
-    enabled
+    enabled,
   })
 }
 
 export function useTotalVolumeQuery({ timeframe, refetchOnMount, enabled = true }: GetProps) {
   return useQuery({
-    queryKey: ['totalVolume', timeframe],
+    queryKey: ["totalVolume", timeframe],
     queryFn: () => fetchTotalVolume({ timeframe }),
     refetchOnMount,
-    enabled
+    enabled,
+  })
+}
+
+export function useTotalValueLockedQuery({ timeframe, refetchOnMount, enabled = true }: GetProps) {
+  const mainCloneClient = useAtomValue(cloneClient)!
+  const networkEndpoint = useAtomValue(rpcEndpoint)
+
+  return useQuery({
+    queryKey: ["totalValueLocked"],
+    queryFn: () => fetchCurrentTVL({ mainCloneClient, networkEndpoint }),
+    refetchOnMount,
+    enabled,
   })
 }

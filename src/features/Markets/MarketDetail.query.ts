@@ -1,4 +1,4 @@
-import { QueryObserverOptions, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { CloneClient, fromCloneScale, fromScale } from "clone-protocol-sdk/sdk/src/clone"
 import { Collateral, Status } from "clone-protocol-sdk/sdk/generated/clone"
 import { assetMapping, ASSETS_DESC } from "src/data/assets"

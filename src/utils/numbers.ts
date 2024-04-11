@@ -1,3 +1,4 @@
+import { floorToScale } from 'clone-protocol-sdk/sdk/src/utils'
 import numbro from 'numbro'
 
 export const formatDollarAmount = (num: number | undefined, digits = 2, round = true) => {
@@ -19,4 +20,14 @@ export const formatDollarAmount = (num: number | undefined, digits = 2, round = 
 
 export const formatLocaleAmount = (num: number | string | undefined | never[], maxFractionDigits = 3) => {
   return num?.toLocaleString('en-US', { maximumFractionDigits: maxFractionDigits })
+}
+
+export const formatHealthScore = (score: number): string => {
+  score = (isNaN(score)) ? 0 : score
+
+  return Math.max(0, Math.min(100, score)).toFixed(2)
+}
+
+export const formatNumberToString = (num: number, scale: number): string => {
+  return floorToScale(num, scale).toFixed(scale)
 }

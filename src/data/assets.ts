@@ -1,3 +1,4 @@
+import { PublicKey } from "@solana/web3.js"
 import { ON_USD } from "~/utils/constants"
 import { IS_DEV } from "./networks"
 
@@ -69,53 +70,73 @@ export const ASSETS = [
 export const assetMapping = (index: number) => {
     let tickerName = ''
     let tickerSymbol = ''
+    let wrapTickerName = ''
+    let wrapTickerSymbol = ''
+    let wrapPortUrl = ''
     let tickerIcon = ''
     let ticker = ''
     let assetType: number
     let pythSymbol = ''
     let supabaseSymbol = ''
+    let underlyingTokenMint = PublicKey.default
     switch (index) {
         case Asset.Arbitrum:
             tickerName = 'Cloned Arbitrum'
             tickerSymbol = 'clARB'
+            wrapTickerName = 'DeBridge Arbitrum'
+            wrapTickerSymbol = 'deARB'
+            wrapPortUrl = 'https://app.debridge.finance/deport?inputChain=42161&outputChain=7565164&inputCurrency=0x912ce59144191c1204e64559fe8253a0e49e6548&outputCurrency='
             tickerIcon = '/images/assets/on-arb.svg'
             ticker = 'arbitrum'
             assetType = AssetType.Crypto
             pythSymbol = 'Crypto.ARB/USD'
             supabaseSymbol = pythSymbol
+            underlyingTokenMint = new PublicKey("9Bv59s4i393sqPysTEKA8xx47DQJ73EoBCS1DBbW9EWy")
             break
         case Asset.Optimism:
             tickerName = 'Cloned Optimism'
             tickerSymbol = 'clOP'
+            wrapTickerName = 'DeBridge Optimism'
+            wrapTickerSymbol = 'deOP'
+            wrapPortUrl = 'https://app.debridge.finance/deport?inputChain=10&outputChain=7565164&inputCurrency=0x4200000000000000000000000000000000000042&outputCurrency='
             tickerIcon = '/images/assets/on-op.svg'
             ticker = 'optimism'
             assetType = AssetType.Crypto
             pythSymbol = 'Crypto.OP/USD'
             supabaseSymbol = pythSymbol
+            underlyingTokenMint = new PublicKey("7QDfgP97Knwzz7uWrvzMEwFNLNT5Cbe2YPVKUY4WpBFa")
             break
         case Asset.Sui:
             tickerName = 'Cloned Sui'
             tickerSymbol = 'clSUI'
+            wrapTickerName = 'Wormhole Sui'
+            wrapTickerSymbol = 'wSUI'
+            wrapPortUrl = 'https://portalbridge.com/'
             tickerIcon = '/images/assets/on-sui.svg'
             ticker = 'sui'
             assetType = AssetType.Crypto
             pythSymbol = 'Crypto.SUI/USD'
             supabaseSymbol = pythSymbol
+            underlyingTokenMint = new PublicKey("G1vJEgzepqhnVu35BN4jrkv3wVwkujYWFFCxhbEZ1CZr")
             break
         case Asset.Doge:
             tickerName = 'Cloned Doge'
             tickerSymbol = 'clDOGE'
+            wrapTickerName = 'DeBridge Doge'
+            wrapTickerSymbol = 'deDOGE'
+            wrapPortUrl = 'https://app.debridge.finance/deport?inputChain=56&outputChain=7565164&inputCurrency=0xba2ae424d960c26247dd6c32edc70b295c744c43&outputCurrency='
             tickerIcon = '/images/assets/on-doge.svg'
             ticker = 'doge'
             assetType = AssetType.Crypto
             pythSymbol = 'Crypto.DOGE/USD'
             supabaseSymbol = pythSymbol
+            underlyingTokenMint = new PublicKey("H7ijetaTKRQbN3GSpxiW46sSpT8Rw3xHfdiDQN9Lx9LX")
             break
         default:
             throw new Error('Not supported')
     }
 
-    return { tickerName, tickerSymbol, tickerIcon, ticker, assetType, pythSymbol, supabaseSymbol }
+    return { tickerName, tickerSymbol, wrapTickerName, wrapTickerSymbol, wrapPortUrl, tickerIcon, ticker, assetType, pythSymbol, supabaseSymbol, underlyingTokenMint }
 }
 
 export const collateralMapping = (index: number) => {

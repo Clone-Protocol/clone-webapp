@@ -1,4 +1,4 @@
-import { QueryObserverOptions, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { AssetType, MAX_POOLS_FOR_SHOW, assetMapping } from '~/data/assets'
 import { FilterType } from '~/data/filter'
 import { getiAssetInfos } from '~/utils/assets';

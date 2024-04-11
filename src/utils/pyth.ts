@@ -2,6 +2,7 @@ import axios from 'axios';
 import { PythHttpClient, getPythProgramKeyForCluster } from '@pythnetwork/client';
 import { PublicKey, Connection } from '@solana/web3.js';
 import { ASSETS, assetMapping } from '~/data/assets';
+import { Oracles, OracleSource } from 'clone-protocol-sdk/sdk/generated/clone'
 import { IS_DEV } from '~/data/networks';
 
 export type Network = "devnet" | "mainnet-beta" | "pythnet" | "testnet" | "pythtest";
@@ -28,15 +29,6 @@ export const fetchPythPriceHistory = async (pythSymbol: string, range: Range): P
     let response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/pyth-data-fetch?${queryString}`)
 
     return response.data
-
-    // const response = await fetch(`/.netlify/functions/pyth-data-fetch?${queryString}`)
-
-    // if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    // }
-
-    // const data = await response.json();
-    // return data
 }
 
 export const getPythOraclePrices = async (
@@ -54,3 +46,23 @@ export const getPythOraclePrices = async (
     }
     return pricesMap;
 };
+
+// Fetches the latest oracle prices from Pyth ordered by the order of the oracles in the program,
+// If the price isn't found in the pyth data, or the source is not pyth, it will return the last
+// saved oracle price from the onchain account.
+export const fetchPythOraclePrices = async (connection: Connection, oracles: Oracles): Promise<number[]> => {
+    const cluster = IS_DEV ? "devnet" : "mainnet-beta";
+    const pythClient = new PythHttpClient(connection, new PublicKey(getPythProgramKeyForCluster(cluster)));
+    const pythData = await pythClient.getData();
+
+    const pythOraclePrices = oracles.oracles.map((oracle) => {
+        if (oracle.source === OracleSource.PYTH) {
+            const feedAddress = oracle.address.toString()
+            const product = pythData.products.find((p) => p.price_account === feedAddress)!
+            const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
+            return rescaleFactor * (pythData.productPrice.get(product.symbol)?.aggregate.price ?? fromScale(oracle.price, oracle.expo))
+        }
+        return fromScale(oracle.price, oracle.expo)
+    })
+    return pythOraclePrices;
+}

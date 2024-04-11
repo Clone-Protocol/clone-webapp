@@ -17,7 +17,6 @@ import ContentCopyIcon from 'public/images/content-copy.svg'
 import { PythSymbolIcon } from '~/components/Common/SvgIcons'
 import { PointTextForPyth } from '~/components/Points/PointMultiplierText'
 import Image from 'next/image'
-
 import { ReferralStatus } from '~/utils/constants'
 import { useSnackbar } from 'notistack'
 import CopyToClipboard from 'react-copy-to-clipboard'
