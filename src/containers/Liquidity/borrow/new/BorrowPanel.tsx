@@ -1,6 +1,6 @@
 import { Box, Stack, FormHelperText, Typography } from '@mui/material'
 import React, { useState, useEffect, useCallback } from 'react'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import PairInput from '~/components/Liquidity/borrow/PairInput'
 import RatioSlider from '~/components/Liquidity/borrow/RatioSlider'
@@ -11,7 +11,7 @@ import { ASSETS } from '~/data/assets'
 import { PairData, DetailInfo } from '~/features/Liquidity/borrow/BorrowPosition.query'
 import { useBorrowMutation } from '~/features/Liquidity/borrow/Borrow.mutation'
 import { useForm, Controller } from 'react-hook-form'
-import SelectArrowIcon from 'public/images/keyboard-arrow-left.svg'
+import SelectArrowIcon from 'public/images/liquidity/keyboard-arrow-left.svg'
 import { SubmitButton } from '~/components/Common/CommonButtons'
 import { Collateral as StableCollateral, collateralMapping } from '~/data/assets'
 import dynamic from 'next/dynamic'
@@ -22,6 +22,7 @@ import DisabledRatioSlider from '~/components/Liquidity/borrow/DisabledRatioSlid
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import { LoadingButton } from '~/components/Common/Loading'
 import { useRouter } from 'next/navigation'
+import { RootLiquidityDir } from '~/utils/constants'
 
 const RISK_RATIO_VAL = 170
 
@@ -132,7 +133,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
       if (data) {
         console.log('data', data)
         initData()
-        router.replace(`/borrow/myliquidity`)
+        router.replace(`${RootLiquidityDir}/borrow/myliquidity`)
       }
     } catch (err) {
       console.error(err)

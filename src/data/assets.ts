@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js"
-import { ON_USD } from "~/utils/constants"
+import { ON_USD, RootLiquidityDir, RootMarketsDir } from "~/utils/constants"
 import { IS_DEV } from "./networks"
 
 export enum Collateral {
@@ -27,7 +27,8 @@ export enum AssetType {
 }
 
 export const DEFAULT_ASSET_ID = AssetTickers.arbitrum
-export const DEFAULT_ASSET_LINK = "/trade/arbitrum"
+export const DEFAULT_LIQUIDITY_ASSET_LINK = `${RootLiquidityDir}/comet/new/arbitrum`
+export const DEFAULT_MARKETS_ASSET_LINK = `${RootMarketsDir}/markets/trade/arbitrum`
 
 //@MEMO: to add more asset, need to adjust here
 export const MAX_POOLS_FOR_SHOW = 4

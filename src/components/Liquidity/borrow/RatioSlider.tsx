@@ -1,4 +1,5 @@
-import { Box, Slider, styled, Typography } from '@mui/material'
+import { Box, Slider, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { formatLocaleAmount } from '~/utils/numbers'
 
 interface Props {

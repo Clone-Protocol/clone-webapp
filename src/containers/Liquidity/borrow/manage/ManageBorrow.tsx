@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Stack, Box, Typography } from '@mui/material'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { TabPanelForEdit, StyledTabs, CommonTab } from '~/components/Common/StyledTab'
 import { LoadingProgress } from '~/components/Common/Loading'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Stack, Typography, Button, Box } from '@mui/material'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams, GridColumnHeaderParams } from '@mui/x-data-grid'
 import { CellDigitValue, Grid, CellTicker, GridType } from '~/components/Common/DataGrid'
 import withSuspense from '~/hocs/withSuspense'
@@ -11,11 +11,11 @@ import { GridEventListener } from '@mui/x-data-grid'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import AddIconOn from 'public/images/add-icon-on.svg'
+import AddIconOn from 'public/images/liquidity/add-icon-on.svg'
 import { AddIcon } from '~/components/Common/SvgIcons'
 import BorrowLiquidityStatus from './BorrowLiquidityStatus'
 import LearnMoreIcon from 'public/images/learn-more.svg'
-import { ON_USD } from '~/utils/constants'
+import { ON_USD, RootLiquidityDir } from '~/utils/constants'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import { Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import InfoTooltip from '~/components/Common/InfoTooltip'
@@ -38,12 +38,12 @@ const BorrowPositions = () => {
 		params,
 	) => {
 		if (params.row.status !== Status.Frozen) {
-			router.push(`/borrow/myliquidity/${params.row.id}`)
+			router.push(`${RootLiquidityDir}/borrow/myliquidity/${params.row.id}`)
 		}
 	}
 
 	const moveNewBorrowPositionPage = () => {
-		router.push('/borrow')
+		router.push(`${RootLiquidityDir}/borrow`)
 	}
 
 	let customOverlayMsg = ''

@@ -12,9 +12,6 @@ import { RouteMarkets } from '~/utils/constants'
 
 const CommonMenu = () => {
   const pathname = usePathname()
-  // router.prefetch(DEFAULT_ASSET_LINK)
-  // router.prefetch('/clportfolio')
-
   return (
     <List component="nav" sx={{ display: 'flex', padding: 0 }}>
       {/* <Link href="/">

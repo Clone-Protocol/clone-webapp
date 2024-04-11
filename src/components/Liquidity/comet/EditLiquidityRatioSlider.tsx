@@ -1,4 +1,5 @@
-import { Box, Slider, Stack, Typography, styled } from '@mui/material'
+import { Box, Slider, Stack, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { formatLocaleAmount } from '~/utils/numbers'
 
 interface Props {
@@ -108,28 +109,4 @@ const FixValueLabel = styled(Box)`
   line-height: 20px;
   color: ${(props) => props.theme.basis.slug};
 `
-// const FormBox = styled(Box)`
-//   height: 63px; 
-//   padding: 12px;
-// `
-// const BottomBox = styled(Box)`
-//   height: 30px;
-//   text-align: center;
-//   border-top: 1px solid ${(props) => props.theme.boxes.blackShade};
-// `
-// const InputAmount = styled(`input`)`
-//   max-width: 100px;
-//   margin-left: 10px;
-//   text-align: right;
-//   border: 0px;
-//   background-color: ${(props) => props.theme.boxes.blackShade};
-//   font-size: 17.3px;
-//   font-weight: 500;
-// `
-// const MintAmount = styled('div')`
-//   font-size: 12px; 
-//   font-weight: 500;
-//   text-align: right; 
-//   color: ${(props) => props.theme.palette.text.secondary}; 
-// `
 export default EditLiquidityRatioSlider

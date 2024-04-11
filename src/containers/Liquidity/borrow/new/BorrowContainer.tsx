@@ -1,6 +1,6 @@
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import BorrowPanel from './BorrowPanel'

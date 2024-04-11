@@ -1,4 +1,5 @@
-import { styled, Typography, Box } from '@mui/material'
+import { Typography, Box } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { usePoolAnalyticsQuery } from '~/features/Liquidity/overview/PoolAnalytics.query'
 import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'

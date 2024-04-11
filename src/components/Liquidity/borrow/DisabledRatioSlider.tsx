@@ -1,5 +1,5 @@
-import { Box, Slider, styled, Typography } from '@mui/material'
-
+import { Box, Slider, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const StyledSlider = styled(Slider)(({ theme }) => ({
 	color: '#FFF',

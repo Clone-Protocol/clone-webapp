@@ -1,4 +1,5 @@
-import { styled, Typography, Stack } from '@mui/material'
+import { Typography, Stack } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import InfoIcon from 'public/images/info-icon.svg'
 import IconAlertComet from 'public/images/alert-comet.svg'

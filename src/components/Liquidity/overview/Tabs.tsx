@@ -1,5 +1,5 @@
 import { Tab, Tabs, TabsProps, SxProps } from '@mui/material'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import React from 'react'
 
 export const PageTabs: React.FC<Pick<TabsProps, 'value' | 'onChange' | 'sx' | 'variant' | 'scrollButtons'>> = ({

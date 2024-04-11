@@ -6,7 +6,7 @@ import LineChart from "~/components/Charts/LineChart"
 import { usePriceHistoryQuery } from "~/features/Chart/PriceByAsset.query"
 import withSuspense from "~/hocs/withSuspense"
 import { LoadingProgress } from "~/components/Common/Loading"
-import AnalyticsIcon from 'public/images/analytics-sketch.svg'
+import AnalyticsIcon from 'public/images/liquidity/analytics-sketch.svg'
 import { PublicKey } from "@solana/web3.js"
 import { formatLocaleAmount } from "~/utils/numbers"
 

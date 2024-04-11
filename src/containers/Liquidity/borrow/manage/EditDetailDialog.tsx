@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Box, styled, Dialog, DialogContent, Typography, Stack } from '@mui/material'
+import { Box, Dialog, DialogContent, Typography, Stack } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useCloseMutation, useEditCollateralMutation } from '~/features/Liquidity/borrow/Borrow.mutation'
 import { PairData, PositionInfo as BorrowDetail } from '~/features/Liquidity/borrow/BorrowPosition.query'
@@ -10,12 +11,13 @@ import { RISK_RATIO_VAL } from '~/data/riskfactors'
 import { CloseButton, SubmitButton } from '~/components/Common/CommonButtons'
 import { Collateral as StableCollateral, collateralMapping } from '~/data/assets'
 import Image from 'next/image'
-import IconSmile from 'public/images/icon-smile.svg'
+import IconSmile from 'public/images/liquidity/icon-smile.svg'
 import WarningMsg, { InfoMsg } from '~/components/Common/WarningMsg'
 import { useRouter } from 'next/navigation'
 import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { LoadingButton } from '~/components/Common/Loading'
+import { RootLiquidityDir } from '~/utils/constants'
 
 const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEditForm }: { borrowId: number, borrowDetail: BorrowDetail, initEditType: number, open: boolean, onHideEditForm: () => void }) => {
   const { publicKey } = useWallet()
@@ -136,7 +138,7 @@ const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEd
         console.log('data', data)
         initData()
         onHideEditForm()
-        router.replace(`/borrow/myliquidity`)
+        router.replace(`${RootLiquidityDir}/borrow/myliquidity`)
         // location.reload()
       }
     } catch (err) {

@@ -20,12 +20,6 @@ import useLocalStorage from '~/hooks/useLocalStorage'
 import { IS_COMPLETE_INIT_REFER } from '~/data/localstorage'
 
 //SSR
-// export async function getServerSideProps({ req, res }) {
-//   res.setHeader(
-//     'Cache-Control',
-//     'public, s-maxage=10, stale-while-revalidate=59'
-//   )
-// })
 export const getStaticProps = (async () => {
   const queryClient = new QueryClient()
 

@@ -1,4 +1,5 @@
-import { Box, Slider, styled } from '@mui/material'
+import { Box, Slider } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { formatNumberToString } from '~/utils/numbers'
 
 interface Props {

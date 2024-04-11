@@ -1,5 +1,5 @@
 'use client'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
 import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
 import MainChart from '~/containers/Liquidity/overview/MainChart'
@@ -56,11 +56,14 @@ const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
 }
 
 export const StyledSection = styled('section')`
+  max-width: 1085px;
+	margin: 0 auto;
+  padding-bottom: 20px;
 	${(props) => props.theme.breakpoints.up('md')} {
-		padding-top: 80px;
+		padding-top: 110px;
 	}
 	${(props) => props.theme.breakpoints.down('md')} {
-		padding: 50px 0px;
+		padding: 110px 0px;
 	}
 `
 

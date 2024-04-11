@@ -1,4 +1,5 @@
-import { styled, Box, Autocomplete, TextField, Popper, PopperProps } from '@mui/material'
+import { Box, Autocomplete, TextField, Popper, PopperProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import SearchIcon from 'public/images/search-icon.svg'
 import 'animate.css'

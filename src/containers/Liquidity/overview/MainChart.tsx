@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount } from '~/utils/numbers'
-import LineChartAlt from '~/components/Charts/LineChartAlt'
+// import LineChartAlt from '~/components/Charts/LineChartAlt'
 import { StyledTabs, StyledTab } from '~/components/Charts/StyledTab'
 import { TimeTabs, TimeTab, FilterTimeMap, FilterTime } from '~/components/Charts/TimeTabs'
 import { useTotalLiquidityQuery, useTotalValueLockedQuery, useTotalVolumeQuery } from '~/features/Chart/Liquidity.query'
+import LineChartAltLiquidity from '~/components/Charts/LineChartAltLiquidity'
 
 const MainChart: React.FC = () => {
   const [tab, setTab] = useState(0)
@@ -64,7 +65,7 @@ const MainChart: React.FC = () => {
   }, [chartHover, tab, totalLiquidityDay, totalVolumeDay])
 
   return (
-    <LineChartAlt
+    <LineChartAltLiquidity
       data={tab === 0 ? totalVolumeDay?.chartData : totalLiquidityDay?.chartData}
       value={chartHover}
       setValue={setChartHover}

@@ -5,7 +5,6 @@ import Image from 'next/image'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 import MyPointStatus from '~/containers/Points/MyPointStatus'
 import RankingList from '~/containers/Points/RankingList'
-// import { DehydratedState, Hydrate, QueryClient, dehydrate } from '@tanstack/react-query'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { fetchRanking } from '~/features/Points/Ranking.query'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -20,41 +19,15 @@ export const getStaticProps = (async () => {
     await queryClient.prefetchQuery({ queryKey: ['ranks'], queryFn: () => fetchRanking() })
   }
 
-  // SSR : there's netlify issue
-  /*
-  //get pyth data
-  let pythResult = { result: [] }
-  try {
-    const fetchData = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/data/pythSnapshot.json`)
-    const fileContents = await fetchData.json()
-    pythResult = {
-      result: fileContents
-    }
-    // console.log('pythResult', pythResult)
-  } catch (error) {
-    console.error('err', error)
-  }
-
-  // get ranking
-  let rankingList: RankingListType[] = []
-  try {
-    rankingList = await fetchRanking(pythResult)
-  } catch (error) {
-    console.error('err', error)
-  }
-  */
-
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      // rankingList,
       //cached time
       revalidate: 30,
     },
   }
 }) satisfies GetStaticProps<{
-  dehydratedState: DehydratedState,
-  // rankingList: RankingListType[]
+  dehydratedState: DehydratedState
 }>
 
 const Points = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticProps>) => {

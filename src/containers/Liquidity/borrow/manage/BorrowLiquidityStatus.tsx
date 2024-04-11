@@ -1,4 +1,4 @@
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { Box, Stack, Typography } from '@mui/material'
 import { useStatusQuery } from '~/features/Liquidity/borrow/Status.query'
 import { useWallet } from '@solana/wallet-adapter-react'

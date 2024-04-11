@@ -8,8 +8,8 @@ export const RouteMarkets = {
 	TRADE_LIST: `${RootMarketsDir}`,
 	TRADE: `${RootMarketsDir}/trade`,
 	PORTFOLIO: `${RootMarketsDir}/clportfolio`,
-	POINTS: `${RootMarketsDir}/points`,
-	GIVEAWAY: `${RootMarketsDir}/giveaway`,
+	POINTS: `${CloneTokenDir}/points`,
+	GIVEAWAY: `${CloneTokenDir}/giveaway`,
 }
 
 export enum CreateAccountDialogStates {

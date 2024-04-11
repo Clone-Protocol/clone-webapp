@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import React, { useState, useMemo } from 'react'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useInitCometDetailQuery } from '~/features/Liquidity/comet/CometInfo.query'
@@ -13,8 +13,9 @@ import PoolAnalytics from '~/components/Liquidity/overview/PoolAnalytics'
 import TipMsg from '~/components/Common/TipMsg'
 import InfoIcon from 'public/images/info-icon.svg'
 import { GoBackButton } from '~/components/Common/CommonButtons'
-import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_ASSET_LINK } from '~/data/assets'
+import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_LIQUIDITY_ASSET_LINK } from '~/data/assets'
 import dynamic from 'next/dynamic'
+import { RootLiquidityDir } from '~/utils/constants'
 
 const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 	const { publicKey } = useWallet()
@@ -29,7 +30,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 				setAssetIndex(AssetTickers[assetTicker as keyof typeof AssetTickers])
 			} else {
 				setAssetIndex(DEFAULT_ASSET_ID)
-				router.replace(DEFAULT_ASSET_LINK)
+				router.replace(DEFAULT_LIQUIDITY_ASSET_LINK)
 			}
 		}
 	}, [assetTicker])
@@ -48,7 +49,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 		setAssetIndex(assetId)
 		setOpenChooseLiquidity(false)
 
-		router.replace(`/comet/assets/${ASSETS[assetId].ticker}`)
+		router.replace(`${RootLiquidityDir}/comet/new/${ASSETS[assetId].ticker}`)
 	}
 
 	return (

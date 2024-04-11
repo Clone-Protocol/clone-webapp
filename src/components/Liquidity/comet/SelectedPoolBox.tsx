@@ -1,4 +1,5 @@
-import { styled, Box, Typography, Stack } from '@mui/material'
+import { Box, Typography, Stack } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import { PositionInfo } from '~/features/Liquidity/comet/LiquidityPosition.query'

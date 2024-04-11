@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Stack, Typography, styled } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import Image from 'next/image'
@@ -7,7 +8,7 @@ import { PositionInfo as BorrowDetail } from '~/features/Liquidity/borrow/Borrow
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { SubmitButton } from "~/components/Common/CommonButtons"
-import CheckIcon from 'public/images/check-icon.svg'
+import CheckIcon from 'public/images/liquidity/check-icon.svg'
 import { ON_USD } from '~/utils/constants'
 import { formatLocaleAmount } from '~/utils/numbers'
 

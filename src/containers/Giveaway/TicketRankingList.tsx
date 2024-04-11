@@ -1,5 +1,5 @@
 import { Box, Tooltip, Typography } from '@mui/material'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'

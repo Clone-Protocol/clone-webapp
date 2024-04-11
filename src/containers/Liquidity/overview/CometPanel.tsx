@@ -5,7 +5,7 @@ import { LoadingButton, LoadingProgress } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Box, Stack, FormHelperText, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import RatioSlider from '~/components/Liquidity/overview/RatioSlider'
 import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
@@ -16,13 +16,13 @@ import { useNewPositionMutation } from '~/features/Liquidity/comet/LiquidityPosi
 import { useRouter } from 'next/navigation'
 import { fromScale } from 'clone-protocol-sdk/sdk/src/clone'
 import { ConnectButton, SelectButton, SubmitButton } from '~/components/Common/CommonButtons'
-import { OpaqueAlreadyPool, OpaqueDefault, OpaqueNoCollateral } from '~/components/Liquidity/overview/OpaqueArea'
-import SelectArrowIcon from 'public/images/keyboard-arrow-left.svg'
-import DepositIcon from 'public/images/deposit-icon.svg'
+import { OpaqueAlreadyPool, OpaqueDefault, OpaqueNoCollateral } from '~/components/Common/OpaqueArea'
+import SelectArrowIcon from 'public/images/liquidity/keyboard-arrow-left.svg'
+import DepositIcon from 'public/images/liquidity/deposit-icon.svg'
 import Link from 'next/link'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { InfoMsg } from '~/components/Common/WarningMsg'
-import { ON_USD } from '~/utils/constants'
+import { ON_USD, RootLiquidityDir } from '~/utils/constants'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import { RISK_RATIO_VAL } from '~/data/riskfactors'
 import { useAtomValue } from 'jotai'
@@ -123,7 +123,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
         console.log('data', data)
         refetch()
         initData()
-        router.push('/comet/myliquidity')
+        router.push(`${RootLiquidityDir}/comet/myliquidity`)
       }
     } catch (err) {
       console.error(err)

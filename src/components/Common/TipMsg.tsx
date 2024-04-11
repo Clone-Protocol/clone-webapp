@@ -1,5 +1,6 @@
 import Slide from '@mui/material/Slide';
-import { styled, Box } from '@mui/material'
+import { Box } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const TipMsg: React.FC = ({ children }: { children?: React.ReactNode }) => {
 	return (

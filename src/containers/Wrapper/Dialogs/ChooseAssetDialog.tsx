@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import { Box, styled, Dialog, DialogContent, Typography, Divider } from '@mui/material'
+import { Box, Dialog, DialogContent, Typography, Divider } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { FadeTransition } from '~/components/Common/Dialog'
 import GridAssets from './GridAssets'
 import SearchInput from '~/components/Liquidity/overview/SearchInput'

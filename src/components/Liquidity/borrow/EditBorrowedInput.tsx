@@ -1,4 +1,5 @@
-import { FormControl, styled, Stack, Box, Typography } from "@mui/material"
+import { FormControl, Stack, Box, Typography } from "@mui/material"
+import { styled } from '@mui/material/styles'
 import { StyledTabs, StyledTab } from "~/components/Common/StyledTab"
 import PairInput from '~/components/Liquidity/comet/PairInput'
 import { formatLocaleAmount } from "~/utils/numbers"

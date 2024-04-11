@@ -1,15 +1,13 @@
 import { Box, Stack, Typography } from '@mui/material'
-import { styled } from '@mui/system'
+import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { useState, useCallback } from 'react'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { useAssetsQuery } from '~/features/Liquidity/overview/Assets.query'
-// import { FilterType } from '~/data/filter'
-// import { PageTabs, PageTab } from '~/components/Overview/Tabs'
-import ArrowUpward from 'public/images/arrow-upward.svg'
-import ArrowDownward from 'public/images/arrow-down-red.svg'
+import ArrowUpward from 'public/images/liquidity/arrow-upward.svg'
+import ArrowDownward from 'public/images/liquidity/arrow-down-red.svg'
 import { Grid, CellTicker } from '~/components/Common/DataGrid'
 import SearchInput from '~/components/Liquidity/overview/SearchInput'
 import useDebounce from '~/hooks/useDebounce'
@@ -17,7 +15,7 @@ import { GridEventListener } from '@mui/x-data-grid'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { useRouter } from 'next/navigation'
 import { formatDollarAmount, formatLocaleAmount } from '~/utils/numbers'
-import { ON_USD } from '~/utils/constants'
+import { ON_USD, RootLiquidityDir } from '~/utils/constants'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 
 const AssetList: React.FC = () => {
@@ -53,7 +51,7 @@ const AssetList: React.FC = () => {
 		params
 	) => {
 		if (!showPoolStatus(params.row.status)) {
-			router.push(`/comet/assets/${params.row.ticker}`)
+			router.push(`${RootLiquidityDir}/comet/new/${params.row.ticker}`)
 		}
 	}, [])
 
