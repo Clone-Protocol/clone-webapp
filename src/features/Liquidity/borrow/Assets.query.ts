@@ -10,7 +10,7 @@ import { showPoolStatus } from '~/components/Common/PoolStatus'
 
 const fetchIassetBalances = async (program: CloneClient, pools: Pools): Promise<number[]> => {
 	const balancesQueries = await Promise.allSettled(
-		pools.pools.slice(0, pools.pools.length).map(async (pool) => {
+		pools.pools.slice(0, MAX_POOLS_FOR_SHOW).map(async (pool) => {
 			const ata = await getAssociatedTokenAddress(
 				pool.assetInfo.onassetMint,
 				program.provider.publicKey!
@@ -38,7 +38,6 @@ export const fetchAssets = async ({ program, userPubKey }: { program: CloneClien
 	const balances = await fetchIassetBalances(program, pools);
 
 	const result: AssetList[] = []
-	//for (let index = 0; index < pools.pools.length; index++) {
 	for (let index = 0; index < MAX_POOLS_FOR_SHOW; index++) {
 		const { tickerName, tickerSymbol, tickerIcon, assetType } = assetMapping(index)
 		const status = pools.pools[index].status

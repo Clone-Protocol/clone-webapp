@@ -4,12 +4,17 @@ export const RootMarketsDir = "/markets"
 export const RootLiquidityDir = "/liquidity"
 export const CloneTokenDir = "/clone"
 
-export const RouteMarkets = {
+export const RouteDir = {
 	TRADE_LIST: `${RootMarketsDir}`,
 	TRADE: `${RootMarketsDir}/trade`,
 	PORTFOLIO: `${RootMarketsDir}/clportfolio`,
+	WRAPPER: `${RootMarketsDir}/wrapper`,
+	LIQUIDITY_LIST: `${RootLiquidityDir}`,
+	MY_COMET: `${RootLiquidityDir}/comet/myliquidity`,
+	MY_BORROW: `${RootLiquidityDir}/borrow/myliquidity`,
 	POINTS: `${CloneTokenDir}/points`,
 	GIVEAWAY: `${CloneTokenDir}/giveaway`,
+	Staking: `${CloneTokenDir}/staking`,
 }
 
 export enum CreateAccountDialogStates {

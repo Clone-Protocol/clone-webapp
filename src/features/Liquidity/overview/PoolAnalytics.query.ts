@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
 import { useClone } from '~/hooks/useClone'
-import { assetMapping } from '~/data/assets'
+import { MAX_POOLS_FOR_SHOW, assetMapping } from '~/data/assets'
 import { REFETCH_CYCLE } from '~/components/Common/DataLoadingIndicator'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { getAggregatedPoolStats, fetchBorrowData } from '~/utils/assets'
@@ -15,9 +15,9 @@ export const fetchPoolAnalytics = async ({ tickerSymbol, program }: { tickerSymb
     return 100 * (current - prev) / prev
   }
 
-  const borrowData = await fetchBorrowData(Number(pools.pools.length))
+  const borrowData = await fetchBorrowData(MAX_POOLS_FOR_SHOW)
 
-  for (let poolIndex = 0; poolIndex < pools.pools.length; poolIndex++) {
+  for (let poolIndex = 0; poolIndex < MAX_POOLS_FOR_SHOW; poolIndex++) {
     const info = assetMapping(poolIndex)
     if (tickerSymbol === info.tickerSymbol) {
       const stats = poolStats[poolIndex]

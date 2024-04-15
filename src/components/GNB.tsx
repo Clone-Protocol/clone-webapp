@@ -1,19 +1,18 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import logoIcon from 'public/images/logo-markets.svg'
-import logoIconDevnet from 'public/images/logo-markets-devnet.png'
+import logoIcon from 'public/images/logos-clone.svg'
 import logoMIcon from 'public/images/clone_icon.svg'
 import walletIcon from 'public/images/gnb-wallet.svg'
 import SettingsIcon from 'public/images/buttons-more-menu-settings.svg'
-import { Button, Toolbar, Container, Box, AppBar, Typography, Theme, useMediaQuery } from '@mui/material'
+import { Button, Toolbar, Container, Box, AppBar, Typography, Theme, useMediaQuery, Stack } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { withCsrOnly } from '~/hocs/CsrOnly'
 import { useWallet, useAnchorWallet } from '@solana/wallet-adapter-react'
 import { shortenAddress } from '~/utils/address'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { useSetAtom } from 'jotai'
-import NaviMenu, { MobileNaviMenu } from './NaviMenu'
+import { NaviMenu, MobileNaviMenu, SubNaviMenu } from './NaviMenu'
 import { mintUSDi } from '~/features/globalAtom'
 import dynamic from 'next/dynamic'
 import useFaucet from '~/hooks/useFaucet'
@@ -42,14 +41,17 @@ const GNB: React.FC = () => {
 				<TempWarningMsg />
 				<Container maxWidth={false}>
 					<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-						{isMobileOnSize ?
-							<a href="/"><Image src={logoMIcon} width={46} height={46} alt="clone" /></a>
-							:
-							<a href="/"><Image src={IS_DEV ? logoIconDevnet : logoIcon} width={IS_DEV ? 121 : 100} height={IS_DEV ? 25 : 26} alt="clone" /></a>
-						}
-						<Box ml='60px' sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-							<NaviMenu />
-						</Box>
+						<Stack direction='row' alignItems='center'>
+							{isMobileOnSize ?
+								<a href="/"><Image src={logoMIcon} width={46} height={46} alt="clone" /></a>
+								:
+								<a href="/"><Image src={logoIcon} width={73} height={24} alt="clone" /></a>
+							}
+							<div style={{ width: '1px', height: '31px', marginLeft: '23px', marginRight: '23px', backgroundColor: '#201c27' }} />
+							<Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
+								<NaviMenu />
+							</Box>
+						</Stack>
 						<Box>
 							<RightMenu />
 						</Box>
@@ -63,6 +65,7 @@ const GNB: React.FC = () => {
 							<MobileNaviMenu />
 						</Box>
 					</Toolbar>
+					<SubNaviMenu />
 				</Container>
 			</StyledAppBar>
 		</>

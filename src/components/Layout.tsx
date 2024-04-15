@@ -16,12 +16,10 @@ import dynamic from 'next/dynamic'
 import ErrorBoundary from '~/components/ErrorBoundary'
 import { IS_DEV } from '~/data/networks'
 import { styled } from '@mui/material/styles'
-import BannerLiquidity from './Common/BannerLiquidity'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [isCompleteInit, _] = useLocalStorage(IS_COMPLETE_INIT, false)
   const [isOpenInit, setIsOpenInit] = useState(false)
-  const [isOpenBanner, setIsOpenBanner] = useState(true)
   const InitEnterScreen = dynamic(() => import('~/components/Common/InitEnterScreen'), { ssr: false })
 
   useEffect(() => {
@@ -52,8 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       {children}
                     </Box>
                     {IS_DEV && isOpenInit && <InitEnterScreen onClose={() => setIsOpenInit(false)} />}
-
-                    <BannerLiquidity open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} />
                   </Box>
                 </ErrorBoundary>
               </DataLoadingIndicatorProvider>

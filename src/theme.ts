@@ -217,7 +217,7 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 	},
 	basis: {
 		textRaven: '#8988a3',
-		hansPurple: '#6800ed',
+		revolver: '#1d142e',
 		lightSlateBlue: '#8070ad',
 		melrose: '#c4b5fd',
 		portGore: '#414166',
@@ -228,6 +228,11 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 		cerisePink: '#ff0084',
 		royalPurple: '#14081c',
 		darkPurple: '#080018',
+		cinder: '#0f0e14',
+		raisinBlack: '#1d142e',
+		nobleBlack: '#201c27',
+		backInBlack: '#16141b',
+		plumFuzz: '#332e46',
 	},
 	boxes: {
 		darkBlack: '#1b1b1b',
@@ -273,7 +278,7 @@ declare module '@mui/material/styles' {
 	interface Theme {
 		basis: {
 			textRaven?: React.CSSProperties['color'];
-			hansPurple?: React.CSSProperties['color'];
+			revolver?: React.CSSProperties['color'];
 			lightSlateBlue?: React.CSSProperties['color'];
 			melrose?: React.CSSProperties['color'];
 			portGore?: React.CSSProperties['color'];
@@ -284,6 +289,11 @@ declare module '@mui/material/styles' {
 			cerisePink?: React.CSSProperties['color'];
 			royalPurple?: React.CSSProperties['color'];
 			darkPurple?: React.CSSProperties['color'];
+			cinder?: React.CSSProperties['color'];
+			raisinBlack?: React.CSSProperties['color'];
+			nobleBlack?: React.CSSProperties['color'];
+			backInBlack?: React.CSSProperties['color'];
+			plumFuzz?: React.CSSProperties['color'];
 		};
 		boxes: {
 			darkBlack: React.CSSProperties['color'];
@@ -301,7 +311,7 @@ declare module '@mui/material/styles' {
 	interface ThemeOptions {
 		basis: {
 			textRaven?: React.CSSProperties['color'];
-			hansPurple?: React.CSSProperties['color'];
+			revolver?: React.CSSProperties['color'];
 			lightSlateBlue?: React.CSSProperties['color'];
 			melrose?: React.CSSProperties['color'];
 			portGore?: React.CSSProperties['color'];
@@ -312,6 +322,11 @@ declare module '@mui/material/styles' {
 			cerisePink?: React.CSSProperties['color'];
 			royalPurple?: React.CSSProperties['color'];
 			darkPurple?: React.CSSProperties['color'];
+			cinder?: React.CSSProperties['color'];
+			raisinBlack?: React.CSSProperties['color'];
+			nobleBlack?: React.CSSProperties['color'];
+			backInBlack?: React.CSSProperties['color'];
+			plumFuzz?: React.CSSProperties['color'];
 		};
 		boxes: {
 			darkBlack?: React.CSSProperties['color'];

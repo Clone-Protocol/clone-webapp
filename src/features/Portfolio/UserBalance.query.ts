@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { CloneClient, fromScale, fromCloneScale } from 'clone-protocol-sdk/sdk/src/clone'
 import { useClone } from '~/hooks/useClone'
-import { assetMapping, AssetType } from '~/data/assets'
+import { assetMapping, AssetType, MAX_POOLS_FOR_SHOW } from '~/data/assets'
 import { REFETCH_CYCLE, REFETCH_SHORT_CYCLE } from '~/components/Markets/TradingBox/RateLoadingIndicator'
 import { getTokenAccount } from '~/utils/token_accounts'
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
@@ -42,7 +42,7 @@ export const fetchUserTotalBalance = async ({ program, userPubKey }: { program: 
 	const priceMap = await getPythOraclePrices(program.provider.connection);
 
 	const balanceQueries = [];
-	for (let i = 0; i < Number(pools.pools.length); i++) {
+	for (let i = 0; i < MAX_POOLS_FOR_SHOW; i++) {
 		balanceQueries.push(
 			fetchOnassetBalance(pools.pools[i].assetInfo.onassetMint, program)
 		)
@@ -51,7 +51,7 @@ export const fetchUserTotalBalance = async ({ program, userPubKey }: { program: 
 	const onassetBalancesResult = await Promise.allSettled(balanceQueries);
 	const result = []
 	const collateralScale = program.clone.collateral.scale
-	for (let i = 0; i < Number(pools.pools.length); i++) {
+	for (let i = 0; i < MAX_POOLS_FOR_SHOW; i++) {
 		const pool = pools.pools[i]
 		const oracle = oracles.oracles[pool.assetInfo.oracleInfoIndex]
 		const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
@@ -110,7 +110,7 @@ export const fetchUserBalance = async ({ program, userPubKey }: { program: Clone
 	const priceMap = await getPythOraclePrices(program.provider.connection);
 
 	const balanceQueries = [];
-	for (let i = 0; i < Number(pools.pools.length); i++) {
+	for (let i = 0; i < MAX_POOLS_FOR_SHOW; i++) {
 		balanceQueries.push(
 			fetchOnassetBalance(pools.pools[i].assetInfo.onassetMint, program)
 		)
@@ -118,7 +118,7 @@ export const fetchUserBalance = async ({ program, userPubKey }: { program: Clone
 	const onassetBalancesResult = await Promise.allSettled(balanceQueries);
 	const result: BalanceList[] = []
 	const collateralScale = program.clone.collateral.scale
-	for (let i = 0; i < Number(pools.pools.length); i++) {
+	for (let i = 0; i < MAX_POOLS_FOR_SHOW; i++) {
 		const { tickerName, tickerSymbol, tickerIcon, assetType, pythSymbol } = assetMapping(i)
 		const pool = pools.pools[i]
 		const oracle = oracles.oracles[pool.assetInfo.oracleInfoIndex]
