@@ -66,7 +66,7 @@ export const StyledSection = styled('section')`
 	margin: 0 auto;
   padding-bottom: 20px;
 	${(props) => props.theme.breakpoints.up('md')} {
-		padding-top: 100px;
+		padding-top: 120px;
 	}
 	${(props) => props.theme.breakpoints.down('md')} {
 		padding: 110px 0px;
