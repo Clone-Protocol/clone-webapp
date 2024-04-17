@@ -292,7 +292,7 @@ const SelectPoolBox = styled(Box)`
   margin-top: 10px;
   margin-bottom: 25px;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
 		background-color: rgba(37, 141, 237, 0.23);
   }
 `

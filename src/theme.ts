@@ -233,6 +233,14 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 		nobleBlack: '#201c27',
 		backInBlack: '#16141b',
 		plumFuzz: '#332e46',
+		liquidityBlue: '#4fe5ff', // temp for liquidity
+		gloomyBlue: '#24abc2',
+		jurassicGrey: '#1a1c28',
+		skylight: '#b5fdf9',
+		slug: '#66707e',
+		shadowGloom: '#414e66',
+		royalNavy: '#071031',
+		darkNavy: '#000e22',
 	},
 	boxes: {
 		darkBlack: '#1b1b1b',
@@ -244,7 +252,13 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 	},
 	gradients: {
 		light: 'linear-gradient(to right, #ed25c1 0%, #a74fff 16%, #f096ff 34%, #fff 50%, #ff96e2 68%, #874fff 83%, #4d25ed, #4d25ed)',
-		darker: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.4), linear-gradient(to right, #ed25c1 0%, #a74fff 16%, #f096ff 34%, #fff 50%, #ff96e2 68%, #874fff 83%, #4d25ed)'
+		darker: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.4), linear-gradient(to right, #ed25c1 0%, #a74fff 16%, #f096ff 34%, #fff 50%, #ff96e2 68%, #874fff 83%, #4d25ed)',
+		metallic: 'linear-gradient(81deg, #258ded 0%, #4fe5ff 24%, #96efff 36%, #fff 48%, #96efff 60%, #4fe5ff 72%, #258ded 96%)',
+		temperatureL2H: 'linear-gradient(to right, #fff 51%, #ff0084 100%)',
+		purpleMetallic: 'linear-gradient(84deg, #8925ed 1%, #7d4fff 25%, #ab96ff 36%, #fff 48%, #ab96ff 60%, #7d4fff 72%, #8925ed 95%)',
+		simple: 'linear-gradient(to right, #fff 21%, #4fe5ff 96%)',
+		temperatureH2L: 'linear-gradient(to right, #ff8e4f 0%, #fff 100%)',
+		healthscore: 'linear-gradient(to right, #ff006b 0%, #4fe5ff 100%)',
 	}
 })
 
@@ -294,6 +308,12 @@ declare module '@mui/material/styles' {
 			nobleBlack?: React.CSSProperties['color'];
 			backInBlack?: React.CSSProperties['color'];
 			plumFuzz?: React.CSSProperties['color'];
+			jurassicGrey: React.CSSProperties['color'];
+			skylight: React.CSSProperties['color'];
+			slug: React.CSSProperties['color'];
+			shadowGloom: React.CSSProperties['color'];
+			royalNavy: React.CSSProperties['color'];
+			darkNavy: React.CSSProperties['color'];
 		};
 		boxes: {
 			darkBlack: React.CSSProperties['color'];
@@ -306,6 +326,12 @@ declare module '@mui/material/styles' {
 		gradients: {
 			light: React.CSSProperties['color'];
 			darker: React.CSSProperties['color'];
+			metallic?: React.CSSProperties['color'];
+			temperatureL2H?: React.CSSProperties['color'];
+			purpleMetallic?: React.CSSProperties['color'];
+			simple?: React.CSSProperties['color'];
+			temperatureH2L?: React.CSSProperties['color'];
+			healthscore?: React.CSSProperties['color'];
 		}
 	}
 	interface ThemeOptions {
@@ -327,6 +353,12 @@ declare module '@mui/material/styles' {
 			nobleBlack?: React.CSSProperties['color'];
 			backInBlack?: React.CSSProperties['color'];
 			plumFuzz?: React.CSSProperties['color'];
+			jurassicGrey: React.CSSProperties['color'];
+			skylight: React.CSSProperties['color'];
+			slug: React.CSSProperties['color'];
+			shadowGloom: React.CSSProperties['color'];
+			royalNavy: React.CSSProperties['color'];
+			darkNavy: React.CSSProperties['color'];
 		};
 		boxes: {
 			darkBlack?: React.CSSProperties['color'];
@@ -339,6 +371,12 @@ declare module '@mui/material/styles' {
 		gradients: {
 			light?: React.CSSProperties['color'];
 			darker?: React.CSSProperties['color'];
+			metallic?: React.CSSProperties['color'];
+			temperatureL2H?: React.CSSProperties['color'];
+			purpleMetallic?: React.CSSProperties['color'];
+			simple?: React.CSSProperties['color'];
+			temperatureH2L?: React.CSSProperties['color'];
+			healthscore?: React.CSSProperties['color'];
 		}
 	}
 }

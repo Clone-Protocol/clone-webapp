@@ -126,11 +126,11 @@ const GetButton = styled(Button)`
   flex-grow: 0;
   border-radius: 100px;
   color: #fff;
-  border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-  background: ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.portGore};
+  background-color: rgba(155, 121, 252, 0.15);
   &:hover {
-    background: ${(props) => props.theme.basis.jurassicGrey};
-    border: solid 1px ${(props) => props.theme.basis.gloomyBlue};
+    background-color: rgba(155, 121, 252, 0.15);
+		border-color: ${(props) => props.theme.basis.lightSlateBlue};
   }
 `
 

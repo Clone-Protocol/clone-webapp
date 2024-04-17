@@ -55,11 +55,6 @@ const HealthscoreBar: React.FC<Props> = ({ score, prevScore, hasRiskScore = fals
   )
 }
 
-const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.boxes.greyShade};
-  padding: 15px 18px;
-  margin-top: 16px;
-`
 const ScorePointer = styled(Box)`
   margin-left: -9px;
   margin-right: -9px;

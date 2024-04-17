@@ -15,7 +15,7 @@ const Wrapper = () => {
           <Stack direction='row' alignItems='center' gap={1}>
             <Typography variant='p' color='#66707e'>The Wrapper enables any user to mint clAssets in exchange for bridged assets in order to arbitrage on Clone.</Typography>
             <a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/wrapper" target='_blank'>
-              <Box display='flex' color='#b5fdf9' sx={{ cursor: 'pointer', ":hover": { color: '#4fe5ff' } }}>
+              <Box display='flex' color='#c4b5fd' sx={{ cursor: 'pointer', ':hover': { color: '#8070ad' }, whiteSpace: 'nowrap' }}>
                 <Typography variant='p' mr='3px'>Learn more</Typography>
                 <Image src={LearnMoreIcon} alt='learnMore' />
               </Box>

@@ -11,10 +11,9 @@ import { RootMarketsDir } from '~/utils/constants'
 
 interface Props {
 	assetId: number
-	onSelectAssetId: (id: number) => void
 }
 
-const TradingBox: React.FC<Props> = ({ assetId, onSelectAssetId }) => {
+const TradingBox: React.FC<Props> = ({ assetId }) => {
 	const router = useRouter()
 	const [showSearchAssetDlog, setShowSearchAssetDlog] = useState(false)
 	const [showOrderSetting, setShowOrderSetting] = useState(false)
@@ -24,11 +23,10 @@ const TradingBox: React.FC<Props> = ({ assetId, onSelectAssetId }) => {
 	const SearchAssetDialog = dynamic(() => import('~/components/Markets/TradingBox/Dialogs/SearchAssetDialog'), { ssr: false })
 	const SwapSettingDialog = dynamic(() => import('~/components/Markets/TradingBox/Dialogs/SwapSettingDialog'), { ssr: false })
 
-	const chooseAsset = useCallback((id: number) => {
-		// onSelectAssetId(id)
+	const chooseAsset = (id: number) => {
 		setShowSearchAssetDlog(false)
 		router.push(`${RootMarketsDir}/trade/${ASSETS[id].ticker}`)
-	}, [onSelectAssetId])
+	}
 
 	const saveSetting = (slippage: number) => {
 		setLocalSlippage(slippage)

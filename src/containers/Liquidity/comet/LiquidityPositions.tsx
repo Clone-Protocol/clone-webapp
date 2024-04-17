@@ -42,7 +42,7 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
   }
 
   const redirectAddCometPage = () => {
-    router.push(`${RootLiquidityDir}${DEFAULT_LIQUIDITY_ASSET_LINK}`)
+    router.push(`${DEFAULT_LIQUIDITY_ASSET_LINK}`)
   }
 
   const handleRowClick: GridEventListener<'rowClick'> = (
@@ -209,11 +209,12 @@ const AddButton = styled(Button)`
   height: 28px;
   padding: 4px 0;
   background-color: rgba(255, 255, 255, 0.01);
-  border: 1px solid ${(props) => props.theme.basis.jurassicGrey};
-  color: ${(props) => props.theme.basis.shadowGloom};
+  border: 1px solid ${(props) => props.theme.boxes.blackShade};
+  color: ${(props) => props.theme.basis.melrose};
   margin-top: 9px;
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.05);
   }
 `
 const AddButtonNoPosition = styled(AddButton)`
