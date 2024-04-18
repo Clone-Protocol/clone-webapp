@@ -149,6 +149,12 @@ export const SubNaviMenu = () => {
               <Typography variant="p_lg" ml='3px'>Staking</Typography>
             </StyledListItemButton>
           </Link>
+          <Link href={RouteDir.Stats}>
+            <StyledListItemButton className={pathname?.startsWith(RouteDir.Stats) ? 'selected' : ''}>
+              <Image src={PointsIcon} alt='stats' />
+              <Typography variant="p_lg" ml='3px'>Stats</Typography>
+            </StyledListItemButton>
+          </Link>
         </Stack>
       }
     </List>

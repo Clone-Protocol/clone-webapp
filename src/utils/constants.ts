@@ -15,6 +15,7 @@ export const RouteDir = {
 	POINTS: `${CloneTokenDir}/points`,
 	GIVEAWAY: `${CloneTokenDir}/giveaway`,
 	Staking: `${CloneTokenDir}/staking`,
+	Stats: `${CloneTokenDir}/stats`,
 }
 
 export enum CreateAccountDialogStates {

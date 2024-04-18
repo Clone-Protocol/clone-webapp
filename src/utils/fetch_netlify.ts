@@ -129,6 +129,22 @@ export const fetchUserGiveaway = async (userAddress: string): Promise<UserGiveaw
     return response.data as UserGiveaway[]
 }
 
+export type ArbitrageStats = {
+    symbol: string
+    poolPrice?: number
+    oraclePrice?: number
+    premium?: number
+    capacity?: number
+    timestamp?: number
+}
+
+export const fetchArbitrageStats = async (): Promise<ArbitrageStats[]> => {
+    let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-arbitrage-stats`;
+    const response = await axios.get(url)
+    console.log('d', response.data)
+    return response.data as ArbitrageStats[]
+}
+
 export const fetchCheckReferralCode = async (userAddress: string) => {
     let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-check-referral-code`;
     url += `?userAddress=${userAddress}`;
