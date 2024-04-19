@@ -63,7 +63,7 @@ export const NaviMenu = () => {
 export const MobileNaviMenu = () => {
   return (
     <Fade in timeout={1500}>
-      <Box display='flex' height='48px' mx='7px' justifyContent='center' bgcolor="#000" borderRadius='20px' border='solid 1px #343441' mb='10px'>
+      <Box display='flex' height='38px' mx='7px' justifyContent='center' bgcolor="#000" borderRadius='20px' border='solid 1px #343441' mb='10px'>
         <CommonMenu />
       </Box>
     </Fade>
@@ -71,7 +71,7 @@ export const MobileNaviMenu = () => {
 }
 
 const StyledListItemButton = styled(ListItemButton)`
-  height: 100%;
+  height: 54px;
   color: ${(props) => props.theme.basis.textRaven};
   &:hover {
     border-radius: 5px;
@@ -94,19 +94,19 @@ export const SubNaviMenu = () => {
           <Link href={RouteDir.TRADE_LIST}>
             <StyledListItemButton className={pathname === RouteDir.TRADE_LIST || pathname?.startsWith(RouteDir.TRADE) ? 'selected' : ''}>
               <Image src={SwapIcon} alt='swap' />
-              <Typography variant='p_lg' ml='3px'>Swap</Typography>
+              <Typography variant='p_lg' ml='2px'>Swap</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.PORTFOLIO}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.PORTFOLIO) ? 'selected' : ''}>
               <Image src={PortfolioIcon} alt='portfolio' />
-              <Typography variant='p_lg' ml='3px'>Portfolio</Typography>
+              <Typography variant='p_lg' ml='2px'>Portfolio</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.WRAPPER}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.WRAPPER) ? 'selected' : ''}>
               <Image src={WrapperIcon} alt='wrapper' />
-              <Typography variant='p_lg' ml='3px'>Wrapper</Typography>
+              <Typography variant='p_lg' ml='2px'>Wrapper</Typography>
             </StyledListItemButton>
           </Link>
         </Stack>
@@ -116,19 +116,19 @@ export const SubNaviMenu = () => {
           <Link href={RouteDir.LIQUIDITY_LIST}>
             <StyledListItemButton className={pathname === RouteDir.LIQUIDITY_LIST ? 'selected' : ''}>
               <Image src={HubIcon} alt='hub' />
-              <Typography variant='p_lg' ml='3px'>Hub</Typography>
+              <Typography variant='p_lg' ml='2px'>Hub</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.MY_COMET}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.MY_COMET) ? 'selected' : ''}>
               <Image src={CometIcon} alt='comet' />
-              <Typography variant='p_lg' ml='3px'>Comet</Typography>
+              <Typography variant='p_lg' ml='2px'>Comet</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.MY_BORROW}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.MY_BORROW) ? 'selected' : ''}>
               <Image src={BorrowIcon} alt='borrow' />
-              <Typography variant='p_lg' ml='3px'>Borrow</Typography>
+              <Typography variant='p_lg' ml='2px'>Borrow</Typography>
             </StyledListItemButton>
           </Link>
         </Stack>
@@ -139,20 +139,20 @@ export const SubNaviMenu = () => {
             <StyledListItemButton className={pathname?.startsWith(RouteDir.POINTS) ? 'selected' : ''}>
               {/* {pathname?.startsWith(RouteDir.POINTS) ? <Image src={PointsStarIconOn} alt='points' /> : <Image src={PointsStarIconOff} alt='points' />} */}
               <Image src={PointsIcon} alt='points' />
-              <Typography variant="p_lg" ml='3px'>Points</Typography>
+              <Typography variant="p_lg" ml='2px'>Points</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.Staking}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.Staking) ? 'selected' : ''}>
               {/* {pathname?.startsWith(RouteDir.Staking) ? <Image src={PointsStarIconOn} alt='points' /> : <Image src={PointsStarIconOff} alt='points' />} */}
               <Image src={StakingIcon} alt='staking' />
-              <Typography variant="p_lg" ml='3px'>Staking</Typography>
+              <Typography variant="p_lg" ml='2px'>Staking</Typography>
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.Stats}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.Stats) ? 'selected' : ''}>
               <Image src={PointsIcon} alt='stats' />
-              <Typography variant="p_lg" ml='3px'>Stats</Typography>
+              <Typography variant="p_lg" ml='2px'>Stats</Typography>
             </StyledListItemButton>
           </Link>
         </Stack>

@@ -39,8 +39,8 @@ const GNB: React.FC = () => {
 			<NavPlaceholder />
 			<StyledAppBar position="static">
 				<TempWarningMsg />
-				<Container maxWidth={false}>
-					<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+				<StyledContainer maxWidth={false}>
+					<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', mx: '24px' }}>
 						<Stack direction='row' alignItems='center'>
 							{isMobileOnSize ?
 								<a href="/"><Image src={logoMIcon} width={46} height={46} alt="clone" /></a>
@@ -66,7 +66,7 @@ const GNB: React.FC = () => {
 						</Box>
 					</Toolbar>
 					<SubNaviMenu />
-				</Container>
+				</StyledContainer>
 			</StyledAppBar>
 		</>
 	)
@@ -197,6 +197,10 @@ const RightMenu: React.FC = () => {
 		</>
 	)
 }
+const StyledContainer = styled(Container)`
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+`
 
 const StyledAppBar = styled(AppBar)`
 	z-index: 900;
@@ -233,7 +237,7 @@ const NavPlaceholder = styled('div')`
 `
 const HeaderButton = styled(Button)`
 	padding: 8px;
-	color: rgb(137, 136, 163);
+	color: #c5c7d9;
 	margin-left: 6px;
 	height: 42px;
 	border-radius: 10px;
