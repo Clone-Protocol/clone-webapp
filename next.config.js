@@ -15,15 +15,16 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  // redirects() {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/markets',
-  //       permanent: true,
-  //     },
-  //   ]
-  // },
+  redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/markets',
+        basePath: false,
+        permanent: false,
+      },
+    ]
+  },
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.(ts)x?$/,
