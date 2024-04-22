@@ -259,6 +259,7 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 		simple: 'linear-gradient(to right, #fff 21%, #4fe5ff 96%)',
 		temperatureH2L: 'linear-gradient(to right, #ff8e4f 0%, #fff 100%)',
 		healthscore: 'linear-gradient(to right, #ff006b 0%, #4fe5ff 100%)',
+		cloneLevel: 'linear-gradient(to right, #b5fdf9 2%, #c4b5fd 93%)',
 	}
 })
 
@@ -308,6 +309,8 @@ declare module '@mui/material/styles' {
 			nobleBlack?: React.CSSProperties['color'];
 			backInBlack?: React.CSSProperties['color'];
 			plumFuzz?: React.CSSProperties['color'];
+			liquidityBlue?: React.CSSProperties['color'];
+			gloomyBlue?: React.CSSProperties['color'];
 			jurassicGrey: React.CSSProperties['color'];
 			skylight: React.CSSProperties['color'];
 			slug: React.CSSProperties['color'];
@@ -332,6 +335,7 @@ declare module '@mui/material/styles' {
 			simple?: React.CSSProperties['color'];
 			temperatureH2L?: React.CSSProperties['color'];
 			healthscore?: React.CSSProperties['color'];
+			cloneLevel?: React.CSSProperties['color'];
 		}
 	}
 	interface ThemeOptions {
@@ -353,6 +357,8 @@ declare module '@mui/material/styles' {
 			nobleBlack?: React.CSSProperties['color'];
 			backInBlack?: React.CSSProperties['color'];
 			plumFuzz?: React.CSSProperties['color'];
+			liquidityBlue?: React.CSSProperties['color'];
+			gloomyBlue?: React.CSSProperties['color'];
 			jurassicGrey: React.CSSProperties['color'];
 			skylight: React.CSSProperties['color'];
 			slug: React.CSSProperties['color'];
@@ -377,6 +383,7 @@ declare module '@mui/material/styles' {
 			simple?: React.CSSProperties['color'];
 			temperatureH2L?: React.CSSProperties['color'];
 			healthscore?: React.CSSProperties['color'];
+			cloneLevel?: React.CSSProperties['color'];
 		}
 	}
 }

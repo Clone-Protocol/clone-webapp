@@ -21,7 +21,7 @@ const WhitelistDialog = ({ open, isWhitelisted, handleClose }: { open: boolean, 
   return (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={463}>
-        <DialogContent sx={{ backgroundColor: '#080018', borderRadius: '10px', padding: '15px', width: { xs: '100%', md: '463px' } }}>
+        <DialogContent sx={{ backgroundColor: '#0f0e14', borderRadius: '10px', padding: '15px', width: { xs: '100%', md: '463px' } }}>
           <BoxWrapper>
             {!isWhitelisted ?
               <>

@@ -14,7 +14,7 @@ const TokenFaucetDialog = ({ open, isConnect, connectWallet, onGetUsdiClick, onH
   return (
     <>
       <Dialog open={open} onClose={onHide} TransitionComponent={FadeTransition}>
-        <DialogContent sx={{ backgroundColor: '#080018', border: '1px solid #414166', borderRadius: '20px', maxWidth: '375px', padding: '15px' }}>
+        <DialogContent sx={{ backgroundColor: '#0f0e14', border: '1px solid #414166', borderRadius: '20px', maxWidth: '375px', padding: '15px' }}>
           <BoxWrapper>
             <Box mb="21px"><Typography variant='h3' fontWeight={500}>{NETWORK_NAME} Token Faucet</Typography></Box>
             <a href="https://faucet.solana.com/" target="_blank" rel="noreferrer">

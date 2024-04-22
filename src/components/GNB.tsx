@@ -12,7 +12,7 @@ import { useWallet, useAnchorWallet } from '@solana/wallet-adapter-react'
 import { shortenAddress } from '~/utils/address'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { useSetAtom } from 'jotai'
-import { NaviMenu, MobileNaviMenu, SubNaviMenu } from './NaviMenu'
+import { NaviMenu, SubNaviMenu } from './NaviMenu'
 import { mintUSDi } from '~/features/globalAtom'
 import dynamic from 'next/dynamic'
 import useFaucet from '~/hooks/useFaucet'
@@ -40,30 +40,23 @@ const GNB: React.FC = () => {
 			<StyledAppBar position="static">
 				<TempWarningMsg />
 				<StyledContainer maxWidth={false}>
-					<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', mx: '24px' }}>
+					<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mx: '24px' }}>
 						<Stack direction='row' alignItems='center'>
 							{isMobileOnSize ?
-								<a href="/"><Image src={logoMIcon} width={46} height={46} alt="clone" /></a>
+								<a href="/"><Image src={logoMIcon} width={25} height={25} alt="clone" style={{ marginTop: '4px' }} /></a>
 								:
 								<a href="/"><Image src={logoIcon} width={73} height={24} alt="clone" /></a>
 							}
-							<div style={{ width: '1px', height: '31px', marginLeft: '23px', marginRight: '23px', backgroundColor: '#201c27' }} />
-							<Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-								<NaviMenu />
-							</Box>
+							<div style={{ width: '1px', height: '31px', marginLeft: isMobileOnSize ? '4px' : '23px', marginRight: isMobileOnSize ? '6px' : '23px', backgroundColor: '#201c27' }} />
+							<NaviMenu />
 						</Stack>
 						<Box>
 							<RightMenu />
 						</Box>
 
-						{/* <Box sx={{ marginLeft: 'auto', display: { xs: 'flex', sm: 'none' } }}>
-							<IconButton sx={{ color: 'white' }} onClick={handleMobileNavBtn}>
-								{mobileNavToggle ? <CloseIcon /> : <MenuIcon />}
-							</IconButton>
-						</Box> */}
-						<Box sx={{ display: { xs: 'block', sm: 'none' }, position: 'fixed', bottom: '0px', left: '0px', width: '100%', zIndex: '999' }}>
+						{/* <Box sx={{ display: { xs: 'block', sm: 'none' }, position: 'fixed', bottom: '0px', left: '0px', width: '100%', zIndex: '999' }}>
 							<MobileNaviMenu />
-						</Box>
+						</Box> */}
 					</Toolbar>
 					<SubNaviMenu />
 				</StyledContainer>
@@ -75,6 +68,7 @@ const GNB: React.FC = () => {
 export default withCsrOnly(GNB)
 
 const RightMenu: React.FC = () => {
+	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 	const { connecting, connected, publicKey, connect, disconnect } = useWallet()
 	const wallet = useAnchorWallet()
 	const { setOpen } = useWalletDialog()
@@ -157,31 +151,32 @@ const RightMenu: React.FC = () => {
 
 	return (
 		<>
-			<Box display="flex">
+			<Box display="flex" alignItems='center'>
 				{IS_DEV &&
 					<HeaderButton sx={{ display: { xs: 'none', sm: 'block' } }} onClick={() => setOpenTokenFaucet(true)}>
 						<Typography variant='p'>{NETWORK_NAME} Faucet</Typography>
 					</HeaderButton>
 				}
-				<HeaderButton sx={{ fontSize: '18px', fontWeight: 'bold', paddingBottom: '20px' }} onClick={handleMoreClick}>...</HeaderButton>
-				<HeaderButton onClick={() => setOpenSettingDlog(true)}><Image src={SettingsIcon} alt="settings" /></HeaderButton>
+				<HeaderButton sx={{ display: { xs: 'none', sm: 'flex' }, width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' }, fontSize: '18px', fontWeight: 'bold', paddingBottom: '20px' }} onClick={handleMoreClick}>...</HeaderButton>
+				<HeaderButton sx={{ width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' } }} onClick={() => setOpenSettingDlog(true)}><Image src={SettingsIcon} alt="settings" /></HeaderButton>
+				{connected && <C2Button sx={{ display: { xs: 'none', sm: 'block' }, width: { xs: '34px', sm: '39px' }, height: { xs: '30px', sm: '34px' } }}>C2</C2Button>}
 				<MoreMenu anchorEl={anchorEl} onShowTokenFaucet={() => setOpenTokenFaucet(true)} onClose={() => setAnchorEl(null)} />
 				<Box>
 					{!connected ?
 						<ConnectButton
+							sx={{ height: { xs: '30px', sm: '34px' } }}
 							onClick={handleWalletClick}
-						// disabled={connecting}
 						>
-							<Typography variant='p_lg'>{connecting ? 'Connecting...' : 'Connect Wallet'}</Typography>
+							<Typography variant='p_lg'>{connecting ? 'Connecting...' : isMobileOnSize ? 'Connect' : 'Connect Wallet'}</Typography>
 						</ConnectButton>
 						:
-						<ConnectedButton onClick={handleWalletClick} startIcon={publicKey ? <Image src={walletIcon} alt="wallet" /> : <></>}>
-							<Typography variant='p'>{publicKey && shortenAddress(publicKey.toString())}</Typography>
+						<ConnectedButton sx={{ width: { xs: '90px', sm: '120px' }, height: { xs: '30px', sm: '34px' } }} onClick={handleWalletClick} startIcon={publicKey ? <Image src={walletIcon} alt="wallet" /> : <></>}>
+							<Typography variant='p'>{isMobileOnSize ? publicKey!.toString().slice(0, 4) + '...' : shortenAddress(publicKey!.toString(), 10, 4)}</Typography>
 						</ConnectedButton>
 					}
 					<WalletSelectBox show={showWalletSelectPopup} onHide={() => setShowWalletSelectPopup(false)} />
 				</Box>
-			</Box>
+			</Box >
 
 			<SettingDialog open={openSettingDlog} handleClose={() => setOpenSettingDlog(false)} />
 
@@ -236,24 +231,29 @@ const NavPlaceholder = styled('div')`
 	}
 `
 const HeaderButton = styled(Button)`
+	min-width: 36px;
+	height: 34px;
 	padding: 8px;
-	color: #c5c7d9;
-	margin-left: 6px;
-	height: 42px;
+	background: ${(props) => props.theme.basis.backInBlack};
+	color: ${(props) => props.theme.basis.textRaven};
+	margin-left: 10px;
 	border-radius: 10px;
 	&:hover {
-		border-radius: 10px;
   	background-color: rgba(196, 181, 253, 0.1);
 	}
 `
+const C2Button = styled(HeaderButton)`
+	min-width: 34px;
+	border: solid 1px #b5fdf9;
+	color: #b5fdf9; 
+`
 const ConnectButton = styled(Button)`
 	padding: 9px;
-	margin-left: 16px;
-	color: #fff;
-	width: 140px;
-	height: 42px;
+	margin-left: 10px;
+	color: #c5c7d9;
+	width: 142px;
+	height: 34px;
 	border-radius: 10px;
-	box-shadow: 0 0 10px 0 #6d5887;
 	border: 1px solid ${(props) => props.theme.basis.melrose};
 	&:hover {
 		background-color: transparent;
@@ -292,10 +292,9 @@ const ConnectButton = styled(Button)`
 //   }
 // `
 const ConnectedButton = styled(Button)`
-	width: 140px;
-	height: 42px;
+	height: 34px;
 	padding: 9px;
-	margin-left: 16px;
+	margin-left: 10px;
 	color: #fff;
 	border-radius: 10px;
 	border: solid 1px ${(props) => props.theme.basis.portGore};

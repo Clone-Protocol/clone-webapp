@@ -8,7 +8,7 @@ const GeoblockDialog = ({ open, handleClose }: { open: boolean, handleClose: () 
   return (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={350}>
-        <DialogContent sx={{ backgroundColor: '#080018', border: '1px solid #414166', borderRadius: '10px', padding: '15px', width: { xs: '100%', md: '350px' } }}>
+        <DialogContent sx={{ backgroundColor: '#0f0e14', border: '1px solid #414166', borderRadius: '10px', padding: '15px', width: { xs: '100%', md: '350px' } }}>
           <BoxWrapper>
             <Box mb="21px"><Typography variant='p_xlg' fontWeight={500}>Restricted Territory</Typography></Box>
 

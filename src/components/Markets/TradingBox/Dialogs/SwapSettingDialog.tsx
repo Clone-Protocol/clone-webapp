@@ -67,7 +67,7 @@ const SwapSettingDialog = ({ open, onSaveSetting }: { open: boolean, onSaveSetti
   return (
     <>
       <Dialog open={open} onClose={onSave} TransitionComponent={FadeTransition}>
-        <DialogContent sx={{ backgroundColor: '#080018', border: '1px solid #414166', borderRadius: '10px', width: { xs: '100%', md: '330px' } }}>
+        <DialogContent sx={{ backgroundColor: '#0f0e14', border: '1px solid #414166', borderRadius: '10px', width: { xs: '100%', md: '330px' } }}>
           <BoxWrapper>
             <Box mb="15px"><Typography variant='h3' fontWeight={500}>Swap Settings</Typography></Box>
             <Box mb='5px'><Typography variant='p_lg'>Max slippage tolerance</Typography></Box>

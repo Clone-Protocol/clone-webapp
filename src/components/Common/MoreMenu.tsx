@@ -44,9 +44,9 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
         mt: 1.5,
         transition: 'none',
         transitionDuration: 0,
-        background: '#080018',
+        background: '#0f0e14',
         color: '#fff',
-        border: '1px solid #414166',
+        border: '1px solid #332e46',
         borderRadius: '10px'
       },
     }}
@@ -74,16 +74,6 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
         </HoverStack>
       </StyledMenuItem>
     </a>
-    <a href={LIQUIDITY_APP} target='_blank' rel="noreferrer">
-      <StyledMenuItem>
-        <HoverStack direction='row' alignItems='center'>
-          <Box width='184px'>
-            <Stack direction='row' justifyContent='space-between' alignItems='center'><Typography variant='p'>{IS_DEV && 'Devnet'} Clone Liquidity</Typography></Stack>
-            <Box><Typography variant='p_sm' color='#989898'>Provide liquidity on Clone using comets</Typography></Box>
-          </Box>
-        </HoverStack>
-      </StyledMenuItem>
-    </a>
     <a href={CAREER_URL} target='_blank' rel="noreferrer">
       <StyledMenuItem>
         <HoverStack direction='row' alignItems='center'>
@@ -103,7 +93,7 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
     </a>
     <a href={TERMS_URL} target='_blank' rel="noreferrer">
       <LinkStack direction='row' alignItems='center' gap={1}>
-        <Typography variant='p_sm'>Terms of Use</Typography>
+        <Typography variant='p_sm'>Terms & Conditions</Typography>
         <Image src={ShareLinkIcon} alt='audit' />
       </LinkStack>
     </a>
@@ -132,7 +122,7 @@ const HoverStack = styled(Stack)`
   }
 `
 const StyledDivider = styled(Divider)`
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #332e46;
   width: 192px;
   height: 1px;
   margin: 0 auto;
@@ -141,7 +131,6 @@ const LinkStack = styled(Stack)`
   width: 194px;
   height: 24px;
   color: #989898;
-  margin-top: 8px;
   margin-left: 11px;
   padding: 6px 9px;
   border-radius: 5px;

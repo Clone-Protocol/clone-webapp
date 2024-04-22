@@ -123,7 +123,7 @@ const BoxWrapper = styled(Box)`
   gap: 12px;
   text-align: center;
   border-radius: 10px;
-  background-color: #080018;
+  background-color: #0f0e14;
   padding: 20px;
   z-index: 99999;
 `

@@ -93,7 +93,7 @@ const WalletWrapper = styled(Stack)`
 	top: 70px;
 	right: 0px;
 	width: 282px;
-	background-color: ${(props) => props.theme.basis.darkPurple};
+	background-color: ${(props) => props.theme.basis.cinder};
 	border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.portGore};
 	z-index: 99;

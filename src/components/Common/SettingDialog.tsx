@@ -160,7 +160,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
   return (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition}>
-        <DialogContent sx={{ backgroundColor: '#080018', border: '1px solid #414166', borderRadius: '10px', width: { xs: '100%', md: '375px' } }}>
+        <DialogContent sx={{ backgroundColor: '#0f0e14', border: '1px solid #414166', borderRadius: '10px', width: { xs: '100%', md: '375px' } }}>
           <BoxWrapper>
             <Typography variant='h3' fontWeight={500}>App Settings</Typography>
             {!IS_DEV &&
@@ -205,11 +205,11 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
                 </Box>
               </Box>
             }
-            <Box my='20px'>
+            {/* <Box my='20px'>
               <Box><Typography variant="p_lg">Network Switching</Typography></Box>
               <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8988a3">Choose between Solana mainnet and devnet. Learn more <a href="#" target="_blank" style={{ textDecoration: 'underline', color: '#fff' }}>here</a>.</Typography></Box>
               <ChangeNetworkButton onClick={goNetwork}><Typography variant='p'>Go to Solana {IS_DEV ? 'Mainnet' : 'Devnet'}</Typography> <Image src={IconShare} alt='icon-share' /></ChangeNetworkButton>
-            </Box>
+            </Box> */}
             <Box sx={{ position: 'absolute', right: '10px', top: '10px' }}>
               <CloseButton handleClose={handleClose} />
             </Box>
