@@ -183,7 +183,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
                     <Box>
                       <StyledInput placeholder="Enter custom RPC URL" disableUnderline onChange={handleChangeCustomRPCUrl} sx={{ width: { xs: '100%', md: '322px' } }} />
                       {errorCustomMsg && <Box><Typography variant='p' color='#ed2525'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
-                      <SaveBtn onClick={saveCustomURL}>Save</SaveBtn>
+                      <SaveBtn onClick={saveCustomURL}><Typography variant='p'>Save</Typography></SaveBtn>
                     </Box>
                   }
                 </Box>
@@ -263,21 +263,6 @@ const StyledInput = styled(Input)`
   
   &:hover {
     border: solid 1px ${(props) => props.theme.basis.melrose};
-  }
-`
-const ChangeNetworkButton = styled(Box)`
-  width: 209px;
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 6px 11px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
   }
 `
 const SaveBtn = styled(Button)`

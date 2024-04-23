@@ -101,6 +101,9 @@ const InputAmount = styled(`input`)`
 	font-weight: 500;
 	color: #757a7f;
 	padding: 0;
+	&::placeholder {
+		color: #8988a3;
+	}
 `
 
 const MaxButton = styled(Button)`

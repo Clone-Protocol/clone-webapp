@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles'
 import React, { useState, useEffect } from 'react'
 import PairInput from './PairInput'
 import Image from 'next/image'
-import swapIcon from 'public/images/swap-icon.svg'
 import reloadIcon from 'public/images/reload-icon.svg'
 import settingsIcon from 'public/images/setting-icon.svg'
 import swapChangeIcon from 'public/images/swap-change.svg'
@@ -373,9 +372,12 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
             </Box>
 
             <TitleOrderDetails onClick={() => setOpenOrderDetails(!openOrderDetails)} style={openOrderDetails ? { color: '#fff' } : { color: '#868686' }}>
-              <RateLoadingIndicator restartTimer={restartTimer} />
-              <Typography variant='p' color='#C4B5FD'>1 {assetData?.tickerSymbol} = {round(amountOnusd ? getPrice() : getDefaultPrice(), 4)} {ON_USD}</Typography>
-              <Box mx='10px' display='flex' alignItems='center'><Image src={swapIcon} alt="swap" /></Box> <Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon>
+              <Box display='flex' alignItems='center'>
+                <RateLoadingIndicator restartTimer={restartTimer} />
+                <Typography variant='p' color='#C4B5FD'>1 {assetData?.tickerSymbol} ≈ {round(amountOnusd ? getPrice() : getDefaultPrice(), 4)} {ON_USD}</Typography>
+              </Box>
+              {/* <Box mx='10px' display='flex' alignItems='center'><Image src={swapIcon} alt="swap" /></Box>  */}
+              <Box display='flex' alignItems='center' mr='5px'><Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon></Box>
             </TitleOrderDetails>
             {openOrderDetails && <OrderDetails isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
 
@@ -454,16 +456,16 @@ const DisableButton = styled(Button)`
 `
 const TitleOrderDetails = styled(Box)`
   cursor: pointer; 
-  text-align: left; 
   display: flex;
+  justify-content: space-between;
+  padding: 5px;
   align-items: center;
 `
 const ArrowIcon = styled('div')`
-  width: 9.4px;
+  width: 9px;
   height: 6px;
-  margin-left: 5px;
   margin-top: -20px;
-  font-weight: 600;
+  font-weight: 500;
   color: #c5c7d9;
 `
 

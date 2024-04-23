@@ -52,19 +52,19 @@ export const getStaticProps = (async (context: any) => {
 
 const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-  const [showTrading, setShowTrading] = useState(false)
+  const [showChart, setShowChart] = useState(false)
 
   const toggleShowTrading = () => {
-    setShowTrading(!showTrading)
+    setShowChart(!showChart)
   }
 
   useEffect(() => {
     if (!isMobileOnSize) {
-      setShowTrading(false)
+      setShowChart(false)
     }
   }, [isMobileOnSize])
 
-  const isShowTradingBox = showTrading || !isMobileOnSize
+  const isShowChart = showChart || !isMobileOnSize
 
   return (
     <div>
@@ -73,24 +73,26 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
           backgroundColor: '#000',
         }}>
         <Stack direction={isMobileOnSize ? 'column' : 'row'} gap={1} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
-          <Box minWidth={isMobileOnSize ? '360px' : '750px'}>
-            <HydrationBoundary state={dehydratedState}>
-              <MarketDetail assetId={assetId} />
-            </HydrationBoundary>
-          </Box>
-          <Box width={showTrading ? '100%' : '360px'} height='100%' overflow={showTrading ? 'auto' : 'hidden'} display={showTrading ? 'flex' : 'block'} justifyContent={showTrading ? 'center' : ''} position={showTrading ? 'fixed' : 'relative'} bgcolor={showTrading ? '#000' : 'transparent'} top={showTrading ? '45px' : 'inherit'} mb={showTrading ? '180px' : '0px'}>
-            {isShowTradingBox && <TradingBox assetId={assetId} />}
+          {isShowChart &&
+            <Box minWidth={isMobileOnSize ? '360px' : '750px'} bgcolor={isMobileOnSize ? '#000' : 'transparent'} zIndex={99}>
+              <HydrationBoundary state={dehydratedState}>
+                <MarketDetail assetId={assetId} />
+              </HydrationBoundary>
+            </Box>
+          }
+          <Box width={isMobileOnSize ? '100%' : '360px'} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} display={isMobileOnSize ? 'flex' : 'block'} justifyContent={isMobileOnSize ? 'center' : ''} top={isMobileOnSize ? '85px' : 'inherit'} mb={isMobileOnSize ? '180px' : '0px'}>
+            <TradingBox assetId={assetId} />
           </Box>
         </Stack>
       </StyledSection>
-      <Box display={isMobileOnSize ? 'block' : 'none'}><ShowTradingBtn onClick={() => toggleShowTrading()}>{showTrading ? 'Hide Swap' : 'Swap'}</ShowTradingBtn></Box>
+      <Box display={isMobileOnSize ? 'block' : 'none'}><ShowTradingBtn onClick={() => toggleShowTrading()}>{showChart ? 'Hide Chart' : 'Show Chart'}</ShowTradingBtn></Box>
     </div>
   )
 }
 
 const StyledSection = styled('section')`
 	${(props) => props.theme.breakpoints.up('md')} {
-		padding-top: 100px;
+		padding-top: 120px;
 	}
 	${(props) => props.theme.breakpoints.down('md')} {
 		padding: 70px 0px 110px 0px;
@@ -99,20 +101,21 @@ const StyledSection = styled('section')`
 
 const ShowTradingBtn = styled(Box)`
   position: fixed;
-  bottom: 50px;
+  bottom: 15px;
   width: 95%;
   height: 36px;
   color: #fff;
-	border-radius: 10px;
+	border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
+  z-index: 9999999;
   cursor: pointer;
-  border: solid 1px ${(props) => props.theme.basis.portGore};
-  background: ${(props) => props.theme.basis.royalPurple};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background: ${(props) => props.theme.basis.backInBlack};
 	&:hover {
-		background: ${(props) => props.theme.basis.royalPurple};
+		background: ${(props) => props.theme.basis.backInBlack};
     border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `

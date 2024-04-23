@@ -14,7 +14,7 @@ const GeoblockDialog = ({ open, handleClose }: { open: boolean, handleClose: () 
 
             <Box width='290px' lineHeight={1} my='20px'>
               <Typography variant='p'>
-                You are accessing Clone Markets UI from a restricted territory. Unfortunately, this means you will not be allowed to connect your wallet and use Clone Protocol.
+                You are accessing Clone UI from a restricted territory. Unfortunately, this means you will not be allowed to connect your wallet and use Clone Protocol.
               </Typography>
             </Box>
 

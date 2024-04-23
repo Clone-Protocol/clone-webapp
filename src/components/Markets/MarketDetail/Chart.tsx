@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { TimeTabs, TimeTab, FilterTimeMap, FilterTime } from '~/components/Charts/TimeTabs'
 import LineChartAlt from '~/components/Charts/LineChartAlt'
 // import { useTotalPriceQuery } from '~/features/Chart/Prices.query'
 import { formatDollarAmount } from '~/utils/numbers'
 import Image from 'next/image'
-import ArrowUpward from 'public/images/arrow-up-green.svg'
+import ArrowUpward from 'public/images/arrow-up.svg'
 import ArrowDownward from 'public/images/arrow-down-red.svg'
 import PoweredByPyth from 'public/images/powered_pyth.svg'
 import { usePriceHistoryQuery } from '~/features/Chart/PriceByAsset.query'
@@ -60,8 +61,8 @@ const Chart = ({ pythSymbol }: { pythSymbol: string }) => {
                 <Typography variant='p_xlg' ml='8px'>{ON_USD}</Typography>
               </Box>
               <Box display='flex' alignItems='center' gap={1}>
-                <Box display='flex' alignItems='center' gap={1}>
-                  <Typography variant='p_xlg' color={percentOfRateHover >= 0 ? '#00ff99' : '#ff0084'}>{percentOfRateHover >= 0 ? '+' : ''}{percentOfRateHover?.toFixed(2)}%</Typography>
+                <Box display='flex' alignItems='center'>
+                  <Typography variant='p_xlg' color={percentOfRateHover >= 0 ? '#c4b5fd' : '#ff0084'}>{percentOfRateHover >= 0 ? '+' : ''}{percentOfRateHover?.toFixed(2)}%</Typography>
                   <Image src={percentOfRateHover >= 0 ? ArrowUpward : ArrowDownward} alt='arrow' />
                 </Box>
               </Box>
@@ -83,5 +84,15 @@ const Chart = ({ pythSymbol }: { pythSymbol: string }) => {
       </Box> : <></>
   )
 }
+
+const BlankLoadingBox = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 315px;
+  border-radius: 20px;
+  background-color: #16141b;
+`
 
 export default Chart

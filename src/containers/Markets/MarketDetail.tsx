@@ -134,8 +134,8 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 
 					<Box marginBottom='40px' padding='10px'>
 						<Typography variant='h3' fontWeight={500}>About {asset.tickerSymbol}</Typography>
-						<Box lineHeight={1.14} mt='8px'><Typography variant='p_lg'>{asset.detailOverview}</Typography></Box>
-						<a href={`https://docs.clone.so/clone-mainnet-guide/classets/${asset.tickerSymbol.toLowerCase()}`} target='_blank' rel="noreferrer"><Typography variant='p_lg' color='#c4b5fd'>...read more</Typography> <Image src={LearnMoreIcon} alt='learnMore' style={{ marginBottom: '-3px' }} /></a>
+						<Box lineHeight={1} mt='8px'><Typography variant='p_lg'>{asset.detailOverview}</Typography></Box>
+						<a href={`https://docs.clone.so/clone-mainnet-guide/classets/${asset.tickerSymbol.toLowerCase()}`} target='_blank' rel="noreferrer"><Typography variant='p_lg' color='#c4b5fd' sx={{ ':hover': { textDecoration: 'underline' } }}>...read more</Typography> <Image src={LearnMoreIcon} alt='learnMore' style={{ marginBottom: '-3px' }} /></a>
 					</Box>
 				</Stack>
 			) : (
@@ -147,11 +147,11 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 
 const OverviewWrapper = styled(Box)`
 	margin-top: 15px; 
-	margin-bottom: 15px; 
+	margin-bottom: 5px; 
 	padding: 10px;
 `
 const StyledDivider = styled(Divider)`
-	background-color: rgba(195, 153, 248, 0.25);
+	background-color: ${(props) => props.theme.basis.plumFuzz};
 	margin-bottom: 12px;
 	margin-top: 12px;
 	height: 1px;
