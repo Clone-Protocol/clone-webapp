@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { StyledSection } from './index'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 import { Container, Box, Typography, Stack } from '@mui/material'
-import TradingBox from '~/containers/Wrapper/TradingBox'
+import TradingBox from '~/containers/Markets/Wrapper/TradingBox'
 
 const Wrapper = () => {
 

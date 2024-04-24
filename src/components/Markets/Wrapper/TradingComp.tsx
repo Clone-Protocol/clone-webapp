@@ -11,11 +11,11 @@ import { useBalanceQuery } from '~/features/Wrapper/Balance.query'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
-import { SubmitButton } from '../Common/CommonButtons'
+import { SubmitButton } from '../../Common/CommonButtons'
 import { AssetTickers, assetMapping } from '~/data/assets'
 import DebridgeIcon from 'public/images/wrapper/debridge-ic.svg'
 import WormholeIcon from 'public/images/wrapper/wormhole-ic.svg'
-import { LearnMoreIcon } from '../Common/SvgIcons'
+import { LearnMoreIcon } from '../../Common/SvgIcons'
 
 interface Props {
   assetIndex: number

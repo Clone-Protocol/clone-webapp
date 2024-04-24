@@ -6,9 +6,9 @@ import LearnMoreIcon from 'public/images/learn-more.svg'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import TicketRankingList from '~/containers/Giveaway/TicketRankingList'
+import TicketRankingList from '~/containers/Clone/Giveaway/TicketRankingList'
 import { fetchTicketRanking } from '~/features/Giveaway/TicketRanking.query'
-import MyGiveawayStatus from '~/containers/Giveaway/MyGiveawayStatus'
+import MyGiveawayStatus from '~/containers/Clone/Giveaway/MyGiveawayStatus'
 
 //SSR
 export const getStaticProps = (async () => {

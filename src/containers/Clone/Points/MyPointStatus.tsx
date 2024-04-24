@@ -333,26 +333,5 @@ const ReferralButton = styled(Button)`
     background-clip: content-box, border-box;
   }
 `
-const GenerateReferralButton = styled(Button)`
-  width: 130px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  background-color: #1c1c1c;
-  color: #fff;
-  padding: 0;
-  &:hover {
-    background-color: #1c1c1c;
-    border-style: solid;
-    border-width: 1px;
-    border-image-source: linear-gradient(to bottom, #a58e35, #1f6e7f);
-    border-image-slice: 1;
-    background-image: linear-gradient(to bottom, #1c1c1c, #1c1c1c), linear-gradient(to bottom, #a58e35, #1f6e7f);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-  }
-`
 
 export default withSuspense(MyPointStatus, <LoadingProgress />)

@@ -1,12 +1,15 @@
-import { Box } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { styled } from '@mui/material/styles'
+import StakingWrapper from "~/containers/Clone/Staking/StakingWrapper"
 
 const Staking = () => {
   return (
     <StyledSection>
-      <Box sx={{ maxWidth: '1270px' }} margin='0 auto'>
-        <h2>Staking</h2>
-      </Box>
+      <Container>
+        <Box sx={{ paddingX: { xs: '0px', md: '20px' }, paddingTop: '10px' }}>
+          <StakingWrapper />
+        </Box>
+      </Container>
     </StyledSection>
   )
 }

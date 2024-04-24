@@ -1,9 +1,9 @@
 import { Paper } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
-import TradingComp from '~/components/Wrapper/TradingComp'
+import TradingComp from '~/components/Markets/Wrapper/TradingComp'
 import dynamic from 'next/dynamic'
-import WrapBridgeDialog from '~/components/Wrapper/WrapBridgeDialog'
+import WrapBridgeDialog from '~/components/Markets/Wrapper/WrapBridgeDialog'
 import { ARB_Widget, OP_Widget } from '~/utils/debridge_widgets'
 import { AssetTickers } from '~/data/assets'
 

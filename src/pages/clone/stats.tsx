@@ -1,6 +1,6 @@
 import { StyledSection } from '~/components/Layout'
 import { Container, Box, Typography } from '@mui/material'
-import StatsList from '~/containers/Stats/StatsList'
+import StatsList from '~/containers/Clone/Stats/StatsList'
 
 const Stats = () => {
   return (

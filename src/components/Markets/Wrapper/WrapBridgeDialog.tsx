@@ -1,8 +1,8 @@
 import { Box, Dialog, DialogContent, Stack } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { FadeTransition } from '~/components/Common/Dialog'
-import { CloseButton } from '../Common/CommonButtons'
-import DebridgeWidget from '../Bridge/DebridgeWidget'
+import { CloseButton } from '../../Common/CommonButtons'
+import DebridgeWidget from '../../Bridge/DebridgeWidget'
 import { WidgetType } from '~/utils/debridge_widgets'
 
 const WrapBridgeDialog = ({ open, widgetType, handleClose }: { open: boolean, widgetType: WidgetType, handleClose: () => void }) => {
