@@ -3,6 +3,8 @@ import withSuspense from "~/hocs/withSuspense"
 import { styled } from '@mui/material/styles'
 import { Box, Stack } from "@mui/material"
 import Stake from "./Stake"
+import MyLevel from "./MyLevel"
+import BenefitLevels from "./BenefitLevels"
 
 
 const StakingWrapper = () => {
@@ -10,9 +12,11 @@ const StakingWrapper = () => {
 
   return (
     <Wrapper>
-      <Stack direction='row' gap={2}>
+      <Stack direction='row' gap={2} mb='25px'>
         <Stake />
+        <MyLevel />
       </Stack>
+      <BenefitLevels />
     </Wrapper>
   )
 }
@@ -23,7 +27,7 @@ const Wrapper = styled(Box)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 12px 28px;
+  padding: 22px 28px;
 `
 
 export default withSuspense(StakingWrapper, <LoadingProgress />)

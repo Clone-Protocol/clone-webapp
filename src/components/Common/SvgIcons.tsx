@@ -24,6 +24,12 @@ export const GoBackIcon = () => {
   </svg>)
 }
 
+export const InfoOutlineIcon = () => {
+  return (<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.958 4.875h1.084V3.79H5.959m.541 7.042A4.34 4.34 0 0 1 2.167 6.5 4.34 4.34 0 0 1 6.5 2.166 4.34 4.34 0 0 1 10.834 6.5 4.34 4.34 0 0 1 6.5 10.833zm0-9.75a5.417 5.417 0 1 0 0 10.833 5.417 5.417 0 0 0 0-10.833zm-.542 8.125h1.084v-3.25H5.959v3.25z" fill="currentColor" />
+  </svg>)
+}
+
 export const PointsStarIconOn = () => {
   return (<svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="m11.875 1.125-.787 1.719-1.713.781 1.713.787.787 1.713.781-1.713 1.719-.787-1.719-.781M5.625 3 4.062 6.438.626 8l3.438 1.563L5.625 13l1.563-3.438L10.624 8 7.187 6.437m4.688 3.438-.787 1.713-1.713.787 1.713.781.787 1.719.781-1.719 1.719-.781-1.719-.787" fill="url(#0cl9opn1ma)" />
