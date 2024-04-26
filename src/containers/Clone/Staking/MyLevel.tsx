@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import BenefitIcon1 from 'public/images/staking/benefit-logo-1.svg'
@@ -6,11 +6,17 @@ import BenefitIcon2 from 'public/images/staking/benefit-logo-2.svg'
 import BenefitIcon3 from 'public/images/staking/benefit-logo-3.svg'
 import InfoOutlineIcon from 'public/images/staking/info-outline.svg'
 import { DISCORD_URL } from '~/data/social'
+import { useWallet } from '@solana/wallet-adapter-react'
 
-const MyLevel = () => {
+const LEVEL_DISCOUNT_TRAIDING_FEE = [0, 100, 150, 200, 250]
+
+const MyLevel = ({ currLevel }: { currLevel: number }) => {
+  const { publicKey } = useWallet()
+
+  const isShowBenefit = publicKey && currLevel !== 0
 
   return (
-    <Wrapper>
+    <Wrapper height={isShowBenefit ? 'auto' : '185px'}>
       <Box padding='22px 30px'>
         <Box position='absolute' right='8px' top='7px' display='flex' gap='4px' alignItems='center' sx={{ backgroundColor: '#0f0e14', borderRadius: '10px', padding: '5px 7px' }}>
           <Image src={InfoOutlineIcon} alt='info' />
@@ -18,38 +24,48 @@ const MyLevel = () => {
         </Box>
         <Typography variant='p_lg'>Your Level</Typography>
         <BorderBox mt='20px' mb='30px'>
-          <TitleTxt>cloner</TitleTxt>
-          <LevelTxt>1</LevelTxt>
+          {publicKey ?
+            <>
+              <TitleTxt>cloner</TitleTxt>
+              <LevelTxt>{currLevel + 1}</LevelTxt>
+            </>
+            : <>
+              <Typography variant='h3' fontWeight={500}>-</Typography>
+            </>
+          }
         </BorderBox>
-        <Box>
-          <Box mb='20px'><Typography variant='p_lg'>Your Benefit</Typography></Box>
-          <Stack direction='row' mb='20px' gap='5px'>
-            <Image src={BenefitIcon1} alt='benefit' />
-            <Box>
-              <Box><Typography variant='p_xlg' color='#fff'>Save on every trade</Typography></Box>
-              <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive <span style={{ color: '#cef2f0' }}>100bps</span> discount for all your trades.</Typography></Box>
-            </Box>
-          </Stack>
-          <Stack direction='row' mb='20px' gap='5px'>
-            <Image src={BenefitIcon2} alt='benefit' />
-            <Box>
-              <Box><Typography variant='p_xlg' color='#fff'>Increased Comet APY</Typography></Box>
-              <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive additional $CLN emission that contributes to increased APY of your Comets.</Typography></Box>
-            </Box>
-          </Stack>
-          <Stack direction='row' gap='5px'>
-            <Image src={BenefitIcon3} alt='benefit' />
-            <Box>
-              <Box><Typography variant='p_xlg' color='#fff'>More points</Typography></Box>
-              <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You become eligible for more points</Typography></Box>
-            </Box>
-          </Stack>
+        {isShowBenefit &&
+          <Box>
+            <Box mb='20px'><Typography variant='p_lg'>Your Benefit</Typography></Box>
+            <Stack direction='row' mb='20px' gap='5px'>
+              <Image src={BenefitIcon1} alt='benefit' />
+              <Box>
+                <Box><Typography variant='p_xlg' color='#fff'>Save on every trade</Typography></Box>
+                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_TRAIDING_FEE[currLevel]}bps</span> discount for all your trades.</Typography></Box>
+              </Box>
+            </Stack>
+            <Stack direction='row' mb='20px' gap='5px'>
+              <Image src={BenefitIcon2} alt='benefit' />
+              <Box>
+                <Box><Typography variant='p_xlg' color='#fff'>Increased Comet APY</Typography></Box>
+                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive additional $CLN emission that contributes to increased APY of your Comets.</Typography></Box>
+              </Box>
+            </Stack>
+            <Stack direction='row' gap='5px'>
+              <Image src={BenefitIcon3} alt='benefit' />
+              <Box>
+                <Box><Typography variant='p_xlg' color='#fff'>More points</Typography></Box>
+                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You become eligible for more points</Typography></Box>
+              </Box>
+            </Stack>
+          </Box>
+        }
+      </Box>
+      {isShowBenefit &&
+        <Box display='flex' justifyContent='center' alignItems='center' borderTop='1px solid #201c27' height='50px' mt='10px'>
+          <a href={DISCORD_URL} target="_blank" rel="noreferrer"><Typography variant='p_sm' color='#8988a3'>Other benefits in mind? Let us know.</Typography></a>
         </Box>
-      </Box>
-
-      <Box display='flex' justifyContent='center' alignItems='center' borderTop='1px solid #201c27' height='50px' mt='10px'>
-        <a href={DISCORD_URL} target="_blank" rel="noreferrer"><Typography variant='p_sm' color='#8988a3'>Other benefits in mind? Let us know.</Typography></a>
-      </Box>
+      }
     </Wrapper>
   )
 }
