@@ -376,16 +376,9 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
                 <RateLoadingIndicator restartTimer={restartTimer} />
                 <Typography variant='p' color='#C4B5FD'>1 {assetData?.tickerSymbol} ≈ {round(amountOnusd ? getPrice() : getDefaultPrice(), 4)} {ON_USD}</Typography>
               </Box>
-              {/* <Box mx='10px' display='flex' alignItems='center'><Image src={swapIcon} alt="swap" /></Box>  */}
               <Box display='flex' alignItems='center' mr='5px'><Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon></Box>
             </TitleOrderDetails>
             {openOrderDetails && <OrderDetails isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
-
-            {/* {publicKey &&
-              <Box mt='10px'>
-                <GetOnUSD />
-              </Box>
-            } */}
           </Box>
         </Box>
       </div>
