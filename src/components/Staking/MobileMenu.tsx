@@ -29,7 +29,7 @@ const MobileMenu: React.FC<Props> = ({ selMenuIdx, onChangeMenu }) => {
             "&.Mui-focused fieldset": {
               borderColor: "#343441"
             }
-          }
+          },
         }}
         MenuProps={{
           disablePortal: false,
@@ -43,8 +43,13 @@ const MobileMenu: React.FC<Props> = ({ selMenuIdx, onChangeMenu }) => {
                   backgroundColor: '#000',
                 }
               },
+              '& .MuiMenuItem-root': {
+                height: '36px !important',
+                minHeight: '36px !important',
+              },
               '& .Mui-selected': {
-                backgroundColor: '#000 !important',
+                backgroundColor: '#201c27 !important',
+                color: '#8988a3'
               },
             }
           },
@@ -91,7 +96,7 @@ const MobileMenu: React.FC<Props> = ({ selMenuIdx, onChangeMenu }) => {
 
 const SelectBox = styled(Select)`
   width: 130px;
-  height: 36px;
+  height: 30px;
   padding: 10px;
   border-radius: 10px;
   background: #201c27;
@@ -99,9 +104,9 @@ const SelectBox = styled(Select)`
 const SelectMenuItem = styled(MenuItem)`
   display: flex;
   padding: 10px;
-  background: #000;
+  background: ${(props) => props.theme.basis.nobleBlack};
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${(props) => props.theme.basis.plumFuzz};
   }
 `
 

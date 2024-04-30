@@ -4,7 +4,7 @@ import Image from 'next/image'
 import BenefitIcon1 from 'public/images/staking/benefit-logo-1.svg'
 import BenefitIcon2 from 'public/images/staking/benefit-logo-2.svg'
 import BenefitIcon3 from 'public/images/staking/benefit-logo-3.svg'
-import InfoOutlineIcon from 'public/images/staking/info-outline.svg'
+import { InfoOutlineIcon } from '~/components/Common/SvgIcons'
 import { DISCORD_URL } from '~/data/social'
 import { useWallet } from '@solana/wallet-adapter-react'
 
@@ -18,10 +18,10 @@ const MyLevel = ({ currLevel }: { currLevel: number }) => {
   return (
     <Wrapper height={isShowBenefit ? 'auto' : '185px'}>
       <Box padding='22px 30px'>
-        <Box position='absolute' right='8px' top='7px' display='flex' gap='4px' alignItems='center' sx={{ backgroundColor: '#0f0e14', borderRadius: '10px', padding: '5px 7px' }}>
-          <Image src={InfoOutlineIcon} alt='info' />
+        <MoreTxt position='absolute' right='8px' top='7px' display='flex' gap='4px' alignItems='center'>
+          <InfoOutlineIcon />
           <Typography variant='p_sm'>More about levels</Typography>
-        </Box>
+        </MoreTxt>
         <Typography variant='p_lg'>Your Level</Typography>
         <BorderBox mt='20px' mb='30px'>
           {publicKey ?
@@ -63,7 +63,11 @@ const MyLevel = ({ currLevel }: { currLevel: number }) => {
       </Box>
       {isShowBenefit &&
         <Box display='flex' justifyContent='center' alignItems='center' borderTop='1px solid #201c27' height='50px' mt='10px'>
-          <a href={DISCORD_URL} target="_blank" rel="noreferrer"><Typography variant='p_sm' color='#8988a3'>Other benefits in mind? Let us know.</Typography></a>
+          <a href={DISCORD_URL} target="_blank" rel="noreferrer">
+            <Box sx={{ color: '#8988a3', ':hover': { color: '#cef2f0' } }}>
+              <Typography variant='p_sm'>Other benefits in mind? Let us know.</Typography>
+            </Box>
+          </a>
         </Box>
       }
     </Wrapper>
@@ -90,6 +94,14 @@ const BorderBox = styled(Box)`
   border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
   background-color: ${(props) => props.theme.basis.backInBlack};
+`
+const MoreTxt = styled(Box)`
+  background-color: #0f0e14; 
+  border-radius: 10px; 
+  padding: 5px 7px;
+  cursor: pointer;
+  &:hover {
+    color: #cef2f0;
 `
 const TitleTxt = styled('span')`
   background-image: linear-gradient(106deg, #b5fdf9 1%, #c4b5fd 93%);

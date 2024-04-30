@@ -1,7 +1,7 @@
 import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { StyledTabs, CommonTab } from '~/components/Staking/StyledTab'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import InfoOutlineIcon from 'public/images/staking/info-outline.svg'
 import InfoTooltip from '~/components/Staking/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
@@ -16,13 +16,32 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { publicKey } = useWallet()
   const [tab, setTab] = useState(0)
+  const scrollRef = useRef(null);
+
+  const scroll = (scrollOffset: number) => {
+    scrollRef.current.scrollLeft += scrollOffset
+  };
+
+  //scroll to right when level changes
+  useEffect(() => {
+    if (currLevel === 1) {
+      scroll(20)
+    } else if (currLevel === 2) {
+      scroll(80)
+    } else if (currLevel === 3) {
+      scroll(150)
+    } else if (currLevel === 4) {
+      scroll(200)
+    }
+  }, [])
+
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue)
   }
 
   return (
-    <Wrapper width={isMobileOnSize ? '100%' : '626px'}>
+    <Wrapper width={isMobileOnSize ? '330px' : '654px'}>
       <Stack direction='row' justifyContent='space-between' alignItems='center' padding='14px 22px'>
         <TitleTxt>Benefit by levels</TitleTxt>
 
@@ -38,7 +57,7 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
       </Stack>
 
       <GridBackground>
-        <Stack direction='row' alignContent='center' justifyContent='center' gap='20px' width='100%' sx={{ overflowX: { xs: 'auto', md: 'hidden' } }}>
+        <LevelStack ref={scrollRef} direction='row' display={isMobileOnSize ? '-webkit-box' : 'flex'} alignContent='center' justifyContent='center' gap='20px' width={isMobileOnSize ? '330px' : '100%'} sx={{ overflowX: { xs: 'auto', md: 'hidden' }, scrollMarginLeft: { xs: '30px', md: '0px' } }}>
           {tab === 0 && LEVEL_TRAIDING_FEE.map((fee, index) =>
             publicKey && index === currLevel ?
               <BorderBox className='selected' key={index}>
@@ -79,7 +98,7 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
                 <Box><Typography variant='p'>cloner {index + 1}</Typography></Box>
               </BorderBox>
           )}
-        </Stack>
+        </LevelStack>
       </GridBackground>
     </Wrapper >
   )
@@ -137,6 +156,7 @@ const GridBackground = styled(Box)`
 const BorderBox = styled(Box)`
   width: 103px;
   min-width: 103px;
+  scroll-snap-align: center;
   height: 65px;
   padding: 10px;
   text-align: center;
@@ -144,6 +164,12 @@ const BorderBox = styled(Box)`
   background-color: ${(props) => props.theme.basis.cinder};
   &.selected {
     border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  }
+`
+const LevelStack = styled(Stack)`
+  scroll-snap-type: x mandatory;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `
 

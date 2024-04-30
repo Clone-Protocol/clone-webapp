@@ -1,14 +1,15 @@
 import { Box, Button, CircularProgress, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import Image from 'next/image'
 import LogosClone from 'public/images/staking/logos-clone-mini.svg'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useState } from 'react'
 import { CommonTab, StyledTabs } from '~/components/Staking/StyledStakingTab'
 import PairInput from '~/components/Staking/PairInput'
 import { Controller, useForm } from 'react-hook-form'
-import { useEditCollateralQuery } from '~/features/Liquidity/comet/EditCollateral.query'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
+import { useStakingInfoQuery } from '~/features/Staking/StakingInfo.query'
+import { useStakingMutation } from '~/features/Staking/Staking.mutation'
+import { formatLocaleAmount } from '~/utils/numbers'
 
 const Stake = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -17,9 +18,9 @@ const Stake = () => {
   const [maxWithdrawable, setMaxWithdrawable] = useState(0)
   const [loading, setLoading] = useState(false)
   const { setOpen } = useWalletDialog()
+  const isDeposit = tab === 0
 
-  //@TODO: need to change
-  const { data: collData, refetch } = useEditCollateralQuery({
+  const { data: stakeData, refetch } = useStakingInfoQuery({
     userPubKey: publicKey,
     refetchOnMount: "always",
     enabled: publicKey != null
@@ -35,32 +36,33 @@ const Stake = () => {
     formState: { errors },
     watch,
     setValue,
-    trigger
+    reset
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       stakeAmt: NaN,
     }
   })
+  const [stakeAmt] = watch([
+    'stakeAmt',
+  ])
+
+  const { mutateAsync } = useStakingMutation(publicKey)
 
   const onConfirm = async () => {
     try {
       setLoading(true)
-      // const data = await mutateAsync(
-      //   {
-      //     quantity: isBuy ? amountOnusd : amountOnasset,
-      //     quantityIsCollateral: isBuy,
-      //     quantityIsInput: true,
-      //     poolIndex: assetIndex,
-      //     slippage: slippage / 100,
-      //     estimatedSwapResult,
-      //   }
-      // )
+      const data = await mutateAsync(
+        {
+          stakeAmount: stakeAmt,
+          isDeposit,
+        }
+      )
 
-      // if (data.result) {
-      //   console.log('data', data)
-      //   initData()
-      // }
+      if (data.result) {
+        console.log('data', data)
+        initData()
+      }
     } catch (err) {
       console.error(err)
     } finally {
@@ -68,19 +70,24 @@ const Stake = () => {
     }
   }
 
+  const initData = () => {
+    setValue('stakeAmt', NaN)
+    reset()
+  }
+
   const invalidMsg = () => {
-    // if (isBuy && (amountOnusd == 0 || isNaN(amountOnusd) || !amountOnusd)) {
-    //   return 'Deposit'
-    // } else if (!isBuy && (amountOnusd == 0 || isNaN(amountOnusd) || !amountOnusd)) {
-    //   return 'Withdraw'
-    // } else if (isBuy && amountOnusd > myBalance?.onusdVal!) {
-    //   return `Insufficient CLN`
-    // } else if (!isBuy && amountOnasset > myBalance?.onassetVal!) {
-    //   return `Exceeded staked balance`
-    // } else {
-    //   return ''
-    // }
-    return ''
+    if (isDeposit && (stakeAmt == 0 || isNaN(stakeAmt) || !stakeAmt)) {
+      return 'Deposit'
+    } else if (!isDeposit && (stakeAmt == 0 || isNaN(stakeAmt) || !stakeAmt)) {
+      return 'Withdraw'
+    }
+    else if (isDeposit && stakeAmt > stakeData?.balance!) {
+      return `Insufficient CLN`
+    } else if (!isDeposit && stakeAmt > stakeData?.stakedAmt!) {
+      return `Exceeded staked balance`
+    } else {
+      return ''
+    }
   }
 
   const isValid = invalidMsg() === ''
@@ -97,7 +104,7 @@ const Stake = () => {
       <StakeBox width={isMobileOnSize ? '100%' : '225px'}>
         <Box mb='10px'><Typography variant='p_lg' color='#8988a3'>Your staked CLN</Typography></Box>
         {publicKey ?
-          <Typography variant='h3' fontWeight={500} color='#fff'>15,000.34</Typography>
+          <Typography variant='h3' fontWeight={500} color='#fff'>{formatLocaleAmount(stakeData?.stakedAmt)}</Typography>
           :
           <Typography variant='h3' fontWeight={500} color='#8988a3'>-</Typography>
         }
@@ -105,42 +112,40 @@ const Stake = () => {
       <Divider />
 
       <Box padding='20px'>
-        {collData &&
-          <Controller
-            name="stakeAmt"
-            control={control}
-            rules={{
-              validate(value) {
-                if (!value || value <= 0) {
-                  return ''
-                } else if (tab === 0 && value > collData.balance) {
-                  return 'The collateral amount cannot exceed the balance.'
-                } else if (tab === 1 && collData.hasCometPositions && value >= maxWithdrawable) {
-                  return 'Cannot withdraw the maximum amount.'
-                } else if (tab === 1 && !collData.hasCometPositions && value > maxWithdrawable) {
-                  return 'Cannot withdraw more than maximum amount.'
-                }
+        <Controller
+          name="stakeAmt"
+          control={control}
+          rules={{
+            validate(value) {
+              if (!value || value <= 0) {
+                return ''
+              } else if (tab === 0 && value > stakeData?.balance!) {
+                return 'The stake amount cannot exceed the balance.'
+              } else if (tab === 1 && value >= maxWithdrawable) {
+                return 'Cannot withdraw the maximum amount.'
               }
-            }}
-            render={({ field }) => (
-              <PairInput
-                tickerIcon={LogosClone}
-                ticker={'CLN'}
-                value={field.value}
-                title={tab === 0 ? 'Deposit' : 'Withdraw'}
-                balance={tab === 0 ? collData.balance : maxWithdrawable}
-                max={maxWithdrawable}
-                onChange={(event: React.FormEvent<HTMLInputElement>) => {
-                  const collAmt = parseFloat(event.currentTarget.value)
-                  field.onChange(collAmt)
-                }}
-                onMax={(value: number) => {
-                  field.onChange(value)
-                }}
-              />
-            )}
-          />
-        }
+            }
+          }}
+          render={({ field }) => (
+            <PairInput
+              tickerIcon={LogosClone}
+              ticker={'CLN'}
+              value={field.value}
+              title={tab === 0 ? 'Deposit' : 'Withdraw'}
+              balance={stakeData ? stakeData.balance : 0}
+              balanceDisabled={!isDeposit}
+              max={maxWithdrawable}
+              maxDisabled={!isDeposit || !stakeData || stakeData?.balance === 0}
+              onChange={(event: React.FormEvent<HTMLInputElement>) => {
+                const collAmt = parseFloat(event.currentTarget.value)
+                field.onChange(collAmt)
+              }}
+              onMax={(value: number) => {
+                field.onChange(value)
+              }}
+            />
+          )}
+        />
 
         <Box mt='15px' mb='5px'>
           {!publicKey ? <ConnectButton onClick={() => setOpen(true)}>
@@ -184,7 +189,7 @@ const StakeBox = styled(Box)`
 `
 const ConnectButton = styled(Button)`
   width: 100%;
-  height: 52px;
+  height: 42px;
   color: #fff;
   padding: 1px;
   background-color: transparent;
@@ -217,10 +222,9 @@ const ActionButton = styled(Button)`
 `
 const DisableButton = styled(Button)`
   width: 100%;
-  height: 52px;
+  height: 42px;
 	color: #fff;
   border-radius: 10px;
-	margin-bottom: 10px;
   &:disabled {
     border: solid 1px ${(props) => props.theme.basis.portGore};
     background:  ${(props) => props.theme.basis.backInBlack};

@@ -10,11 +10,11 @@ import { useState } from "react"
 
 const StakingWrapper = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-  const [currLevel, setCurrLevel] = useState(1)
+  const [currLevel, setCurrLevel] = useState(3)
 
   return (
     <Wrapper>
-      <Stack direction={isMobileOnSize ? 'column' : 'row'} justifyContent='center' alignItems={isMobileOnSize ? 'center' : 'flex-start'} gap={2} mb='25px'>
+      <Stack direction={isMobileOnSize ? 'column' : 'row'} justifyContent='center' alignItems={isMobileOnSize ? 'center' : 'flex-start'} gap='25px' mb='25px'>
         <Stake />
         <MyLevel currLevel={currLevel} />
       </Stack>

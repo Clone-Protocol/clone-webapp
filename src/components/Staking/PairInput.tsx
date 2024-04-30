@@ -14,18 +14,20 @@ interface Props {
 	value?: number
 	valueDisabled?: boolean
 	max?: number
+	maxDisabled?: boolean
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 	onMax?: (balance: number) => void
 }
 
-const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanceDisabled, value, valueDisabled = false, onChange, onMax, max }) => {
+const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanceDisabled, value, valueDisabled = false, onChange, onMax, max, maxDisabled = false }) => {
 	return (
 		<FormControl variant="standard" sx={{ width: '100%' }}>
 			<Stack direction="row" justifyContent="space-between" alignItems='center'>
 				<Box><Typography variant='p_lg' color='#8988a3'>{title}</Typography></Box>
 				{!balanceDisabled ? <Box display='flex' alignItems='center'>
 					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#c5c7d9' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
-					<MaxButton onClick={() => onMax && onMax(balance!)}>MAX</MaxButton></Box> : <></>}
+					{!maxDisabled && <MaxButton onClick={() => onMax && onMax(balance!)}>MAX</MaxButton>}
+				</Box> : <></>}
 			</Stack>
 			<FormStack direction="row" justifyContent="space-between" alignItems="center">
 				<Box display='flex' flexDirection='column' alignItems='flex-start' pl='5px' sx={valueDisabled ? { cursor: 'not-allowed' } : { cursor: 'default' }}>
@@ -33,7 +35,7 @@ const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanc
 				</Box>
 				<TickerBox>
 					{tickerIcon && <Image src={tickerIcon} width={22} height={22} alt={''} />}
-					<Box display='flex' alignItems='center'>
+					<Box display='flex' alignItems='center' ml='4px'>
 						<Typography variant='h4' color='#fff'>{ticker}</Typography>
 					</Box>
 				</TickerBox>
