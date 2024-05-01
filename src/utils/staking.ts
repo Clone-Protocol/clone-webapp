@@ -80,7 +80,8 @@ export const createDepositStakeIx = (
       {
         user: userPubkey,
         amount,
-      }
+      },
+      CLONE_STAKING_PROGRAM_ID
     )
   )
   return ixns
@@ -122,7 +123,8 @@ export const createWithdrawStakeIx = async (
       },
       {
         amount,
-      }
+      },
+      CLONE_STAKING_PROGRAM_ID
     )
   )
   return ixns
