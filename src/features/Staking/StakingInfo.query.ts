@@ -4,6 +4,7 @@ import { CloneClient } from 'clone-protocol-sdk/sdk/src/clone'
 import { useClone } from '~/hooks/useClone'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { REFETCH_SHORT_CYCLE } from '~/components/Common/DataLoadingIndicator'
+import { getStakingAccount, getCLNTokenBalance, CLN_TOKEN_SCALE } from "~/utils/staking";
 
 export const fetchStakingInfo = async ({
 	program,
@@ -16,8 +17,22 @@ export const fetchStakingInfo = async ({
 
 	console.log('fetchStakingInfo :: StakingInfo.query')
 
-	let stakedAmt = 15000.34
-	let balance = 100
+	let stakedAmt = 0
+	let balance = 0
+
+	const [stakingAccountResult, balanceInfoResult] = await Promise.allSettled([
+		getStakingAccount(userPubKey, program.provider.connection),
+		getCLNTokenBalance(userPubKey, program.provider.connection)
+	])
+
+	const scalingFactor = Math.pow(10, -CLN_TOKEN_SCALE)
+
+	if (stakingAccountResult.status === "fulfilled") {
+		stakedAmt = Number(stakingAccountResult.value.stakedTokens) * scalingFactor
+	}
+	if (balanceInfoResult.status === "fulfilled") {
+		balance = Number(balanceInfoResult.value.amount) * scalingFactor
+	}
 
 	return {
 		stakedAmt,
