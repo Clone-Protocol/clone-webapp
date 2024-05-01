@@ -1,14 +1,11 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import Image from 'next/image'
-import BenefitIcon1 from 'public/images/staking/benefit-logo-1.svg'
-import BenefitIcon2 from 'public/images/staking/benefit-logo-2.svg'
-import BenefitIcon3 from 'public/images/staking/benefit-logo-3.svg'
 import { InfoOutlineIcon } from '~/components/Common/SvgIcons'
 import { DISCORD_URL } from '~/data/social'
 import { useWallet } from '@solana/wallet-adapter-react'
+import BenefitLevel from '~/components/Staking/BenefitLevel'
 
-const LEVEL_DISCOUNT_TRAIDING_FEE = [0, 100, 150, 200, 250]
+export const LEVEL_DISCOUNT_TRAIDING_FEE = [0, 100, 150, 200, 250]
 
 const MyLevel = ({ currLevel }: { currLevel: number }) => {
   const { publicKey } = useWallet()
@@ -22,44 +19,7 @@ const MyLevel = ({ currLevel }: { currLevel: number }) => {
           <InfoOutlineIcon />
           <Typography variant='p_sm'>More about levels</Typography>
         </MoreTxt>
-        <Typography variant='p_lg'>Your Level</Typography>
-        <BorderBox mt='20px' mb='30px'>
-          {publicKey ?
-            <>
-              <TitleTxt>cloner</TitleTxt>
-              <LevelTxt>{currLevel + 1}</LevelTxt>
-            </>
-            : <>
-              <Typography variant='h3' fontWeight={500}>-</Typography>
-            </>
-          }
-        </BorderBox>
-        {isShowBenefit &&
-          <Box>
-            <Box mb='20px'><Typography variant='p_lg'>Your Benefit</Typography></Box>
-            <Stack direction='row' mb='20px' gap='5px'>
-              <Image src={BenefitIcon1} alt='benefit' />
-              <Box>
-                <Box><Typography variant='p_xlg' color='#fff'>Save on every trade</Typography></Box>
-                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_TRAIDING_FEE[currLevel]}bps</span> discount for all your trades.</Typography></Box>
-              </Box>
-            </Stack>
-            <Stack direction='row' mb='20px' gap='5px'>
-              <Image src={BenefitIcon2} alt='benefit' />
-              <Box>
-                <Box><Typography variant='p_xlg' color='#fff'>Increased Comet APY</Typography></Box>
-                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive additional $CLN emission that contributes to increased APY of your Comets.</Typography></Box>
-              </Box>
-            </Stack>
-            <Stack direction='row' gap='5px'>
-              <Image src={BenefitIcon3} alt='benefit' />
-              <Box>
-                <Box><Typography variant='p_xlg' color='#fff'>More points</Typography></Box>
-                <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You become eligible for more points</Typography></Box>
-              </Box>
-            </Stack>
-          </Box>
-        }
+        <BenefitLevel currLevel={currLevel} />
       </Box>
       {isShowBenefit &&
         <Box display='flex' justifyContent='center' alignItems='center' borderTop='1px solid #201c27' height='50px' mt='10px'>
@@ -70,6 +30,7 @@ const MyLevel = ({ currLevel }: { currLevel: number }) => {
           </a>
         </Box>
       }
+
     </Wrapper>
   )
 }

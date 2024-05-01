@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Box, Typography, Stack } from '@mui/material'
+import { Box, Typography, Stack, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { LoadingProgress } from '~/components/Common/Loading'
 import { useBalanceQuery } from '~/features/Portfolio/Balance.query'
@@ -15,6 +15,9 @@ import { useClone } from '~/hooks/useClone';
 import { ON_USD } from '~/utils/constants';
 import { formatLocaleAmount } from '~/utils/numbers';
 import { useClickOutside } from '~/hooks/useClickOutside';
+import BenefitLevel from '../Staking/BenefitLevel';
+import Image from 'next/image';
+import ArrowTopIcon from 'public/images/arrow-top-right.svg'
 
 const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }) => {
   const { enqueueSnackbar } = useSnackbar()
@@ -82,6 +85,10 @@ const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }
       <AssetBox>
         <Typography variant='h3'>${formatLocaleAmount(balance?.onusdVal)}</Typography> <Typography variant='p_lg'>{ON_USD}</Typography>
       </AssetBox>
+      <Box padding="18px 25px" mb='5px'>
+        <BenefitLevel currLevel={1} />
+        <GoStakingButton><Typography variant='p_sm'>Go to Staking</Typography> <Image src={ArrowTopIcon} alt='arrow' /></GoStakingButton>
+      </Box>
     </WalletWrapper>
   ) : <></>
 }
@@ -92,7 +99,7 @@ const WalletWrapper = styled(Stack)`
 	position: absolute;
 	top: 70px;
 	right: 0px;
-	width: 282px;
+	width: 284px;
 	background-color: ${(props) => props.theme.basis.cinder};
 	border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.portGore};
@@ -120,4 +127,19 @@ const AssetBox = styled(Box)`
 	gap: 10px;
 	color: #fff;
 	background-color: rgba(255, 255, 255, 0.05);
+`
+const GoStakingButton = styled(Button)`
+  width: 98px;
+  height: 23px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 25px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 7px;
+  border-radius: 10px;
+  background-color: #201c27;
+  color: #8988a3;
 `

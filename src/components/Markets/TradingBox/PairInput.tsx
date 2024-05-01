@@ -64,21 +64,17 @@ const FormStack = styled(Stack)`
 	padding: 12px;
 	border-radius: 10px;
 	color: ${(props) => props.theme.basis.textRaven};
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: ${(props) => props.theme.basis.backInBlack};
 	&:hover {
 		box-shadow: 0 3px 20px 0 rgba(67, 48, 119, 0.52), 0 0 0 1px ${(props) => props.theme.basis.portGore} inset;
 	}
 `
-
 const TickerBox = styled(Box)`
 	display: flex;
 	align-items: center;
 	padding: 3px 10px 3px 5px;
 	color: #fff;
-	border-radius: 100px;
-	background-color: rgba(65, 65, 102, 0.5);
 `
-
 const SelectTickerButton = styled(Button)`
 	display: flex;
 	align-items: center;

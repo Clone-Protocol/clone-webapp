@@ -1,4 +1,4 @@
-import { Box, Stack, Button, IconButton, Typography, CircularProgress, Tooltip } from '@mui/material'
+import { Box, Stack, Button, IconButton, Typography, CircularProgress, Tooltip, useMediaQuery, Theme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { useState, useEffect } from 'react'
 import PairInput from './PairInput'
@@ -24,6 +24,7 @@ import { ON_USD } from '~/utils/constants'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
+import BannerSaveTrade from './BannerSaveTrade'
 
 export enum ComponentEffect {
   iAssetAmount,
@@ -54,6 +55,7 @@ const round = (n: number, decimals: number) => {
 const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onShowSearchAsset }) => {
   const [loading, setLoading] = useState(false)
   const { publicKey } = useWallet()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const [isBuy, setisBuy] = useState(true)
   const [openOrderDetails, setOpenOrderDetails] = useState(false)
   const [estimatedFees, setEstimatedFees] = useState(0.0)
@@ -62,6 +64,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   const [isEnabledRestart, setIsEnabledRestart] = useState(true);
   const [estimatedSwapResult, setEstimatedSwapResult] = useState(0.0)
   const [feesAreNonZero, setFeesAreNonZero] = useState(false)
+  const [isOpenBanner, setIsOpenBanner] = useState(true)
 
   const onUSDInfo = collateralMapping(StableCollateral.onUSD)
   const fromPair: PairData = {
@@ -231,6 +234,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
     <>
       <div style={{ width: '100%', height: '100%' }}>
         <Box p='18px' sx={{ paddingBottom: { xs: '150px', md: '18px' } }}>
+          {isMobileOnSize && <BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} />}
           <Stack direction="row" justifyContent="flex-end" alignItems="center" my='12px'>
 
             <Tooltip title="Refetching latest oracle data" placement="top">
@@ -379,6 +383,8 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
               <Box display='flex' alignItems='center' mr='5px'><Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon></Box>
             </TitleOrderDetails>
             {openOrderDetails && <OrderDetails isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
+
+            {!isMobileOnSize && <BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} />}
           </Box>
         </Box>
       </div>
@@ -453,6 +459,7 @@ const TitleOrderDetails = styled(Box)`
   justify-content: space-between;
   padding: 5px;
   align-items: center;
+  margin-bottom: 10px;
 `
 const ArrowIcon = styled('div')`
   width: 9px;

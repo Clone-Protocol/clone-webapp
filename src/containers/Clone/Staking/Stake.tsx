@@ -80,8 +80,7 @@ const Stake = () => {
       return 'Deposit'
     } else if (!isDeposit && (stakeAmt == 0 || isNaN(stakeAmt) || !stakeAmt)) {
       return 'Withdraw'
-    }
-    else if (isDeposit && stakeAmt > stakeData?.balance!) {
+    } else if (isDeposit && stakeAmt > stakeData?.balance!) {
       return `Insufficient CLN`
     } else if (!isDeposit && stakeAmt > stakeData?.stakedAmt!) {
       return `Exceeded staked balance`
