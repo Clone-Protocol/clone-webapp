@@ -21,17 +21,19 @@ export const fetchCurrentLevelData = async ({
 	if (!userPubKey) return
 
 	console.log('fetchCurrentLevel :: StakingInfo.query')
+	let currentLevel = 0;
 
-	const [clnStakingInfo, clnUserAccount] = await Promise.all([
+	const [clnStakingInfoResult, clnUserAccountResult] = await Promise.allSettled([
 		getClnStakingInitInfo(program.provider.connection),
 		getStakingAccount(userPubKey, program.provider.connection),
 	])
 
-	let currentLevel = 0;
-	for (let i = 0; i < clnStakingInfo.numTiers; i++) {
-		let tierInfo = clnStakingInfo.tiers[i]
-		if (clnUserAccount.stakedTokens >= tierInfo.stakeRequirement) {
-			currentLevel = i + 1;
+	if (clnStakingInfoResult.status === "fulfilled" && clnUserAccountResult.status === "fulfilled") {
+		for (let i = 0; i < clnStakingInfoResult.value.numTiers; i++) {
+			let tierInfo = clnStakingInfoResult.value.tiers[i]
+			if (clnUserAccountResult.value.stakedTokens >= tierInfo.stakeRequirement) {
+				currentLevel = i + 1;
+			}
 		}
 	}
 
