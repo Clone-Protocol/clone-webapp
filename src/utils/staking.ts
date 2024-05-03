@@ -11,8 +11,8 @@ import {
   createWithdrawStakeInstruction,
 } from "clone-protocol-sdk/sdk/generated/clone-staking"
 
-export const CLONE_STAKING_PROGRAM_ID = new PublicKey(process.env.CLONE_STAKING_PROGRAM_ID!)
-export const CLN_TOKEN_MINT = new PublicKey(process.env.CLN_TOKEN_MINT!)
+export const CLONE_STAKING_PROGRAM_ID = new PublicKey(process.env.NEXT_PUBLIC_CLONE_STAKING_PROGRAM_ID!)
+export const CLN_TOKEN_MINT = new PublicKey(process.env.NEXT_PUBLIC_CLN_TOKEN_MINT!)
 export const CLN_TOKEN_SCALE = 8
 
 const getCloneStakingAccounts = (): {
@@ -54,7 +54,7 @@ export const getCLNTokenBalance = async (
     const tokenAccount = await getAccount(connection, clnTokenAccountAddress, "confirmed")
     amount = Number(tokenAccount.amount)
     isAccountInitialized = true
-  } catch {}
+  } catch { }
   return { isAccountInitialized, amount }
 }
 

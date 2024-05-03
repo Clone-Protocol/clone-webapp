@@ -4,13 +4,12 @@ import { InfoOutlineIcon } from '~/components/Common/SvgIcons'
 import { DISCORD_URL } from '~/data/social'
 import { useWallet } from '@solana/wallet-adapter-react'
 import BenefitLevel from '~/components/Staking/BenefitLevel'
+import { LevelInfo } from '~/features/Staking/StakingInfo.query'
 
-export const LEVEL_DISCOUNT_TRAIDING_FEE = [0, 100, 150, 200, 250]
-
-const MyLevel = ({ currLevel }: { currLevel: number }) => {
+const MyLevel = ({ levelData }: { levelData: LevelInfo | undefined }) => {
   const { publicKey } = useWallet()
 
-  const isShowBenefit = publicKey && currLevel !== 0
+  const isShowBenefit = publicKey && levelData && levelData.currentLevel !== 0
 
   return (
     <Wrapper height={isShowBenefit ? 'auto' : '185px'}>
@@ -19,7 +18,7 @@ const MyLevel = ({ currLevel }: { currLevel: number }) => {
           <InfoOutlineIcon />
           <Typography variant='p_sm'>More about levels</Typography>
         </MoreTxt>
-        <BenefitLevel currLevel={currLevel} />
+        <BenefitLevel levelData={levelData} />
       </Box>
       {isShowBenefit &&
         <Box display='flex' justifyContent='center' alignItems='center' borderTop='1px solid #201c27' height='50px' mt='10px'>
@@ -42,20 +41,6 @@ const Wrapper = styled(Box)`
   background: ${(props) => props.theme.basis.backInBlack};
   color: ${(props) => props.theme.basis.textRaven};
 `
-const BorderBox = styled(Box)`
-  width: 271px;
-  height: 90px;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
-  background-color: ${(props) => props.theme.basis.backInBlack};
-`
 const MoreTxt = styled(Box)`
   background-color: #0f0e14; 
   border-radius: 10px; 
@@ -64,27 +49,6 @@ const MoreTxt = styled(Box)`
   &:hover {
     color: #cef2f0;
 `
-const TitleTxt = styled('span')`
-  background-image: linear-gradient(106deg, #b5fdf9 1%, #c4b5fd 93%);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: normal;
-  text-align: left;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
-const LevelTxt = styled('span')`
-  background-image: linear-gradient(134deg, #b5fdf9 7%, #c4b5fd 89%);
-  font-size: 50px;
-  font-weight: 600;
-  line-height: 0.8;
-  letter-spacing: normal;
-  text-align: left;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
+
 
 export default MyLevel

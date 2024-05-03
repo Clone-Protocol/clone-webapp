@@ -18,6 +18,7 @@ import { useClickOutside } from '~/hooks/useClickOutside';
 import BenefitLevel from '../Staking/BenefitLevel';
 import Image from 'next/image';
 import ArrowTopIcon from 'public/images/arrow-top-right.svg'
+import { useCurrentLevelQuery } from '~/features/Staking/StakingInfo.query';
 
 const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }) => {
   const { enqueueSnackbar } = useSnackbar()
@@ -36,6 +37,12 @@ const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }
   const { data: balance } = useBalanceQuery({
     userPubKey: publicKey,
     refetchOnMount: 'always',
+    enabled: publicKey != null
+  })
+
+  const { data: levelData, refetch } = useCurrentLevelQuery({
+    userPubKey: publicKey,
+    refetchOnMount: "always",
     enabled: publicKey != null
   })
 
@@ -86,7 +93,7 @@ const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }
         <Typography variant='h3'>${formatLocaleAmount(balance?.onusdVal)}</Typography> <Typography variant='p_lg'>{ON_USD}</Typography>
       </AssetBox>
       <Box padding="18px 25px" mb='5px'>
-        <BenefitLevel currLevel={1} />
+        <BenefitLevel levelData={levelData} />
         <GoStakingButton><Typography variant='p_sm'>Go to Staking</Typography> <Image src={ArrowTopIcon} alt='arrow' /></GoStakingButton>
       </Box>
     </WalletWrapper>
@@ -142,4 +149,14 @@ const GoStakingButton = styled(Button)`
   border-radius: 10px;
   background-color: #201c27;
   color: #8988a3;
+  &:hover {
+    border-style: solid;
+    border-width: 1px;
+    border-image-source: linear-gradient(101deg, #b5fdf9 1%, #c4b5fd 93%);
+    border-image-slice: 1;
+    background-image: linear-gradient(to bottom, #201c27, #201c27), linear-gradient(101deg, #b5fdf9 1%, #c4b5fd 93%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    padding: 0;
+  }
 `

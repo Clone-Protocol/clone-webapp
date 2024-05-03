@@ -5,21 +5,21 @@ import BenefitIcon2 from 'public/images/staking/benefit-logo-2.svg'
 import BenefitIcon3 from 'public/images/staking/benefit-logo-3.svg'
 import { styled } from '@mui/material/styles'
 import { useWallet } from "@solana/wallet-adapter-react"
-import { LEVEL_DISCOUNT_TRAIDING_FEE } from "~/containers/Clone/Staking/MyLevel"
+import { LEVEL_DISCOUNT_PRICING_FEES, LevelInfo } from "~/features/Staking/StakingInfo.query"
 
-const BenefitLevel = ({ currLevel }: { currLevel: number }) => {
+const BenefitLevel = ({ levelData }: { levelData: LevelInfo | undefined }) => {
   const { publicKey } = useWallet()
 
-  const isShowBenefit = publicKey && currLevel !== 0
+  const isShowBenefit = publicKey && levelData && levelData.currentLevel !== 0
 
   return (
     <Box color='#8988a3'>
       <Typography variant='p_lg'>Your Level</Typography>
       <BorderBox mt='20px' mb='30px'>
-        {publicKey ?
+        {publicKey && levelData?.currentLevel ?
           <>
             <TitleTxt>cloner</TitleTxt>
-            <LevelTxt>{currLevel + 1}</LevelTxt>
+            <LevelTxt>{levelData.currentLevel + 1}</LevelTxt>
           </>
           : <>
             <Typography variant='h3' fontWeight={500}>-</Typography>
@@ -33,7 +33,7 @@ const BenefitLevel = ({ currLevel }: { currLevel: number }) => {
             <Image src={BenefitIcon1} alt='benefit' />
             <Box>
               <Box><Typography variant='p_xlg' color='#fff'>Save on every trade</Typography></Box>
-              <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_TRAIDING_FEE[currLevel]}bps</span> discount for all your trades.</Typography></Box>
+              <Box lineHeight={1} mt='4px'><Typography variant='p_lg'>You receive <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_PRICING_FEES[levelData.currentLevel]}bps</span> discount for all your trades.</Typography></Box>
             </Box>
           </Stack>
           <Stack direction='row' mb='20px' gap='5px'>

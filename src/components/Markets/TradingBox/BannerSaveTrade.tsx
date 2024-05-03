@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import CloseIcon from 'public/images/close-round.svg'
 import Image from 'next/image'
 import BenefitIcon1 from 'public/images/staking/benefit-logo-1.svg'
-import { LEVEL_DISCOUNT_TRAIDING_FEE } from '~/containers/Clone/Staking/MyLevel'
+import { LEVEL_DISCOUNT_PRICING_FEES } from '~/features/Staking/StakingInfo.query'
 
 const BannerSaveTrade = ({ open, handleClose }: Props) => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -21,7 +21,7 @@ const BannerSaveTrade = ({ open, handleClose }: Props) => {
           <Box><Typography variant='p_lg' color='#fff'>Save on every trade</Typography></Box>
           <Box lineHeight={1} mb='10px'>
             <Typography variant='p' color='#8988a3'>
-              <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_TRAIDING_FEE[currLevel]}bps</span> fee discount automatically applies to all your trades given your CLN staking.
+              <span style={{ color: '#cef2f0' }}>{LEVEL_DISCOUNT_PRICING_FEES[currLevel]}bps</span> fee discount automatically applies to all your trades given your CLN staking.
             </Typography>
           </Box>
         </Box>

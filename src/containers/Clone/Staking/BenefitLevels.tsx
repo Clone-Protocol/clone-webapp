@@ -7,12 +7,10 @@ import InfoTooltip from '~/components/Staking/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { useWallet } from '@solana/wallet-adapter-react'
 import MobileMenu from '~/components/Staking/MobileMenu'
+import { LEVEL_COMET_APYS, LEVEL_POINTS_BOOSTS, LEVEL_TRADING_FEES, LevelInfo } from '~/features/Staking/StakingInfo.query'
 
-const LEVEL_TRAIDING_FEE = [300, 200, 150, 100, 50]
-const LEVEL_COMET_APY = [8.57, 9.57, 10.1, 11.5, 13.2]
-const LEVEL_POINTS_BOOST = [1, 1.2, 1.4, 1.6, 1.8]
 
-const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
+const BenefitLevels = ({ levelData }: { levelData: LevelInfo | undefined }) => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { publicKey } = useWallet()
   const [tab, setTab] = useState(0)
@@ -24,16 +22,18 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
 
   //scroll to right when level changes
   useEffect(() => {
-    if (currLevel === 1) {
-      scroll(20)
-    } else if (currLevel === 2) {
-      scroll(80)
-    } else if (currLevel === 3) {
-      scroll(150)
-    } else if (currLevel === 4) {
-      scroll(200)
+    if (levelData) {
+      if (levelData.currentLevel === 1) {
+        scroll(20)
+      } else if (levelData.currentLevel === 2) {
+        scroll(80)
+      } else if (levelData.currentLevel === 3) {
+        scroll(150)
+      } else if (levelData.currentLevel === 4) {
+        scroll(200)
+      }
     }
-  }, [])
+  }, [levelData])
 
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -58,8 +58,8 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
 
       <GridBackground>
         <LevelStack ref={scrollRef} direction='row' display={isMobileOnSize ? '-webkit-box' : 'flex'} alignContent='center' justifyContent='center' gap='20px' width={isMobileOnSize ? '330px' : '100%'} sx={{ overflowX: { xs: 'auto', md: 'hidden' }, scrollMarginLeft: { xs: '30px', md: '0px' } }}>
-          {tab === 0 && LEVEL_TRAIDING_FEE.map((fee, index) =>
-            publicKey && index === currLevel ?
+          {tab === 0 && LEVEL_TRADING_FEES.map((fee, index) =>
+            publicKey && index === levelData.currentLevel ?
               <BorderBox className='selected' key={index}>
                 <Box><SelectedTxt variant='p_xlg'>{fee} bps</SelectedTxt></Box>
                 <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>
@@ -71,8 +71,8 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
               </BorderBox>
           )}
           {tab === 1 && publicKey &&
-            LEVEL_COMET_APY.map((apy, index) =>
-              index === currLevel ?
+            LEVEL_COMET_APYS.map((apy, index) =>
+              index === levelData.currentLevel ?
                 <BorderBox className='selected' key={index}>
                   <Box><SelectedTxt variant='p_xlg'>{apy}%</SelectedTxt></Box>
                   <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>
@@ -86,8 +86,8 @@ const BenefitLevels = ({ currLevel }: { currLevel: number }) => {
           {tab === 1 && !publicKey &&
             <Box><Typography variant='p'>Connect your wallet to view APY</Typography></Box>
           }
-          {tab === 2 && LEVEL_POINTS_BOOST.map((points, index) =>
-            publicKey && index === currLevel ?
+          {tab === 2 && LEVEL_POINTS_BOOSTS.map((points, index) =>
+            publicKey && index === levelData.currentLevel ?
               <BorderBox className='selected' key={index}>
                 <Box><SelectedTxt variant='p_xlg'>{points > 1 ? `${points}X` : '-'}</SelectedTxt></Box>
                 <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>
