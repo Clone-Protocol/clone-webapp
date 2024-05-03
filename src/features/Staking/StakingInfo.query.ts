@@ -4,7 +4,7 @@ import { CloneClient } from 'clone-protocol-sdk/sdk/src/clone'
 import { useClone } from '~/hooks/useClone'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { REFETCH_CYCLE } from '~/components/Common/DataLoadingIndicator'
-import { getStakingAccount, getCLNTokenBalance, CLN_TOKEN_SCALE } from "~/utils/staking";
+import { getStakingAccount, getCLNTokenBalance, CLN_TOKEN_SCALE, getClnStakingInitInfo } from "~/utils/staking";
 
 export const LEVEL_TRADING_FEES = [300, 200, 150, 100, 50]
 export const LEVEL_COMET_APYS = [8.57, 9.57, 10.1, 11.5, 13.2]
@@ -22,7 +22,18 @@ export const fetchCurrentLevelData = async ({
 
 	console.log('fetchCurrentLevel :: StakingInfo.query')
 
-	let currentLevel = 3
+	const [clnStakingInfo, clnUserAccount] = await Promise.all([
+		getClnStakingInitInfo(program.provider.connection),
+		getStakingAccount(userPubKey, program.provider.connection),
+	])
+
+	let currentLevel = 0;
+	for (let i = 0; i < clnStakingInfo.numTiers; i++) {
+		let tierInfo = clnStakingInfo.tiers[i]
+		if (clnUserAccount.stakedTokens >= tierInfo.stakeRequirement) {
+			currentLevel = i + 1;
+		}
+	}
 
 	return {
 		currentLevel,

@@ -6,6 +6,7 @@ import {
 } from "@solana/spl-token"
 import { BN } from "@coral-xyz/anchor"
 import {
+  CloneStaking as ClnStakingInfo,
   User as UserStaking,
   createAddStakeInstruction,
   createWithdrawStakeInstruction,
@@ -41,6 +42,16 @@ export const getStakingAccount = async (
   connection: Connection
 ): Promise<UserStaking> => {
   return await UserStaking.fromAccountAddress(connection, getStakingAccountAddress(userPubkey))
+}
+
+export const getClnStakingInitInfo = async (
+  connection: Connection
+): Promise<ClnStakingInfo> => {
+  const [clnStakingInfoAccount, __] = PublicKey.findProgramAddressSync(
+    [Buffer.from("clone-staking")],
+    CLONE_STAKING_PROGRAM_ID
+  )
+  return await ClnStakingInfo.fromAccountAddress(connection, clnStakingInfoAccount)
 }
 
 export const getCLNTokenBalance = async (
