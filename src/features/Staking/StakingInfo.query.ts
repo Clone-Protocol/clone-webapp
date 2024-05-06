@@ -76,6 +76,7 @@ export const fetchStakingInfo = async ({
 
 	let stakedAmt = 0
 	let balance = 0
+	let minWithdrawalSlot = undefined
 
 	const [stakingAccountResult, balanceInfoResult] = await Promise.allSettled([
 		getStakingAccount(userPubKey, program.provider.connection),
@@ -86,6 +87,7 @@ export const fetchStakingInfo = async ({
 
 	if (stakingAccountResult.status === "fulfilled") {
 		stakedAmt = Number(stakingAccountResult.value.stakedTokens) * scalingFactor
+		minWithdrawalSlot = Number(stakingAccountResult.value.minSlotWithdrawal)
 	}
 	if (balanceInfoResult.status === "fulfilled") {
 		balance = Number(balanceInfoResult.value.amount) * scalingFactor
@@ -94,12 +96,14 @@ export const fetchStakingInfo = async ({
 	return {
 		stakedAmt,
 		balance,
+		minWithdrawalSlot
 	}
 }
 
 export interface DetailInfo {
 	stakedAmt: number
 	balance: number
+	minWithdrawalSlot?: number
 }
 
 interface GetProps {
