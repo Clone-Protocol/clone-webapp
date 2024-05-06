@@ -8,8 +8,11 @@ import { funcNoWallet } from '~/features/baseQuery'
 import { TransactionStateType, useTransactionState } from "~/hooks/useTransactionState"
 import { CLN_TOKEN_SCALE, createDepositStakeIx, createWithdrawStakeIx, getStakingAccount } from '~/utils/staking'
 import { sendAndConfirm } from '~/utils/tx_helper'
+import { useAtomValue } from 'jotai';
+import { priorityFee } from '~/features/globalAtom';
+import { FeeLevel } from '~/data/networks'
 
-export const callStaking = async ({ program, userPubKey, setTxState, data }: CallProps) => {
+export const callStaking = async ({ program, userPubKey, setTxState, data, feeLevel }: CallProps) => {
   if (!userPubKey) throw new Error('no user public key')
 
   console.log('staking input data', data)
@@ -33,10 +36,9 @@ export const callStaking = async ({ program, userPubKey, setTxState, data }: Cal
     )
   }
 
-  // TODO: Need to pass in `feeLevel` and `retryFunc`.
-  // const result = await sendAndConfirm(program.provider as AnchorProvider, ixns, setTxState, feeLevel, retryFunc)
+  const result = await sendAndConfirm(program.provider as AnchorProvider, ixns, setTxState, feeLevel)
   return {
-    result: true
+    result
   }
 }
 
@@ -49,15 +51,17 @@ interface CallProps {
   userPubKey: PublicKey | null
   setTxState: (state: TransactionStateType) => void
   data: StakingFormData
+  feeLevel: FeeLevel
 }
 export function useStakingMutation(userPubKey: PublicKey | null) {
   const wallet = useAnchorWallet()
   const { getCloneApp } = useClone()
   const { setTxState } = useTransactionState()
+  const feeLevel = useAtomValue(priorityFee)
 
   if (wallet) {
     return useMutation({
-      mutationFn: async (data: StakingFormData) => callStaking({ program: await getCloneApp(wallet), userPubKey, setTxState, data }),
+      mutationFn: async (data: StakingFormData) => callStaking({ program: await getCloneApp(wallet), userPubKey, setTxState, data, feeLevel }),
       onSuccess: () => {
         // queryClient.invalidateQueries({ queryKey: ['editCollateral'] })
 
