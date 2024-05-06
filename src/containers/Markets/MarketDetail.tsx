@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import Chart from '~/components/Markets/MarketDetail/Chart'
 import Image from 'next/image'
 import { useMarketDetailQuery } from '~/features/Markets/MarketDetail.query'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount, formatLocaleAmount } from '~/utils/numbers'
 import { useWallet } from '@solana/wallet-adapter-react'
@@ -64,10 +64,10 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 	return (
 		<>
 			{asset ? (
-				<Stack mb={2} direction="column" pl={isMobileOnSize ? 0 : 5} pt={isMobileOnSize ? 5 : 1} pb={1} maxWidth={isMobileOnSize ? '380px' : '750px'}>
-					<GoBackButton onClick={() => router.push(`${RootMarketsDir}`)}>
+				<Stack mb={2} direction="column" pl={isMobileOnSize ? 0 : 5} pt={isMobileOnSize ? 5 : 1} pb={1} maxWidth={isMobileOnSize ? '100%' : '750px'} px={isMobileOnSize ? 3 : 0}>
+					{/* <GoBackButton onClick={() => router.push(`${RootMarketsDir}`)}>
 						<GoBackIcon /><Typography variant='p'>clAssets</Typography>
-					</GoBackButton>
+					</GoBackButton> */}
 					<Box>
 						<Box display="inline-flex" alignItems="center">
 							<Image src={asset.tickerIcon} width={30} height={30} alt={asset.tickerSymbol} />
@@ -168,4 +168,4 @@ const GoBackButton = styled(Box)`
   }
 `
 
-export default withSuspense(MarketDetail, <LoadingProgress />)
+export default withSuspense(MarketDetail, <Box mt='10px'><LoadingSkeleton /></Box>)

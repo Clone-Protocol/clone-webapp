@@ -21,7 +21,7 @@ import { Collateral as StableCollateral, collateralMapping } from '~/data/assets
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { calculateSwapExecution } from 'clone-protocol-sdk/sdk/src/utils'
 import { ON_USD } from '~/utils/constants'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import BannerSaveTrade from './BannerSaveTrade'
@@ -233,10 +233,9 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   return (
     <>
       <div style={{ width: '100%', height: '100%' }}>
-        <Box p='18px' sx={{ paddingBottom: { xs: '150px', md: '18px' } }}>
-          {isMobileOnSize && <BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} />}
-          <Stack direction="row" justifyContent="flex-end" alignItems="center" my='12px'>
-
+        {isMobileOnSize && <Box mb='20px'><BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} /></Box>}
+        <Box px='24px' height='100%' sx={{ paddingBottom: '18px', background: '#0a080f', borderTopRightRadius: '10px', borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
+          <Stack direction="row" justifyContent="flex-end" alignItems="center" pt='12px' pb='6px'>
             <Tooltip title="Refetching latest oracle data" placement="top">
               <ToolButton onClick={() => { refreshBalance() }} disabled={!isEnabledRestart}>
                 <Image src={reloadIcon} alt="reload" />
@@ -383,10 +382,9 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
               <Box display='flex' alignItems='center' mr='5px'><Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon></Box>
             </TitleOrderDetails>
             {openOrderDetails && <OrderDetails isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
-
-            {!isMobileOnSize && <BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} />}
           </Box>
         </Box>
+        {!isMobileOnSize && <Box mb='15px'><BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} /></Box>}
       </div>
     </>
   )
@@ -469,4 +467,4 @@ const ArrowIcon = styled('div')`
   color: #c5c7d9;
 `
 
-export default withSuspense(TradingComp, <Box mt='20px' sx={{ display: { xs: 'block', md: 'none' } }}><LoadingProgress /></Box>)
+export default withSuspense(TradingComp, <LoadingSkeleton />)

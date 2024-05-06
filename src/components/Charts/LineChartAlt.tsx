@@ -134,7 +134,7 @@ const Wrapper = styled(Card)`
   padding: 5px;
   padding-right: 1rem;
   display: flex;
-  background-color: #000;
+  background-color: ${(props) => props.theme.basis.cinder};
   flex-direction: column;
   > * {
     font-size: 1rem;
