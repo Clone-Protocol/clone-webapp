@@ -27,8 +27,8 @@ const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanc
 			<Stack direction="row" justifyContent="space-between">
 				<Box><Typography variant='p_lg' color='#8988a3'>{title}</Typography></Box>
 				{!balanceDisabled ? <Box display='flex' alignItems='center'>
-					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#c4b5fd' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
-					<MaxButton onClick={() => onMax && onMax(balance!)}>Max</MaxButton></Box> : <></>}
+					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#c5c7d9' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
+					<MaxButton onClick={() => onMax && onMax(balance!)}>MAX</MaxButton></Box> : <></>}
 			</Stack>
 			<FormStack direction="row" justifyContent="space-between" alignItems="center">
 				<Box display='flex' flexDirection='column' alignItems='flex-start' pl='5px' sx={valueDisabled ? { cursor: 'not-allowed' } : { cursor: 'default' }}>
@@ -66,7 +66,7 @@ const FormStack = styled(Stack)`
 	color: ${(props) => props.theme.basis.textRaven};
 	background-color: ${(props) => props.theme.basis.backInBlack};
 	&:hover {
-		box-shadow: 0 3px 20px 0 rgba(67, 48, 119, 0.52), 0 0 0 1px ${(props) => props.theme.basis.portGore} inset;
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.portGore} inset;
 	}
 `
 const TickerBox = styled(Box)`

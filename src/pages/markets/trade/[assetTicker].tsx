@@ -11,6 +11,8 @@ import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { fetchMarketDetail } from '~/features/Markets/MarketDetail.query'
 import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import ChartSwitch from '~/components/Markets/TradingBox/ChartSwitch';
+import { LoadingSkeleton } from '~/components/Common/Loading';
 
 //SSR
 export const getStaticPaths = (async () => {
@@ -64,23 +66,24 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
     }
   }, [isMobileOnSize])
 
-  const isShowChart = showChart || !isMobileOnSize
+  const isShowChart = showChart
 
   return (
     <div>
       <StyledSection
         sx={{
-          backgroundColor: '#000',
+          backgroundColor: '#0f0e14',
         }}>
-        <Stack direction={isMobileOnSize ? 'column' : 'row'} gap={1} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
+        <Stack direction={isMobileOnSize ? 'column' : 'row'} gap={5} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
           {isShowChart &&
-            <Box minWidth={isMobileOnSize ? '360px' : '750px'} bgcolor={isMobileOnSize ? '#000' : 'transparent'} zIndex={99}>
+            <Box minWidth={isMobileOnSize ? '360px' : '750px'} width={isMobileOnSize ? '100%' : '750px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
               <HydrationBoundary state={dehydratedState}>
                 <MarketDetail assetId={assetId} />
               </HydrationBoundary>
             </Box>
           }
-          <Box width={isMobileOnSize ? '100%' : '360px'} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} display={isMobileOnSize ? 'flex' : 'block'} justifyContent={isMobileOnSize ? 'center' : ''} top={isMobileOnSize ? '85px' : 'inherit'} mb={isMobileOnSize ? '180px' : '0px'}>
+          <Box width={isMobileOnSize ? '100%' : '420px'} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} display={isMobileOnSize ? 'flex' : 'block'} justifyContent={isMobileOnSize ? 'center' : ''} top={isMobileOnSize ? '85px' : 'inherit'} mt='24px' mb={isMobileOnSize ? '180px' : '0px'}>
+            {!isMobileOnSize && <ChartSwitch onChange={() => toggleShowTrading()} checked={showChart} />}
             <TradingBox assetId={assetId} />
           </Box>
         </Stack>

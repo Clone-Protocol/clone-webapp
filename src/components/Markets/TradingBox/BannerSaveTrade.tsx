@@ -17,7 +17,7 @@ const BannerSaveTrade = ({ open, handleClose }: Props) => {
         <Box width='40px' height='100%' display='flex' justifyContent='flex-end' pl='10px' pt='10px'>
           <Image src={BenefitIcon1} alt='benefit' />
         </Box>
-        <Box width='280px' padding='15px' textAlign='left'>
+        <Box width='280px' padding='10px' textAlign='left'>
           <Box><Typography variant='p_lg' color='#fff'>Save on every trade</Typography></Box>
           <Box lineHeight={1} mb='10px'>
             <Typography variant='p' color='#8988a3'>
@@ -39,8 +39,9 @@ interface Props {
 }
 const StackWrapper = styled(Stack)`
   position: relative;
-  width: 330px;
+  width: 100%;
   height: 80px;
+  margin-top: 20px;
   border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
   background-color: #0a080f;

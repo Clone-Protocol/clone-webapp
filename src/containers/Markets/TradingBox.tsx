@@ -58,7 +58,7 @@ const TradingBox: React.FC<Props> = ({ assetId }) => {
 
 const StyledPaper = styled(Paper)`
   position: relative;
-	width: 360px;
+	width: 420px;
 	background: transparent;
 	text-align: center;
 `
