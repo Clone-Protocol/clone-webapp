@@ -5,6 +5,7 @@ import { useClone } from '~/hooks/useClone'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { REFETCH_CYCLE } from '~/components/Common/DataLoadingIndicator'
 import { getStakingAccount, getCLNTokenBalance, CLN_TOKEN_SCALE, getClnStakingInitInfo } from "~/utils/staking";
+import { BN } from "@coral-xyz/anchor"
 
 export const LEVEL_TRADING_FEES = [300, 200, 150, 100, 50]
 export const LEVEL_COMET_APYS = [8.57, 9.57, 10.1, 11.5, 13.2]
@@ -29,9 +30,11 @@ export const fetchCurrentLevelData = async ({
 	])
 
 	if (clnStakingInfoResult.status === "fulfilled" && clnUserAccountResult.status === "fulfilled") {
+		const currentStake = new BN(clnUserAccountResult.value.stakedTokens.toString())
 		for (let i = 0; i < clnStakingInfoResult.value.numTiers; i++) {
 			let tierInfo = clnStakingInfoResult.value.tiers[i]
-			if (clnUserAccountResult.value.stakedTokens >= tierInfo.stakeRequirement) {
+			const stakeRequirement = new BN(tierInfo.stakeRequirement.toString())
+			if (currentStake.gte(stakeRequirement)) {
 				currentLevel = i + 1;
 			}
 		}
