@@ -10,6 +10,7 @@ interface GridProps {
   rows: any,
   customNoResultsOverlay: () => JSX.Element,
   isBorderTopRadius?: boolean,
+  isBorderBottomRadius?: boolean,
   minHeight?: number,
   noAutoHeight?: boolean,
   columnVisibilityModel?: GridColumnVisibilityModel,
@@ -22,7 +23,7 @@ export const enum GridType {
   Borrow = 'borrow'
 }
 
-export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverlay, isBorderTopRadius = true, minHeight = 260, noAutoHeight = false, columnVisibilityModel, onRowClick }) => (
+export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverlay, isBorderTopRadius = true, isBorderBottomRadius = true, minHeight = 260, noAutoHeight = false, columnVisibilityModel, onRowClick }) => (
   <DataGrid
     columnVisibilityModel={columnVisibilityModel}
     sx={{
@@ -31,14 +32,14 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverla
       color: '#fff',
       minHeight: `${minHeight}px`,
       '& .MuiDataGrid-main': {
-        borderLeft: '1px solid rgba(196, 181, 253, 0.25)',
-        borderRight: '1px solid rgba(196, 181, 253, 0.25)',
-        borderBottom: '1px solid rgba(196, 181, 253, 0.25)',
-        borderTop: '1px solid rgba(196, 181, 253, 0.25)',
-        borderBottomLeftRadius: '20px',
-        borderBottomRightRadius: '20px',
-        borderTopLeftRadius: isBorderTopRadius ? '20px' : '0',
-        borderTopRightRadius: isBorderTopRadius ? '20px' : '0',
+        borderLeft: '1px solid #332e46',
+        borderRight: '1px solid #332e46',
+        borderBottom: '1px solid #332e46',
+        borderTop: '1px solid #332e46',
+        borderBottomLeftRadius: isBorderBottomRadius ? '10px' : '0',
+        borderBottomRightRadius: isBorderBottomRadius ? '10px' : '0',
+        borderTopLeftRadius: isBorderTopRadius ? '10px' : '0',
+        borderTopRightRadius: isBorderTopRadius ? '10px' : '0',
       },
       '& .right--cell': {
         display: 'flex',
@@ -166,7 +167,7 @@ export const CellTicker: React.FC<TickerType> = ({ tickerIcon, tickerName, ticke
       <Box sx={{ maxWidth: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
         <Typography variant='p_xlg'>{tickerName}</Typography>
       </Box>
-      <Box sx={{ color: '#8988a3', marginLeft: { xs: '0px', md: '10px' } }}>
+      <Box sx={{ color: '#989898', marginLeft: { xs: '0px', md: '10px' } }}>
         <Typography variant='p_lg'>{tickerSymbol}</Typography>
       </Box>
     </Box>

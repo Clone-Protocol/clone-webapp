@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, ReactNode } from 'react';
+import React, { Dispatch, SetStateAction, ReactNode, useState } from 'react';
 import { styled } from '@mui/system'
 import { Card, Box, Typography } from '@mui/material'
 import { ResponsiveContainer, YAxis, Tooltip, AreaChart, Area } from 'recharts'
@@ -31,7 +31,7 @@ export type LineChartProps = {
 
 const LineChartAlt: React.FC<LineChartProps> = ({
   data,
-  color = '#4fe5ff',
+  color = 'rgba(166, 153, 251)',
   value,
   label,
   setValue,
@@ -47,6 +47,7 @@ const LineChartAlt: React.FC<LineChartProps> = ({
   minY,
   ...rest
 }) => {
+  const [activeTooltip, setActiveTooltip] = useState(false)
   const parsedValue = value
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -80,23 +81,20 @@ const LineChartAlt: React.FC<LineChartProps> = ({
             height={268}
             data={data}
             margin={{
-              top: 20,
-              right: 30,
+              top: 5,
+              right: 20,
               left: 20,
               bottom: 5,
             }}
             onMouseLeave={() => {
               setLabel && setLabel(undefined)
               setValue && setValue(undefined)
-              // if (defaultValue && defaultValue > 0) {
-              //   setValue && setValue(defaultValue)
-              // }
             }}
           >
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={darken(0.36, color)} stopOpacity={0.5} />
-                <stop offset="100%" stopColor={color} stopOpacity={0} />
+                <stop offset="15%" stopColor={color} stopOpacity={0.29} />
+                <stop offset="100%" stopColor={darken(0.29, color)} stopOpacity={0.5} />
               </linearGradient>
             </defs>
             {/* <XAxis
@@ -122,19 +120,17 @@ const LineChartAlt: React.FC<LineChartProps> = ({
               isAnimationActive={false}
               wrapperStyle={{ outline: "none" }}
               contentStyle={{ display: 'block', background: 'transparent' }}
-            // formatter={(value: number, name: string, props: { payload: { time: string; value: number } }) => {
-            //   if (setValue && parsedValue !== props.payload.value) {
-            //     setValue(props.payload.value)
-            //   }
-            //   const formattedTime = dayjs(props.payload.time).format('MMM D, YYYY')
-            //   if (setLabel && label !== formattedTime) setLabel(formattedTime)
-            // }}
             />
-            <Area dataKey="value" type="monotone" stroke="#4fe5ff" fill="url(#gradient)" strokeWidth={2} />
+            <Area dataKey="value" type="monotone" stroke="#c4b5fd" fill="url(#gradient)"
+              activeDot={activeTooltip}
+              animationBegin={100} animationDuration={1200} strokeWidth={1}
+              onAnimationStart={() => setActiveTooltip(false)}
+              onAnimationEnd={() => setActiveTooltip(true)}
+            />
           </AreaChart>
         </ResponsiveContainer>
         :
-        <Box width='100%' height='100%' display='flex' justifyContent='center' alignItems='center'><Typography variant='p_lg' color='#66707e'>Chart unavailable</Typography></Box>}
+        <Box width='100%' height='100%' display='flex' justifyContent='center' alignItems='center'><Typography variant='p_lg' color='#8988a3'>Chart unavailable</Typography></Box>}
     </Wrapper>
   )
 }
@@ -145,7 +141,7 @@ const Wrapper = styled(Card)`
   height: 268px;
   padding: 1rem;
   display: flex;
-  background: #000;
+  background-color: ${(props) => props.theme.basis.cinder};
   flex-direction: column;
   > * {
     font-size: 1rem;

@@ -36,10 +36,12 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
 export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple iconPosition="start" {...props} />)(({ theme }) => ({
 	'&.MuiTab-root': {
 		height: '29px',
+		width: '100px',
 		minHeight: '0px',
 		maxHeight: '29px',
 		paddingLeft: '2px',
 		display: 'flex',
+		justifyContent: 'flex-start',
 		gap: '5px'
 	},
 	textTransform: 'none',

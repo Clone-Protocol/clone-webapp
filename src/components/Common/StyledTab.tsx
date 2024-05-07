@@ -69,10 +69,14 @@ export const CommonTab = styled((props: StyledTabProps) => (
 ))({
 	width: '138px',
 	'&.Mui-selected': {
-		background: '#1a1c28',
+		background: '#201c27',
 		borderStyle: 'solid',
 		borderColor: 'transparent',
-		borderTopColor: '#4fe5ff',
+		borderTopColor: '#332e46',
+		borderLeftColor: '#332e46',
+		borderRightColor: '#332e46',
+		borderTopLeftRadius: '10px',
+		borderTopRightRadius: '10px',
 		borderWidth: '1px',
 	}
 })

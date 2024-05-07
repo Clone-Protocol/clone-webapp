@@ -142,7 +142,7 @@ export const SubNaviMenu = () => {
           <Link href={RouteDir.LIQUIDITY_LIST}>
             <StyledListItemButton className={pathname === RouteDir.LIQUIDITY_LIST ? 'selected' : ''}>
               {!isMobileOnSize && <>
-                {pathname?.startsWith(RouteDir.LIQUIDITY_LIST) ? <Image src={HubIconOn} alt='hub' /> : <Image src={HubIconOff} alt='hub' />}
+                {pathname === (RouteDir.LIQUIDITY_LIST) ? <Image src={HubIconOn} alt='hub' /> : <Image src={HubIconOff} alt='hub' />}
               </>}
               <Typography variant='p_lg' ml='2px'>Hub</Typography>
             </StyledListItemButton>

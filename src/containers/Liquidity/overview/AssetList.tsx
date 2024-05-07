@@ -31,10 +31,6 @@ const AssetList: React.FC = () => {
 		enabled: true
 	})
 
-	// const handleFilterChange = useCallback((event: React.SyntheticEvent, newValue: FilterType) => {
-	// 	setFilter(newValue)
-	// }, [filter])
-
 	const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const newVal = e.currentTarget.value
 		if (newVal) {
@@ -43,9 +39,6 @@ const AssetList: React.FC = () => {
 			setSearchTerm('')
 		}
 	}, [searchTerm])
-
-	// const isAlreadyInitializedAccount = useAtomValue(isAlreadyInitializedAccountState)
-	// const handleLinkNeedingAccountClick = useOnLinkNeedingAccountClick()
 
 	const handleRowClick: GridEventListener<'rowClick'> = useCallback((
 		params
@@ -58,11 +51,6 @@ const AssetList: React.FC = () => {
 	return (
 		<PanelBox sx={{ '& .non-hover-row': { ':hover': { background: '#000' } } }}>
 			<Stack mb={2} direction="row" justifyContent="space-between" alignItems="center">
-				{/* <PageTabs value={filter} onChange={handleFilterChange}>
-					{Object.keys(FilterTypeMap).map((f) => (
-						<PageTab key={f} value={f} label={FilterTypeMap[f as FilterType]} />
-					))}
-				</PageTabs> */}
 				<Box></Box>
 				<Box width='320px'>
 					<SearchInput onChange={handleSearch} />
@@ -115,7 +103,7 @@ let columns: GridColDef[] = [
 		renderCell(params: GridRenderCellParams<string>) {
 			return !showPoolStatus(params.row.status) ?
 				params.row.change24h >= 0 ?
-					<Box color='#4fe5ff' display='flex' alignItems='center'>
+					<Box color='#c4b5fd' display='flex' alignItems='center'>
 						<Typography variant='p_xlg'>+{params.row.change24h?.toFixed(2)}%</Typography>
 						<Image src={ArrowUpward} alt='arrowUp' />
 					</Box>
@@ -160,7 +148,7 @@ let columns: GridColDef[] = [
 			return showPoolStatus(params.row.status) ? <PoolStatusButton status={params.row.status} />
 				:
 				params.row.avgAPY24h > 0 ?
-					<Box color='#4fe5ff' display='flex' alignItems='center'>
+					<Box color='#c4b5fd' display='flex' alignItems='center'>
 						<Typography variant='p_xlg'>{params.row.avgAPY24h >= 0.01 ? `+${params.row.avgAPY24h?.toFixed(2)}` : '<0.01'}%</Typography>
 					</Box>
 					: <Box color='white' display='flex' alignItems='center'>

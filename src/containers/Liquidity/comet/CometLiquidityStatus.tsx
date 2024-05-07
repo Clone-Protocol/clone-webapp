@@ -54,7 +54,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             {(infos && infos.positions.length > 0 && !isNaN(infos.totalApy)) &&
               <Box>
                 {infos.totalApy > 0 ?
-                  <Box color='#4fe5ff'>
+                  <Box color='#c4b5fd'>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <Typography variant='p_xlg'>{infos.totalApy >= 0.01 ? `+${infos.totalApy?.toFixed(2)}` : '<0.01'}%</Typography>
                     </Box>
@@ -89,7 +89,7 @@ const Wrapper = styled(Box)`
   margin-bottom: 28px;
   padding: 12px 28px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const StatusValue = styled(Box)`
   display: flex;

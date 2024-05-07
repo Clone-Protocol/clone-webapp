@@ -72,18 +72,20 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
           headers={columns}
           rows={rowsPositions || []}
           minHeight={108}
+          isBorderTopRadius={false}
+          isBorderBottomRadius={false}
           noAutoHeight={(!publicKey || hasNoCollateral || (!hasNoCollateral && positions.length === 0)) === true}
           customNoRowsOverlay={customOverlay}
           onRowClick={handleRowClick}
         />
       </Box>
       {publicKey && !hasNoCollateral &&
-        <Stack direction='row' mt='9px' onMouseOver={() => setIsBtnHover(true)} onMouseLeave={() => setIsBtnHover(false)}>
+        <Stack direction='row' onMouseOver={() => setIsBtnHover(true)} onMouseLeave={() => setIsBtnHover(false)}>
           {positions.length > 0 ?
             <AddButton onClick={redirectAddCometPage} disableRipple>
               <Stack direction='row'>
-                <AddIcon color={isBtnHover ? '#fff' : '#414e66'} />
-                <Typography variant='p_lg' ml='10px' color={isBtnHover ? '#fff' : '#414e66'}>Add new liquidity position</Typography>
+                <AddIcon color={isBtnHover ? '#fff' : '#8988a3'} />
+                <Typography variant='p_lg' ml='10px' color={isBtnHover ? '#fff' : '#8988a3'}>Add new liquidity position</Typography>
               </Stack>
             </AddButton>
             :
@@ -135,8 +137,8 @@ let columns: GridColDef[] = [
     flex: 1,
     renderHeader(params: GridColumnHeaderParams<string>) {
       return <Stack direction='row' alignItems='center'>
-        <Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
-        <InfoTooltip title={TooltipTexts.myPositions.liquidityAmount} color='#66707e' />
+        <Typography variant='p' color='#8988a3'>{params.colDef.headerName}</Typography>
+        <InfoTooltip title={TooltipTexts.myPositions.liquidityAmount} color='#8988a3' />
       </Stack>
     },
     renderCell(params: GridRenderCellParams<string>) {
@@ -151,8 +153,8 @@ let columns: GridColDef[] = [
     flex: 1,
     renderHeader(params: GridColumnHeaderParams<string>) {
       return <Stack direction='row' alignItems='center'>
-        <Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
-        <InfoTooltip title={TooltipTexts.myPositions.ild} color='#66707e' />
+        <Typography variant='p' color='#8988a3'>{params.colDef.headerName}</Typography>
+        <InfoTooltip title={TooltipTexts.myPositions.ild} color='#8988a3' />
       </Stack>
     },
     renderCell(params: GridRenderCellParams<string>) {
@@ -167,8 +169,8 @@ let columns: GridColDef[] = [
     flex: 1,
     renderHeader(params: GridColumnHeaderParams<string>) {
       return <Stack direction='row' alignItems='center'>
-        <Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
-        <InfoTooltip title={TooltipTexts.myPositions.rewards} color='#66707e' />
+        <Typography variant='p' color='#8988a3'>{params.colDef.headerName}</Typography>
+        <InfoTooltip title={TooltipTexts.myPositions.rewards} color='#8988a3' />
       </Stack>
     },
     renderCell(params: GridRenderCellParams<string>) {
@@ -183,15 +185,15 @@ let columns: GridColDef[] = [
     flex: 1,
     renderHeader(params: GridColumnHeaderParams<string>) {
       return <Stack direction='row' alignItems='center'>
-        <Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
-        <InfoTooltip title={TooltipTexts.myPositions.apy} color='#66707e' />
+        <Typography variant='p' color='#8988a3'>{params.colDef.headerName}</Typography>
+        <InfoTooltip title={TooltipTexts.myPositions.apy} color='#8988a3' />
       </Stack>
     },
     renderCell(params: GridRenderCellParams<string>) {
       return showPoolStatus(params.row.status) ? <PoolStatusButton status={params.row.status} />
         :
         Number(params.value) > 0 ?
-          <Box display='flex' justifyContent='center' alignItems='center' color='#4fe5ff'>
+          <Box display='flex' justifyContent='center' alignItems='center' color='#c4b5fd'>
             <Typography variant='p_xlg'>{Number(params.value) >= 0.01 ? `+${Number(params.value).toFixed(2)}` : '<0.01'}%</Typography>
           </Box>
           :
@@ -209,9 +211,13 @@ const AddButton = styled(Button)`
   height: 28px;
   padding: 4px 0;
   background-color: rgba(255, 255, 255, 0.01);
-  border: 1px solid ${(props) => props.theme.boxes.blackShade};
-  color: ${(props) => props.theme.basis.melrose};
-  margin-top: 9px;
+  border: 1px solid ${(props) => props.theme.basis.plumFuzz};
+  border-top: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: ${(props) => props.theme.basis.textRaven};
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.05);

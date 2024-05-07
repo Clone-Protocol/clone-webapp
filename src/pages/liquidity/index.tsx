@@ -42,8 +42,8 @@ const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
         {IS_DEV && publicKey &&
           <GetUSDiBadge />
         }
-        <Box mt='25px'>
-          <Box mb='19px'>
+        <Box mt='15px'>
+          <Box>
             <MainChart />
           </Box>
           <HydrationBoundary state={dehydratedState}>

@@ -50,6 +50,7 @@ const Collaterals = ({ hasNoCollateral, collaterals, onRefetchData }: { hasNoCol
         rows={rowsCollateral || []}
         minHeight={108}
         noAutoHeight={!publicKey}
+        isBorderTopRadius={false}
         customNoRowsOverlay={() => CustomNoRowsOverlay(customOverlayMsg)}
         onRowClick={handleRowClick}
       />
@@ -126,8 +127,8 @@ const GetButton = styled(Button)`
   flex-grow: 0;
   border-radius: 100px;
   color: #fff;
-  border: solid 1px ${(props) => props.theme.basis.portGore};
-  background-color: rgba(155, 121, 252, 0.15);
+  border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: #000;
   &:hover {
     background-color: rgba(155, 121, 252, 0.15);
 		border-color: ${(props) => props.theme.basis.lightSlateBlue};

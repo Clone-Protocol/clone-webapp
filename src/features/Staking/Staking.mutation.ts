@@ -1,7 +1,7 @@
 import { PublicKey, TransactionInstruction } from '@solana/web3.js'
 import { BN, AnchorProvider } from "@coral-xyz/anchor"
 import { useClone } from '~/hooks/useClone'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CloneClient } from 'clone-protocol-sdk/sdk/src/clone'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { funcNoWallet } from '~/features/baseQuery'
@@ -54,6 +54,7 @@ interface CallProps {
   feeLevel: FeeLevel
 }
 export function useStakingMutation(userPubKey: PublicKey | null) {
+  const queryClient = useQueryClient()
   const wallet = useAnchorWallet()
   const { getCloneApp } = useClone()
   const { setTxState } = useTransactionState()
@@ -63,10 +64,10 @@ export function useStakingMutation(userPubKey: PublicKey | null) {
     return useMutation({
       mutationFn: async (data: StakingFormData) => callStaking({ program: await getCloneApp(wallet), userPubKey, setTxState, data, feeLevel }),
       onSuccess: () => {
-        // queryClient.invalidateQueries({ queryKey: ['editCollateral'] })
+        queryClient.invalidateQueries({ queryKey: ['stakingInfo'] })
 
         // setTimeout(() => {
-        // 	queryClient.invalidateQueries({ queryKey: ['editCollateral'] })
+        // 	queryClient.invalidateQueries({ queryKey: ['stakingInfo'] })
         // }, 3500)
       }
     })

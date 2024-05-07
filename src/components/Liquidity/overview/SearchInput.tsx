@@ -22,8 +22,8 @@ const StyledBox = styled(Box)`
   height: 36px;
   color: #fff;
   padding: 14px 11px;
-  border: solid 1px ${(props) => props.theme.basis.portGore};
-  border-radius: 10px;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.05);
   &:hover {
     border-color: ${(props) => props.theme.basis.melrose};

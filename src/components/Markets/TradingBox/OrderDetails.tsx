@@ -7,6 +7,7 @@ import { TooltipTexts } from '~/data/tooltipTexts';
 import { formatLocaleAmount } from '~/utils/numbers';
 import ArrowIcon from 'public/images/dropdown-show-more-arrow-right.svg'
 import Image from 'next/image';
+import StarPlusIcon from 'public/images/star-plus.svg'
 
 interface Props {
   isBuy: boolean,
@@ -52,7 +53,9 @@ const OrderDetails: React.FC<Props> = ({ isBuy, onusdAmount, onassetPrice, onass
         </div>
       </Stack>
       <Stack mt="10px" direction="row" justifyContent="space-between" alignItems="center">
-        <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} color="#c5c7d9" variant='p' display='flex' alignItems='center'>Trading Fees <InfoTooltip title={TooltipTexts.tradeFees} color='#8988a3' /></TradingFeeTxt>
+        <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} color="#c5c7d9" variant='p' display='flex' alignItems='center'>
+          <Image src={StarPlusIcon} alt='trading-star' /> Trading Fees <InfoTooltip title={TooltipTexts.tradeFees} color='#8988a3' />
+        </TradingFeeTxt>
         <div style={{ lineHeight: '10px', textAlign: 'right' }}>
           <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} variant='p' fontWeight={600} color='#c4b5fd'>{isNaN(estimatedFees) ? '0' : estimatedFees?.toFixed(6)} {outputSymbol}</TradingFeeTxt>
           <Box display='flex' alignItems='center' justifyContent='flex-end' mt='3px'>

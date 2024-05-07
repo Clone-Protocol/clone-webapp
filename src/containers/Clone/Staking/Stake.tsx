@@ -15,7 +15,6 @@ const Stake = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { publicKey } = useWallet()
   const [tab, setTab] = useState(0) // 0 : deposit , 1: withdraw
-  const [maxWithdrawable, setMaxWithdrawable] = useState(0)
   const [loading, setLoading] = useState(false)
   const { setOpen } = useWalletDialog()
   const isDeposit = tab === 0
@@ -120,7 +119,7 @@ const Stake = () => {
                 return ''
               } else if (tab === 0 && value > stakeData?.balance!) {
                 return 'The stake amount cannot exceed the balance.'
-              } else if (tab === 1 && value >= maxWithdrawable) {
+              } else if (tab === 1 && value >= stakeData?.stakedAmt!) {
                 return 'Cannot withdraw the maximum amount.'
               }
             }
@@ -133,7 +132,7 @@ const Stake = () => {
               title={tab === 0 ? 'Deposit' : 'Withdraw'}
               balance={stakeData ? stakeData.balance : 0}
               balanceDisabled={!isDeposit}
-              max={maxWithdrawable}
+              max={stakeData?.balance}
               maxDisabled={!isDeposit || !stakeData || stakeData?.balance === 0}
               onChange={(event: React.FormEvent<HTMLInputElement>) => {
                 const collAmt = parseFloat(event.currentTarget.value)
