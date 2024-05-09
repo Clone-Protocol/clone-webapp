@@ -161,7 +161,7 @@ let columns: GridColDef[] = [
 				:
 				params.row.borrowed > 0 ?
 					(<Stack direction='column' alignItems='flex-end'>
-						<Box><Typography variant='h4' color={isRisk ? '#ed2525' : '#4fe5ff'}>{formatLocaleAmount(params.value, 2)}%</Typography></Box>
+						<Box><Typography variant='h4' color={isRisk ? '#ed2525' : '#c4b5fd'}>{formatLocaleAmount(params.value, 2)}%</Typography></Box>
 						<Box><Typography variant='p_lg' color={isRisk ? '#ed2525' : '#66707e'}>(min {params.row.minCollateralRatio.toLocaleString()}%)</Typography></Box>
 					</Stack>)
 					: (<></>)

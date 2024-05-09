@@ -9,7 +9,7 @@ const TxtPriceRate = ({ val, rate }: { val: number, rate: number }) => {
   if (isFinite(rate)) {
     if (rate >= 0) {
       return (
-        <Typography variant="p" color='#4fe5ff'>+{Math.abs(rate).toLocaleString()}%</Typography>
+        <Typography variant="p" color='#c4b5fd'>+{Math.abs(rate).toLocaleString()}%</Typography>
       )
     } else {
       return (

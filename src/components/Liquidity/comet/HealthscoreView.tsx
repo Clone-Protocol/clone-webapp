@@ -18,7 +18,7 @@ const enum HealthScoreType {
 
 const enum HealthScoreTypeColor {
   Fair = '#fff',
-  Excellent = '#4fe5ff',
+  Excellent = '#c4b5fd',
   Poor = '#ff0084'
 }
 
@@ -73,7 +73,7 @@ const HealthscoreView: React.FC<Props> = ({ score }) => {
 const ScoreBar = styled(Box)`
   width: 4px;
   height: 100%;
-  background-image: linear-gradient(to top, #ff006b, #4fe5ff);
+  background-image: linear-gradient(to top, #ff006b, #c4b5fd);
 `
 
 export default HealthscoreView

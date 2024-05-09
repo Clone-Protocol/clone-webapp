@@ -13,9 +13,9 @@ const WrapBridgeDialog = ({ open, widgetType, handleClose }: { open: boolean, wi
   return (
     <>
       <Dialog open={open} onClose={close} TransitionComponent={FadeTransition} maxWidth={463} sx={{ overflowX: 'hidden' }}>
-        <DialogContent sx={{ backgroundColor: '#000916', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: '540px', overflowX: 'hidden', width: { xs: '100%', md: '340px' } }}>
+        <DialogContent sx={{ backgroundColor: '#16141b', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: '540px', overflowX: 'hidden', width: { xs: '100%', md: '340px' } }}>
           <BoxWrapper>
-            <Box position='absolute' top='0px' width='100%' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#000916' }}>
+            <Box position='absolute' top='0px' width='100%' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#16141b' }}>
               <Stack direction='row' justifyContent='space-between' >
                 <Box></Box>
                 <Box mr='15px'>

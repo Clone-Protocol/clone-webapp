@@ -15,16 +15,16 @@ export const GoBackButton = styled(Box)`
 export const SubmitButton = styled(Button) <{ hasRisk?: boolean }>`
 	width: 100%;
   height: 52px;
-	background-color: ${(props) => props.hasRisk ? '#d92a84' : props.theme.palette.primary.main};
+	background-color: ${(props) => props.hasRisk ? '#d92a84' : props.theme.basis.melrose};
 	color: #000;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-top: 15px;
 	margin-bottom: 15px;
   &:hover {
-    background-color: ${(props) => props.hasRisk ? '#af256c' : props.theme.basis.gloomyBlue};
+    background-color: ${(props) => props.hasRisk ? '#af256c' : props.theme.basis.lightSlateBlue};
   }
   &:disabled {
-    border: 1px solid ${(props) => props.theme.basis.shadowGloom};
+    border: 1px solid ${(props) => props.theme.basis.plumFuzz};
     color: #989898;
     font-weight: 600;
   }
@@ -41,27 +41,26 @@ export const RiskSubmitButton = styled(SubmitButton)`
 export const ConnectButton = styled(Button)`
   width: 100%;
   height: 52px;
-  border-radius: 5px;
-  box-shadow: 0 0 15px 0 #005874;
-  border: solid 1px ${(props) => props.theme.basis.liquidityBlue};
+  border-radius: 10px;
+  // box-shadow: 0 0 15px 0 #005874;
+  background: ${(props) => props.theme.basis.backInBlack};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
   color: #fff;
   margin-top: 15px;
   margin-bottom: 15px;
   &:hover {
     background: transparent;
-    border: solid 1px ${(props) => props.theme.basis.gloomyBlue};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
   &:disabled {
-    border: 1px solid ${(props) => props.theme.basis.shadowGloom};
+    border: 1px solid ${(props) => props.theme.basis.portGore};
     font-weight: 600;
     color: #989898;
   }
 `
 
 export const SelectButton = styled(ConnectButton)`
-  border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-  color: #989898;
-  box-shadow: 0 0 0 0 #000;
+  color: #8988a3;
 `
 
 export const CloseButton = ({ handleClose }: { handleClose: () => void }) => (

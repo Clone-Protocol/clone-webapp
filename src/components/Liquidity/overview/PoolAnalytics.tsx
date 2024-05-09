@@ -6,26 +6,10 @@ import { TooltipTexts } from '~/data/tooltipTexts'
 import { ON_USD } from '~/utils/constants'
 import { formatLocaleAmount } from '~/utils/numbers'
 
-const TxtPriceRateComparePast = ({ val, rate }: { val: number, rate: number }) => {
-  if (isFinite(rate)) {
-    if (rate >= 0) {
-      return (
-        <Typography variant="p_sm" color='#4fe5ff'>+{val.toLocaleString()} ({rate.toLocaleString()}%) past 24h</Typography>
-      )
-    } else {
-      return (
-        <Typography variant="p_sm" color="#258ded">-{Math.abs(val).toLocaleString()} ({rate.toLocaleString()}%) past 24h</Typography>
-      )
-    }
-  } else {
-    return <></>
-  }
-}
-
 const TxtPriceRate = ({ rate }: { rate: number }) => {
   if (isFinite(rate)) {
     return (
-      <Typography variant="p" color={rate >= 0 ? '#4fe5ff' : '#258ded'} ml='5px'>  {rate >= 0 ? '+' : '-'}{Math.abs(rate).toLocaleString()}%</Typography>
+      <Typography variant="p" color={rate >= 0 ? '#c4b5fd' : '#258ded'} ml='5px'>  {rate >= 0 ? '+' : '-'}{Math.abs(rate).toLocaleString()}%</Typography>
     )
   } else {
     return <></>
@@ -41,7 +25,7 @@ const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
 
   return (
     <Box>
-      <Box mb="12px"><Typography variant="p_lg">{tickerSymbol}/{ON_USD} Pool Analytics</Typography></Box>
+      <Box mb="12px"><Typography variant="p_xlg">{tickerSymbol}/{ON_USD} Pool Analytics</Typography></Box>
       <DataBox>
         <Box>
           <Typography variant="p" color='#66707e'>Total Liquidity</Typography>
@@ -60,7 +44,7 @@ const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
           <Typography variant="p" color='#66707e'>APR</Typography>
           <InfoTooltip title={TooltipTexts.avgAPY24h} color='#66707e' />
         </Box>
-        <Box mt='-4px'><Typography variant="p_xlg" color={resultData?.avgAPY24hr! > 0 ? '#4fe5ff' : 'white'}>
+        <Box mt='-4px'><Typography variant="p_xlg" color={resultData?.avgAPY24hr! > 0 ? '#c4b5fd' : 'white'}>
           {
             resultData?.avgAPY24hr! >= 0.01 ? `+${Math.abs(resultData?.avgAPY24hr!).toLocaleString()}` : resultData?.avgAPY24hr! > 0 ? '<0.01' : '0.00'
           }%
@@ -72,10 +56,11 @@ const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
 
 const DataBox = styled(Box)`
   width: 100%;
-  height: 61px;
-  margin-bottom: 12px;
-  padding: 4px 16px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  height: 59px;
+  margin-bottom: 15px;
+  padding: 2px 21px;
+  border-radius: 20px;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 
 export default PoolAnalytics

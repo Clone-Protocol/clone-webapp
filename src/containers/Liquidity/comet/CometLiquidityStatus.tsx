@@ -118,7 +118,7 @@ const WatchButton = styled(Button)`
   margin: 8px 0 0;
   padding: 8px 33px;
   border-radius: 5px;
-  background-color: #4fe5ff;
+  background-color: #c4b5fd;
   font-size: 12px;
   font-weight: 500;
 `

@@ -282,11 +282,15 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
 }
 
 const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  // border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 20px;
 `
 const StackWithBorder = styled(Stack)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 10px;
   padding: 18px;
+  height: 52px;
 `
 const WarningStack = styled(Stack)`
   justify-content: center;
@@ -294,7 +298,7 @@ const WarningStack = styled(Stack)`
   cursor: pointer;
   margin-top: 10px;
   padding: 13px;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: rgba(255, 0, 214, 0.15);
   color: #ff0084;
   &:hover {
@@ -310,28 +314,29 @@ const SelectPoolBox = styled(Box)`
 	align-items: center;
 	width: 190px;
 	height: 40px;
-	background-color: rgba(37, 141, 237, 0.15);
-	border-radius: 5px;
+	border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+	border-radius: 1000px;
 	cursor: pointer;
 	padding: 8px;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
-		background-color: rgba(37, 141, 237, 0.23);
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
   }
 `
 const SelectDefaultPool = styled(Box)`
-  width: 134px;
+  width: 142px;
   height: 40px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
-  border-radius: 5px;
+  padding: 8px 12px;
+  border-radius: 1000px;
   cursor: pointer;
-  border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   &:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
   }
 `
 const DepositCollateralButton = styled(SelectDefaultPool)`

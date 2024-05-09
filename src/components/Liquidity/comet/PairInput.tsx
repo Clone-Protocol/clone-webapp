@@ -39,7 +39,7 @@ const PairInput: React.FC<Props> = ({
     <FormControl variant="standard" sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent="space-between">
         <Box>
-          <Typography variant="p" color={inputTitleColor}>{inputTitle}</Typography>
+          <Typography variant="p_lg" color={inputTitleColor}>{inputTitle}</Typography>
         </Box>
         {!balanceDisabled ? (
           <Box display='flex' alignItems='center'>
@@ -90,7 +90,7 @@ const PairInput: React.FC<Props> = ({
 
 const CenterBox = styled(Box)`
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${(props) => props.theme.basis.cinder};
 `
 const FormStack = styled(Stack)`
   display: flex;
@@ -104,7 +104,7 @@ const FormStack = styled(Stack)`
 const MaxPointerValue = styled(Box)`
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.basis.liquidityBlue};
+  color: ${(props) => props.theme.basis.melrose};
   margin-left: 4px;
 `
 const MaxButton = styled(Box)`

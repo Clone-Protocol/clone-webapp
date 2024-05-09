@@ -314,7 +314,7 @@ const ConnectButton = styled(Button)`
   width: 100%;
   height: 52px;
   color: #fff;
-  border: solid 1px #4fe5ff;
+  border: solid 1px #c4b5fd;
   border-radius: 5px;
   margin-top: 10px;
   &:hover {

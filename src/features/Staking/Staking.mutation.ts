@@ -36,6 +36,8 @@ export const callStaking = async ({ program, userPubKey, setTxState, data, feeLe
     )
   }
 
+  console.log('ixns', ixns)
+
   const result = await sendAndConfirm(program.provider as AnchorProvider, ixns, setTxState, feeLevel)
   return {
     result

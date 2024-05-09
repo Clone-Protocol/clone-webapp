@@ -46,9 +46,7 @@ export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple ic
 		maxHeight: '55px',
 		display: 'flex',
 		whiteSpace: 'nowrap',
-		// borderRadius: '5px',
-		borderTopLeftRadius: '5px',
-		borderTopRightRadius: '5px',
+		borderRadius: '10px',
 		'&:hover': {
 			color: '#fff',
 		}
@@ -58,8 +56,8 @@ export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple ic
 	marginLeft: '0px',
 	color: '#66707e',
 	'&.Mui-selected': {
-		border: 'solid 1px #b5fdf9',
-		backgroundColor: '#071031',
+		border: 'solid 1px #c4b5fd',
+		backgroundColor: '#1d142e',
 		color: '#fff',
 	},
 }))

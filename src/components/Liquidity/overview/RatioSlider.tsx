@@ -21,7 +21,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
 		backgroundColor: '#fff',
 		border: '3px solid #809cff',
 		'&:hover': {
-			boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+			boxShadow: '0 0 0 4px #8988a3',
 		},
 	},
 	'& .MuiSlider-track': {

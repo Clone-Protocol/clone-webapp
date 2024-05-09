@@ -50,7 +50,7 @@ const BoxWrapper = styled(Box)`
   width: 607px;
   color: #fff; 
   text-align: left;
-  background: #000916;
+  background: #16141b;
   padding: 28px 53px;
 `
 const TextHead = styled(Box)`

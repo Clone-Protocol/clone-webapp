@@ -134,7 +134,7 @@ const Liquidity = ({ positionInfo, positionIndex, poolIndex }: { positionInfo: P
           </Box>
           <Box>
             <Typography variant='p_lg'>${formatLocaleAmount(totalLiquidity, 5)}</Typography>
-            <Typography variant='p_lg' ml='9px' sx={differentLiquidityVal >= 0 ? { color: '#4fe5ff' } : { color: '#ff0084' }}>
+            <Typography variant='p_lg' ml='9px' sx={differentLiquidityVal >= 0 ? { color: '#c4b5fd' } : { color: '#ff0084' }}>
               {differentLiquidityVal >= 0 ? '+' : '-'}${Math.abs(differentLiquidityVal).toLocaleString()}
             </Typography>
           </Box>
@@ -190,10 +190,11 @@ const Liquidity = ({ positionInfo, positionIndex, poolIndex }: { positionInfo: P
 }
 
 const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 10px;
 `
 const CometHealthBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   margin-bottom: 30px;
 `
 

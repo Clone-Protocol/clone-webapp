@@ -18,7 +18,7 @@ export type LineChartProps = {
 
 const LineChart: React.FC<LineChartProps> = ({
   data,
-  color = '#4fe5ff',
+  color = '#c4b5fd',
   maxY,
   minY,
 }) => {

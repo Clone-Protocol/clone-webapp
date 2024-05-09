@@ -155,7 +155,7 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
   return collData ? (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={400}>
-        <DialogContent sx={{ backgroundColor: '#000916', width: '400px' }}>
+        <DialogContent sx={{ backgroundColor: '#16141b', width: '400px' }}>
           <BoxWrapper>
             <Box mb='20px'>
               <Typography variant='h3'>Manage Collateral</Typography>
@@ -229,7 +229,7 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
                     <CometHealthBox padding='36px 20px' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                       <Image src={IconHealthScoreGraph} alt='healthscore' />
                       <Box mt='7px'>
-                        <Typography variant='p' color='#414e66'>Projected health score unavailable</Typography>
+                        <Typography variant='p' color='#8988a3'>Projected health score unavailable</Typography>
                       </Box>
                     </CometHealthBox>
                 }
@@ -286,8 +286,8 @@ const BoxWrapper = styled(Box)`
   overflow-x: hidden;
 `
 const CometHealthBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
-  margin-bottom: 30px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+  margin-bottom: 15px;
 `
 const ZeroAmountBox = styled(Box)`
   width: 100%;
@@ -296,7 +296,7 @@ const ZeroAmountBox = styled(Box)`
   justify-content: center;
   align-items: center;
   padding: 7px 17px;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #989898;
   border: solid 1px ${(props) => props.theme.basis.shadowGloom};
 `

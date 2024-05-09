@@ -155,7 +155,7 @@ const Stake = () => {
                 :
                 <Stack direction='row' alignItems='center' gap={2}>
                   <CircularProgress sx={{ color: '#c4b5fd' }} size={15} thickness={4} />
-                  <Typography variant='p_lg' color='#fff'>{tab === 0 ? 'Depositing' : 'Withdrawing'}</Typography>
+                  <Typography variant='p_lg'>{tab === 0 ? 'Depositing' : 'Withdrawing'}</Typography>
                 </Stack>}
             </ActionButton> :
               <DisableButton disabled={true}>
@@ -215,7 +215,7 @@ const ActionButton = styled(Button)`
     opacity: 0.9;
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.9;
   } 
 `
 const DisableButton = styled(Button)`

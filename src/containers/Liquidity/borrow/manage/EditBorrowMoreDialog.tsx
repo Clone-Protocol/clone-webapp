@@ -126,7 +126,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
   return (
     <>
       <Dialog open={open} onClose={onHideEditForm} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ background: '#000916', width: '600px' }}>
+        <DialogContent sx={{ background: '#16141b', width: '600px' }}>
           <BoxWrapper>
             <Typography variant='h3'>Manage Borrow Position: Borrowed Amount</Typography>
 
@@ -210,7 +210,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                     <Typography variant='h3' fontWeight={500} color={editType === 0 && hasRiskRatio ? '#ff0084' : '#fff'}>
                       {expectedCollRatio.toFixed(2)}%
                     </Typography>
-                    <Typography variant='p_xlg' color={editType === 0 ? '#ff0084' : '#4fe5ff'}>
+                    <Typography variant='p_xlg' color={editType === 0 ? '#ff0084' : '#c4b5fd'}>
                       {editType === 1 ? '+' : '-'}{(Math.abs(expectedCollRatio - borrowDetail.collateralRatio)).toFixed(2)}%
                     </Typography>
                   </Stack>

@@ -57,8 +57,8 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 			<Stack direction='row' spacing={9} justifyContent="center">
 				<Box>
 					<GoBackButton onClick={() => router.back()}><Typography variant='p'>{'<'} Go back</Typography></GoBackButton>
-					<Box mb='15px'>
-						<Typography variant='p_xxlg'>New Comet Liquidity Position</Typography>
+					<Box mb='8px'>
+						<Typography variant='h3' fontWeight={500}>New Comet Liquidity Position</Typography>
 					</Box>
 					<a href="https://docs.clone.so/system-architecture/comet-liquidity-system" target="_blank" rel="noreferrer">
 						<TipMsg>
