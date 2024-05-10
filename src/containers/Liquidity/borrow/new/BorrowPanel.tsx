@@ -150,7 +150,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
         <Box>
           <Box>
             <Typography variant='p_lg'>clAsset to Borrow</Typography>
-            <InfoTooltip title={TooltipTexts.onAssetToBorrow} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.onAssetToBorrow} color='#8988a3' />
           </Box>
           <SelectPoolBox onClick={() => setOpenChooseAsset(true)}>
             <Stack direction='row' gap={1}>
@@ -162,7 +162,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
           <Box>
             <Box mb='5px'>
               <Typography variant='p_lg'>Collateral Amount</Typography>
-              <InfoTooltip title={TooltipTexts.collateralAmount} color='#66707e' />
+              <InfoTooltip title={TooltipTexts.collateralAmount} color='#8988a3' />
             </Box>
             <Controller
               name="collAmount"
@@ -201,7 +201,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
 
           <Box mt='25px' mb='5px'>
             <Typography variant='p_lg'>Collateral Ratio</Typography>
-            <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
           </Box>
           <Box>
             {!isNaN(collAmount) && collAmount > 0 ?
@@ -214,7 +214,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
           <Box mb='10px'>
             <Box mt='25px' mb='5px'>
               <Typography variant='p_lg'>Borrow Amount</Typography>
-              <InfoTooltip title={TooltipTexts.borrowAmount} color='#66707e' />
+              <InfoTooltip title={TooltipTexts.borrowAmount} color='#8988a3' />
             </Box>
             <Box>
               <Controller

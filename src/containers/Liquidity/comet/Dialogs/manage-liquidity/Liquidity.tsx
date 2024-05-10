@@ -120,23 +120,25 @@ const Liquidity = ({ positionInfo, positionIndex, poolIndex }: { positionInfo: P
     <>
       <Box>
         <Typography variant='p_lg'>Liquidity Amount</Typography>
-        <InfoTooltip title={TooltipTexts.liquidityAmount} color='#66707e' />
+        <InfoTooltip title={TooltipTexts.liquidityAmount} color='#8988a3' />
       </Box>
       <Box mt='20px'>
         <EditLiquidityRatioSlider min={0} max={100} ratio={mintRatio} currentRatio={defaultMintRatio} disableHandleRatio={disableRatio} onChangeRatio={handleChangeMintRatio} />
       </Box>
 
       <BoxWithBorder>
-        <Stack direction='row' justifyContent='space-between' alignItems="center" padding='15px'>
+        <Stack direction='row' justifyContent='space-between' alignItems="center" padding='10px 15px'>
           <Box>
             <Typography variant='p'>New Liquidity Value</Typography>
-            <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#8988a3' />
           </Box>
           <Box>
             <Typography variant='p_lg'>${formatLocaleAmount(totalLiquidity, 5)}</Typography>
-            <Typography variant='p_lg' ml='9px' sx={differentLiquidityVal >= 0 ? { color: '#c4b5fd' } : { color: '#ff0084' }}>
-              {differentLiquidityVal >= 0 ? '+' : '-'}${Math.abs(differentLiquidityVal).toLocaleString()}
-            </Typography>
+            {differentLiquidityVal !== 0 &&
+              <Typography variant='p_lg' ml='9px' sx={differentLiquidityVal >= 0 ? { color: '#c4b5fd' } : { color: '#ff0084' }}>
+                {differentLiquidityVal >= 0 ? '+' : '-'}${Math.abs(differentLiquidityVal).toLocaleString()}
+              </Typography>
+            }
           </Box>
         </Stack>
       </BoxWithBorder>
@@ -152,7 +154,7 @@ const Liquidity = ({ positionInfo, positionIndex, poolIndex }: { positionInfo: P
           :
           <CometHealthBox padding='15px 20px'>
             <Box display='flex' justifyContent='center'>
-              <Typography variant='p'>Projected Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#66707e' /></Typography>
+              <Typography variant='p'>Projected Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Typography>
             </Box>
             <Box mt='15px' display='flex' justifyContent='center'>
               <HealthscoreView score={healthScore ?? positionInfo.totalHealthScore} />
@@ -175,15 +177,19 @@ const Liquidity = ({ positionInfo, positionIndex, poolIndex }: { positionInfo: P
           }
         </>
 
-        {isSubmitting ?
-          <Box display='flex' justifyContent='center' my='15px'>
-            <LoadingButton width='100%' height='52px' />
-          </Box>
-          :
-          <SubmitButton onClick={handleSubmit(onEditLiquidity)} disabled={!isValid} hasRisk={hasRiskScore}>
-            <Typography variant='p_xlg'>{hasRiskScore && 'Accept Risk and '}Adjust Liquidity</Typography>
-          </SubmitButton>
-        }
+        <Box mt='1px'>
+          {isSubmitting ?
+            <Box display='flex' justifyContent='center' my='15px'>
+              <LoadingButton width='100%' height='52px' />
+            </Box>
+            :
+            <SubmitButton onClick={handleSubmit(onEditLiquidity)} disabled={!isValid} hasRisk={hasRiskScore}>
+              {mintRatio == 0 ? <Typography variant='p_xlg'>Withdraw Liquidity</Typography> :
+                <Typography variant='p_xlg'>{hasRiskScore && 'Accept Risk and '}Adjust Liquidity</Typography>
+              }
+            </SubmitButton>
+          }
+        </Box>
       </Box>
     </>
   )
@@ -195,7 +201,8 @@ const BoxWithBorder = styled(Box)`
 `
 const CometHealthBox = styled(Box)`
   background-color: ${(props) => props.theme.basis.nobleBlack};
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
 `
 
 export default withSuspense(Liquidity, <LoadingProgress />)

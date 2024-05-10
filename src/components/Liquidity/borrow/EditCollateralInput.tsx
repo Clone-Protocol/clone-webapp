@@ -53,7 +53,7 @@ const EditCollateralInput: React.FC<Props> = ({
         <Typography variant="p">Current collateral amount</Typography>
         <Stack direction='row' gap={1}>
           <Typography variant="p_lg">{formatLocaleAmount(currentCollAmount)} {ON_USD}</Typography>
-          <Typography variant="p_lg" color='#66707e'>(${formatLocaleAmount(dollarPrice)} USD)</Typography>
+          <Typography variant="p_lg" color='#8988a3'>(${formatLocaleAmount(dollarPrice)} USD)</Typography>
         </Stack>
       </StackWithBorder>
 
@@ -76,7 +76,7 @@ const EditCollateralInput: React.FC<Props> = ({
           <Typography variant="p">Collateral amount after {editType === 0 ? "deposit" : "withdrawal"}</Typography>
           <Stack direction='row' gap={1}>
             <Typography variant="p_lg">{isAfterNoCollateralRemaining ? '0' : hasInvalidRatio ? 'N/A' : `${formatLocaleAmount(afterCollateralAmount)} ${ON_USD}`}</Typography>
-            <Typography variant="p_lg" color='#66707e'>{isAfterNoCollateralRemaining ? '(No Collateral Remaining)' : hasInvalidRatio ? 'N/A' : `($${formatLocaleAmount(afterCollateralDollarPrice)})`}</Typography>
+            <Typography variant="p_lg" color='#8988a3'>{isAfterNoCollateralRemaining ? '(No Collateral Remaining)' : hasInvalidRatio ? 'N/A' : `($${formatLocaleAmount(afterCollateralDollarPrice)})`}</Typography>
           </Stack>
         </StackWithBorder>
       </CenterBox>

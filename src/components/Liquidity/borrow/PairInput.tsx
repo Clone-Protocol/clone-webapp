@@ -37,11 +37,11 @@ const PairInput: React.FC<Props> = ({
 		<FormControl variant="standard" sx={{ width: '100%' }}>
 			<Stack direction="row" justifyContent="space-between">
 				<Box>
-					<Typography variant="p_lg" color='#66707e'>{inputTitle}</Typography>
+					<Typography variant="p_lg" color='#8988a3'>{inputTitle}</Typography>
 				</Box>
 				{headerTitle ? (
 					<Stack direction="row" justifyContent="flex-end">
-						<Typography variant='p' color='#66707e'>
+						<Typography variant='p' color='#8988a3'>
 							{headerTitle}: {headerValue || headerValue == 0 ? (<MaxValue onClick={() => onMax && onMax(headerValue)}>{formatLocaleAmount(headerValue, 5)}</MaxValue>) : '_'}
 						</Typography>
 						{(headerValue || headerValue == 0) && <MaxButton onClick={() => onMax && onMax(headerValue)}>MAX</MaxButton>}

@@ -40,11 +40,11 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
             <ValueBox width='300px'>
               <Box mb='6px'>
                 <Typography variant='p'>Collateral Ratio</Typography>
-                <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#66707e' />
+                <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
               </Box>
               <Stack direction='row' gap={1} alignItems='center'>
                 <Typography variant='h3'>{positionInfo.collateralRatio.toFixed(2)}%</Typography>
-                <Typography variant='p_lg' color='#66707e'>(min {positionInfo.minCollateralRatio}%)</Typography>
+                <Typography variant='p_lg' color='#8988a3'>(min {positionInfo.minCollateralRatio}%)</Typography>
               </Stack>
             </ValueBox>
           </Stack>
@@ -54,7 +54,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
             <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
               <Box textAlign='left'>
                 <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.borrowedOnasset), 5)}</Typography></Box>
-                <Box mt='-5px'><Typography variant='p' color='#66707e'>${formatLocaleAmount(borrowedDollarPrice)}</Typography></Box>
+                <Box mt='-5px'><Typography variant='p' color='#8988a3'>${formatLocaleAmount(borrowedDollarPrice)}</Typography></Box>
               </Box>
               <TickerBox display="flex" alignItems='center'>
                 <Image src={positionInfo.tickerIcon} width={22} height={22} alt={positionInfo.tickerSymbol!} />
@@ -75,7 +75,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
         <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
           <Box textAlign='left'>
             <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.collateralAmount), 5)}</Typography></Box>
-            <Box mt='-5px'><Typography variant='p' color='#66707e'>${formatLocaleAmount(Number(positionInfo.collateralAmount))}</Typography></Box>
+            <Box mt='-5px'><Typography variant='p' color='#8988a3'>${formatLocaleAmount(Number(positionInfo.collateralAmount))}</Typography></Box>
           </Box>
           <TickerBox display="flex" alignItems='center'>
             <Image src={collateralMapping(Collateral.onUSD).collateralIcon} width={22} height={22} alt={'dev-usd'} />

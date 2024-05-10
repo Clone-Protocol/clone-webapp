@@ -91,7 +91,7 @@ let columns: GridColDef[] = [
     flex: 1,
     renderCell(params: GridRenderCellParams<string>) {
       const collAmount = params.row.collAmount
-      return <Typography variant='p_xlg' color={collAmount === 0 ? '#66707e' : '#fff'}>{formatLocaleAmount(collAmount)}</Typography>
+      return <Typography variant='p_xlg' color={collAmount === 0 ? '#8988a3' : '#fff'}>{formatLocaleAmount(collAmount)}</Typography>
     },
   },
   {
@@ -102,7 +102,7 @@ let columns: GridColDef[] = [
     flex: 1,
     renderCell(params: GridRenderCellParams<string>) {
       const collUsdValue = params.row.collAmountDollarPrice * params.row.collAmount
-      return <Typography variant='p_xlg' color={collUsdValue === 0 ? '#66707e' : '#fff'}>${formatLocaleAmount(collUsdValue)}</Typography>
+      return <Typography variant='p_xlg' color={collUsdValue === 0 ? '#8988a3' : '#fff'}>${formatLocaleAmount(collUsdValue)}</Typography>
     },
   },
   {

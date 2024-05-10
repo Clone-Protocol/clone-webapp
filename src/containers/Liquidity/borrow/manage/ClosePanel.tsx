@@ -20,7 +20,7 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
       <Box mt='24px'>
         <Box>
           <Typography variant='p_lg'>Step 1: Repay full borrowed amount</Typography>
-          <InfoTooltip title={TooltipTexts.repayFullBorrow} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.repayFullBorrow} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
           <Typography variant='p_lg'>
@@ -41,7 +41,7 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
       <Box>
         <Box>
           <Typography variant='p_lg'>Step 2 (Final Step): Withdraw entire collateral</Typography>
-          <InfoTooltip title={TooltipTexts.withdrawEntire} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.withdrawEntire} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
           <Typography variant='p_lg'>

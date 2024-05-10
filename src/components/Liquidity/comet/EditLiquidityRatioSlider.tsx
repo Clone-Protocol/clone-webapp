@@ -67,7 +67,7 @@ const EditLiquidityRatioSlider: React.FC<Props> = ({ min = 0, max = 100, ratio, 
           <StyledSlider
             sx={{
               '& .MuiSlider-track': {
-                background: `linear-gradient(to right, #fff 51%, #ff0084 400px);`
+                background: `linear-gradient(to right, #c4b5fd 51%, #ff0084 400px);`
               }
             }}
             value={ratio}
@@ -82,7 +82,7 @@ const EditLiquidityRatioSlider: React.FC<Props> = ({ min = 0, max = 100, ratio, 
           <PrevBox sx={{ left: `calc(${currentRatio.toFixed(1)}% - 30px)` }}>
             <Pointer>▲</Pointer>
             <FixValueLabel><Typography variant='p_lg'>{formatLocaleAmount(currentRatio, 2)}%</Typography></FixValueLabel>
-            <Box mt='-4px'><Typography variant='p' color='#66707e'>Current</Typography></Box>
+            <Box mt='-4px'><Typography variant='p' color='#8988a3'>Current</Typography></Box>
           </PrevBox>
         </Box>
       </Stack>

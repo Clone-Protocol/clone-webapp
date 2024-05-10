@@ -56,7 +56,7 @@ const BorrowPositions = () => {
 			<Box mb='20px'>
 				<Typography variant='h3' fontWeight={500}>Borrow</Typography>
 				<Stack direction='row' alignItems='center' gap={1}>
-					<Typography variant='p' color='#66707e'>Borrow function enable LPs to leverage creative liquidity strategies.</Typography>
+					<Typography variant='p' color='#8988a3'>Borrow function enable LPs to leverage creative liquidity strategies.</Typography>
 					<a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/borrowing" target='_blank'>
 						<Box display='flex' color='#c4b5fd' sx={{ cursor: 'pointer', ':hover': { color: '#8070ad' }, whiteSpace: 'nowrap' }}>
 							<Typography variant='p' mr='3px'>Learn more</Typography>
@@ -123,7 +123,7 @@ let columns: GridColDef[] = [
 			return Number(params.value) > 0 ?
 				<Stack direction='column' alignItems='flex-end'>
 					<Box><CellDigitValue value={params.value} symbol={params.row.tickerSymbol} /></Box>
-					<Box><Typography variant='p_lg' color='#66707e'>${formatLocaleAmount(Number(params.value) * params.row.oPrice, 5)} USD</Typography></Box>
+					<Box><Typography variant='p_lg' color='#8988a3'>${formatLocaleAmount(Number(params.value) * params.row.oPrice, 5)} USD</Typography></Box>
 				</Stack>
 				: <Box></Box>
 		},
@@ -138,7 +138,7 @@ let columns: GridColDef[] = [
 			return (
 				<Stack direction='column' alignItems='flex-end'>
 					<Box><CellDigitValue value={params.value} symbol={ON_USD} /></Box>
-					<Box><Typography variant='p_lg' color='#66707e'>${formatLocaleAmount(params.value)} USD</Typography></Box>
+					<Box><Typography variant='p_lg' color='#8988a3'>${formatLocaleAmount(params.value)} USD</Typography></Box>
 				</Stack>
 			)
 		},
@@ -152,7 +152,7 @@ let columns: GridColDef[] = [
 		renderHeader(params: GridColumnHeaderParams<string>) {
 			return <Stack direction='row' alignItems='center'>
 				<Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
-				<InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#66707e' />
+				<InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
 			</Stack>
 		},
 		renderCell(params: GridRenderCellParams<string>) {
@@ -162,7 +162,7 @@ let columns: GridColDef[] = [
 				params.row.borrowed > 0 ?
 					(<Stack direction='column' alignItems='flex-end'>
 						<Box><Typography variant='h4' color={isRisk ? '#ed2525' : '#c4b5fd'}>{formatLocaleAmount(params.value, 2)}%</Typography></Box>
-						<Box><Typography variant='p_lg' color={isRisk ? '#ed2525' : '#66707e'}>(min {params.row.minCollateralRatio.toLocaleString()}%)</Typography></Box>
+						<Box><Typography variant='p_lg' color={isRisk ? '#ed2525' : '#8988a3'}>(min {params.row.minCollateralRatio.toLocaleString()}%)</Typography></Box>
 					</Stack>)
 					: (<></>)
 		},

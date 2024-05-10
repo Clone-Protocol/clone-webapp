@@ -28,21 +28,21 @@ const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
       <Box mb="12px"><Typography variant="p_xlg">{tickerSymbol}/{ON_USD} Pool Analytics</Typography></Box>
       <DataBox>
         <Box>
-          <Typography variant="p" color='#66707e'>Total Liquidity</Typography>
-          <InfoTooltip title={TooltipTexts.totalLiquidity} color='#66707e' />
+          <Typography variant="p" color='#8988a3'>Total Liquidity</Typography>
+          <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
         </Box>
         <Box mt='-4px'><Typography variant="p_xlg">${formatLocaleAmount(resultData?.totalLiquidity)} USD</Typography> <TxtPriceRate rate={resultData!.liquidityGainPct} /></Box>
       </DataBox>
       <DataBox>
         <Box>
-          <Typography variant="p" color='#66707e'>24h Trading Volume</Typography>
+          <Typography variant="p" color='#8988a3'>24h Trading Volume</Typography>
         </Box>
         <Box><Typography variant="p_xlg">${formatLocaleAmount(resultData?.tradingVol24h)} USD</Typography> <TxtPriceRate rate={resultData!.tradingVolGainPct} /></Box>
       </DataBox>
       <DataBox>
         <Box>
-          <Typography variant="p" color='#66707e'>APR</Typography>
-          <InfoTooltip title={TooltipTexts.avgAPY24h} color='#66707e' />
+          <Typography variant="p" color='#8988a3'>APR</Typography>
+          <InfoTooltip title={TooltipTexts.avgAPY24h} color='#8988a3' />
         </Box>
         <Box mt='-4px'><Typography variant="p_xlg" color={resultData?.avgAPY24hr! > 0 ? '#c4b5fd' : 'white'}>
           {

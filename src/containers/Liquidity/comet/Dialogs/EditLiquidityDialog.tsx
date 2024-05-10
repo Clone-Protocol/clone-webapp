@@ -91,7 +91,7 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
 }
 
 const BoxWrapper = styled(Box)`
-  padding: 8px 18px; 
+  padding: 4px 18px; 
   color: #fff;
   overflow-x: hidden;
 `

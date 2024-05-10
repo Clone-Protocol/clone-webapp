@@ -19,8 +19,8 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
       <Stack direction='row' gap={16}>
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#66707e'}>Borrowed Amount</Typography>
-            <InfoTooltip title={TooltipTexts.borrowedAmount} color='#66707e' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#8988a3'}>Borrowed Amount</Typography>
+            <InfoTooltip title={TooltipTexts.borrowedAmount} color='#8988a3' />
           </Box>
           <StatusValue>
             {status && status.statusValues &&
@@ -36,8 +36,8 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
         </Box>
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#66707e'}>Collateral in Borrow Positions</Typography>
-            <InfoTooltip title={TooltipTexts.collateralInBorrow} color='#66707e' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#8988a3'}>Collateral in Borrow Positions</Typography>
+            <InfoTooltip title={TooltipTexts.collateralInBorrow} color='#8988a3' />
           </Box>
           <StatusValue>
             {status && status.statusValues &&

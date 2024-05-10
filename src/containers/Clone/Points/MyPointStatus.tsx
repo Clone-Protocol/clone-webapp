@@ -98,7 +98,7 @@ const MyPointStatus = () => {
         <BorderBox width={isMobileOnSize ? '166px' : '350px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' height='20px'>
             <Typography variant='p_lg'>My Total Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.totalPoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.totalPoints} color='#8988a3' />
           </Box>
           <StatusValue>
             {infos?.hasPythPoint &&
@@ -126,7 +126,7 @@ const MyPointStatus = () => {
         <BorderBox width={isMobileOnSize ? '166px' : '200px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Liquidity Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.lpPoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.lpPoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -137,7 +137,7 @@ const MyPointStatus = () => {
         <BorderBox width={isMobileOnSize ? '166px' : '200px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Trade Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.tradePoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.tradePoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -152,7 +152,7 @@ const MyPointStatus = () => {
         <BorderBox width={isMobileOnSize ? '166px' : '200px'}>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Social Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.socialPoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.socialPoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -170,7 +170,7 @@ const MyPointStatus = () => {
               <Box mt='8px'>
                 <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
                   <Typography variant='p'>My Referral Points</Typography>
-                  <InfoTooltip title={TooltipTexts.points.referralPoints} color='#66707e' />
+                  <InfoTooltip title={TooltipTexts.points.referralPoints} color='#8988a3' />
                 </Box>
                 <StatusValue>
                   <Typography variant='p_xlg'>

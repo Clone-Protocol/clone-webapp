@@ -24,13 +24,13 @@ export const SubmitButton = styled(Button) <{ hasRisk?: boolean }>`
     background-color: ${(props) => props.hasRisk ? '#af256c' : props.theme.basis.lightSlateBlue};
   }
   &:disabled {
+    background-color: ${(props) => props.theme.basis.backInBlack};
     border: 1px solid ${(props) => props.theme.basis.plumFuzz};
-    color: #989898;
+    color: #8988a3;
     font-weight: 600;
   }
 `
 export const RiskSubmitButton = styled(SubmitButton)`
-  box-shadow: 0 0 10px 0 #c201a3;
   background-color: #d92a84;
   &:hover {
     background-color: #d92a84;
@@ -42,7 +42,6 @@ export const ConnectButton = styled(Button)`
   width: 100%;
   height: 52px;
   border-radius: 10px;
-  // box-shadow: 0 0 15px 0 #005874;
   background: ${(props) => props.theme.basis.backInBlack};
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
   color: #fff;

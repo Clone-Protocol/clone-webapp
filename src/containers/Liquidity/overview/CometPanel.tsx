@@ -221,7 +221,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
               <Box>
                 <Box mb='10px'>
                   <Typography variant='p_lg'>Select Liquidity Pool</Typography>
-                  <InfoTooltip title={TooltipTexts.selectLiquidityPool} color='#66707e' />
+                  <InfoTooltip title={TooltipTexts.selectLiquidityPool} color='#8988a3' />
                 </Box>
                 {positionInfo?.hasAlreadyPool ?
                   <SelectDefaultPool onClick={() => openChooseLiquidityDialog()}>
@@ -240,7 +240,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
                 <Box mt='20px'>
                   <Box>
                     <Typography variant='p_lg'>Liquidity Amount</Typography>
-                    <InfoTooltip title={TooltipTexts.liquidityAmount} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.liquidityAmount} color='#8988a3' />
                   </Box>
                   <Box mt='15px' mb='10px' p='5px'>
                     <RatioSlider min={0} max={100} value={mintRatio} hideValueBox onChange={handleChangeMintRatio} />
@@ -251,13 +251,13 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
                 <StackWithBorder direction='row' justifyContent='space-between' alignItems='center'>
                   <Box display='flex' alignItems='center'>
                     <Typography variant="p">Liquidity Value</Typography>
-                    <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#8988a3' />
                   </Box>
                   <Box display='flex' alignItems='center'><Typography variant="p_lg">${formatLocaleAmount(totalLiquidity)}</Typography></Box>
                 </StackWithBorder>
 
                 <Box mt='25px'>
-                  <Box mb="15px"><Typography variant="p_lg">Projected Health Score</Typography> <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#66707e' /></Box>
+                  <Box mb="15px"><Typography variant="p_lg">Projected Health Score</Typography> <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Box>
                   <HealthscoreBar score={healthScore} width={470} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
                   {hasRiskScore &&
                     <a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/comets" target='_blank'>

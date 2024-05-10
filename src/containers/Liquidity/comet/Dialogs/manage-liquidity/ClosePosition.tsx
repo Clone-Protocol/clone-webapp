@@ -104,10 +104,10 @@ const ClosePosition = ({ positionIndex, onMoveTab, handleClose }: { positionInde
       <Box>
         <Box>
           <Typography variant='p_lg'>Step 1: Withdraw All Liquidity</Typography>
-          <InfoTooltip title={TooltipTexts.withdrawLiquidity} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.withdrawLiquidity} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
-          <Typography variant='p_lg' color={positionLiquidity > 0 ? '#fff' : '#66707e'}>
+          <Typography variant='p_lg' color={positionLiquidity > 0 ? '#fff' : '#8988a3'}>
             ${formatLocaleAmount(positionLiquidity, 8)}
           </Typography>
 
@@ -124,10 +124,10 @@ const ClosePosition = ({ positionIndex, onMoveTab, handleClose }: { positionInde
       <Box>
         <Box>
           <Typography variant='p_lg'>Step 2: Pay Entire ILD Balance</Typography>
-          <InfoTooltip title={TooltipTexts.entireILDBalance} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.entireILDBalance} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
-          <Typography variant='p_lg' color={ildBalance > 0 ? '#fff' : '#66707e'}>
+          <Typography variant='p_lg' color={ildBalance > 0 ? '#fff' : '#8988a3'}>
             ${formatLocaleAmount(ildBalance, 8)}</Typography>
 
           {ildBalance === 0 ?
@@ -143,10 +143,10 @@ const ClosePosition = ({ positionIndex, onMoveTab, handleClose }: { positionInde
       <Box>
         <Box>
           <Typography variant='p_lg'>Step 3: Claim All Rewards</Typography>
-          <InfoTooltip title={TooltipTexts.claimAllRewards} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.claimAllRewards} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
-          <Typography variant='p_lg' color={remainRewards > 0 ? '#fff' : '#66707e'}>
+          <Typography variant='p_lg' color={remainRewards > 0 ? '#fff' : '#8988a3'}>
             ${formatLocaleAmount(remainRewards, 8)}</Typography>
           {remainRewards === 0 ?
             <Stack direction='row' gap={1} alignItems='center'>
@@ -181,7 +181,7 @@ const StackWithBorder = styled(Stack)`
   height: 60px;
   margin-top: 4px;
   margin-bottom: 12px;
-  border-radius: 5px;
+  border-radius: 10px;
   align-items: center;
   gap: 10px;
   padding: 21px;

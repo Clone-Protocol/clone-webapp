@@ -17,7 +17,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>Health Score</Typography>
-            <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#8988a3' />
           </Box>
           <Box mt='15px'>
             <HealthscoreView score={infos && infos.healthScore ? infos.healthScore : 0} />
@@ -26,7 +26,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Liquidity</Typography>
-            <InfoTooltip title={TooltipTexts.totalLiquidity} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -37,7 +37,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Collateral</Typography>
-            <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -48,7 +48,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My APR</Typography>
-            <InfoTooltip title={TooltipTexts.yourApy} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.yourApy} color='#8988a3' />
           </Box>
           <StatusValue>
             {(infos && infos.positions.length > 0 && !isNaN(infos.totalApy)) &&

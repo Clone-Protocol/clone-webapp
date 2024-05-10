@@ -143,9 +143,9 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
                   <Box display='flex' flexDirection='column' alignItems='flex-start'>
                     <Box display='flex' gap={1} alignItems='center' mb='4px'>
                       <Typography variant='p_lg' color='#fff'>Get more {pairData.wrapTickerSymbol}</Typography>
-                      {hasLinkForWrapPortUrl && <Box color='#66707e' mb='-3px'><LearnMoreIcon /></Box>}
+                      {hasLinkForWrapPortUrl && <Box color='#8988a3' mb='-3px'><LearnMoreIcon /></Box>}
                     </Box>
-                    <Typography variant='p' color='#66707e' textAlign='left' whiteSpace='nowrap'>Port over {pairData.tickerSymbol.slice(2).toUpperCase()} as {pairData.wrapTickerSymbol} to Solana</Typography>
+                    <Typography variant='p' color='#8988a3' textAlign='left' whiteSpace='nowrap'>Port over {pairData.tickerSymbol.slice(2).toUpperCase()} as {pairData.wrapTickerSymbol} to Solana</Typography>
                   </Box>
                   <Image src={isWormholeAsset ? WormholeIcon : DebridgeIcon} alt='debridge' />
                 </GetMoreStack>
@@ -190,7 +190,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
               :
               <Box>
                 <MaxStack direction="row" justifyContent="space-between" alignItems="center" px='20px'>
-                  <Typography variant='p_lg' color='#66707e'>Max Unwrappable</Typography>
+                  <Typography variant='p_lg' color='#8988a3'>Max Unwrappable</Typography>
                   <Typography variant='p_xlg'>{myBalance?.maxUnwrappableVal! >= 0.01 ? myBalance?.maxUnwrappableVal.toFixed(2) : '<0.01'} {pairData.tickerSymbol}</Typography>
                 </MaxStack>
 

@@ -144,7 +144,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                 <Box mb='6px'><Typography variant='p'>Collateral Ratio</Typography></Box>
                 <Stack direction='row' gap={1} alignItems='center'>
                   <Typography variant='h3'>{borrowDetail.collateralRatio.toFixed(2)}%</Typography>
-                  <Typography variant='p_lg' color='#66707e'>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
+                  <Typography variant='p_lg' color='#8988a3'>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
                 </Stack>
               </ValueBox>
             </Stack>
@@ -204,7 +204,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                 <Box>
                   <Box>
                     <Typography variant='p'>Projected Collateral Ratio</Typography>
-                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#8988a3' />
                   </Box>
                   <Stack direction='row' gap={1} mt='8px'>
                     <Typography variant='h3' fontWeight={500} color={editType === 0 && hasRiskRatio ? '#ff0084' : '#fff'}>
@@ -214,7 +214,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                       {editType === 1 ? '+' : '-'}{(Math.abs(expectedCollRatio - borrowDetail.collateralRatio)).toFixed(2)}%
                     </Typography>
                   </Stack>
-                  <Typography variant='p_lg' color={editType === 0 && hasRiskRatio ? '#ff0084' : '#66707e'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
+                  <Typography variant='p_lg' color={editType === 0 && hasRiskRatio ? '#ff0084' : '#8988a3'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
                 </Box>}
             </RatioBox>
 

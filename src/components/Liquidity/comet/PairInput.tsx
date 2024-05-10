@@ -27,7 +27,7 @@ const PairInput: React.FC<Props> = ({
   rightHeaderTitle,
   balance,
   inputTitle,
-  inputTitleColor = '#66707e',
+  inputTitleColor = '#8988a3',
   balanceDisabled = false,
   hideMaxButton = false,
   onChange,
@@ -43,7 +43,7 @@ const PairInput: React.FC<Props> = ({
         </Box>
         {!balanceDisabled ? (
           <Box display='flex' alignItems='center'>
-            <Typography variant="p" color="#66707e">
+            <Typography variant="p" color="#8988a3">
               {rightHeaderTitle}:{" "}
             </Typography>
             <MaxPointerValue>
@@ -91,12 +91,15 @@ const PairInput: React.FC<Props> = ({
 const CenterBox = styled(Box)`
   width: 100%;
   background-color: ${(props) => props.theme.basis.cinder};
+  margin-top: 5px;
+  border-radius: 10px;
 `
 const FormStack = styled(Stack)`
   display: flex;
   width: 100%;
   height: 84px;
   padding: 18px 12px;
+  border-radius: 10px;
   &:hover {
     box-shadow: 0 0 0 1px ${(props) => props.theme.basis.shadowGloom} inset;
   }
