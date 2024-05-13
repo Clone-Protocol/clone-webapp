@@ -67,15 +67,32 @@ export const CommonTab = styled((props: StyledTabProps) => (
 ))({
 	width: '138px',
 	'&.Mui-selected': {
-		background: '#201c27',
+		background: '#16141b',
 		borderStyle: 'solid',
+		borderTopLeftRadius: '10px',
+		borderTopRightRadius: '10px',
+		borderBottomLeftRadius: '0px',
+		borderBottomRightRadius: '0px',
+		border: 'none'
+	}
+})
+
+export const LiquidityTab = styled((props: StyledTabProps) => (
+	<StyledTab {...props} />
+))({
+	width: '138px',
+	'&.Mui-selected': {
+		background: '#201c27',
 		borderColor: 'transparent',
 		borderTopColor: '#332e46',
 		borderLeftColor: '#332e46',
 		borderRightColor: '#332e46',
+		borderWidth: '1px',
+		borderStyle: 'solid',
 		borderTopLeftRadius: '10px',
 		borderTopRightRadius: '10px',
-		borderWidth: '1px',
+		borderBottomLeftRadius: '0px',
+		borderBottomRightRadius: '0px',
 	}
 })
 

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { StyledTabs, CommonTab } from '~/components/Common/StyledTab'
+import { StyledTabs, CommonTab, LiquidityTab } from '~/components/Common/StyledTab'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
@@ -42,7 +42,7 @@ const CometLiquidity = () => {
 
       <Box>
         <StyledTabs value={0} sx={{ maxWidth: '590px', marginTop: '12px' }}>
-          <CommonTab value={0} label='Collateral' />
+          <LiquidityTab value={0} label='Collateral' />
         </StyledTabs>
 
         <PanelBox>
@@ -52,7 +52,7 @@ const CometLiquidity = () => {
 
       <Box>
         <StyledTabs value={0} sx={{ maxWidth: '590px', marginTop: '12px' }}>
-          <CommonTab value={0} label='Positions' />
+          <LiquidityTab value={0} label='Positions' />
         </StyledTabs>
 
         <PanelBox>

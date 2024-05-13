@@ -65,7 +65,7 @@ const RatioSlider: React.FC<Props> = ({ min = 0, max = 200, value, hideValueBox 
 						'& .MuiSlider-valueLabel': {
 							border: `solid 1px #fff`,
 							borderRadius: '4px',
-							color: value >= 100 ? '#ed2525' : ''
+							color: value >= 100 ? '#ff0084' : ''
 						},
 						'& .MuiSlider-thumb': {
 							border: `0px`,

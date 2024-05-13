@@ -61,7 +61,8 @@ const DataBox = styled(Box)`
   height: 61px;
   margin-bottom: 12px;
   padding: 4px 16px;
-  border: solid 1px ${(props) => props.theme.basis.darkPurple};
+  border-radius: 10px;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 
 export default PositionAnalytics

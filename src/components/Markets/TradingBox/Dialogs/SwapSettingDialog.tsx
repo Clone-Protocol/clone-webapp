@@ -93,7 +93,7 @@ const SwapSettingDialog = ({ open, onSaveSetting }: { open: boolean, onSaveSetti
             </SlippageStack>
 
             {showErrorMsg &&
-              <Box mt='10px' lineHeight={1}><Typography variant='p' color='#ed2525'>Your transaction may be reverted due to low slippage tolerance</Typography></Box>
+              <Box mt='10px' lineHeight={1}><Typography variant='p' color='#ff0084'>Your transaction may be reverted due to low slippage tolerance</Typography></Box>
             }
 
             <Box sx={{ position: 'absolute', right: '10px', top: '10px' }}>

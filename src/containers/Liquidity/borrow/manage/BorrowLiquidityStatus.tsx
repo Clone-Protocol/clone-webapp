@@ -19,8 +19,8 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
       <Stack direction='row' gap={16}>
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#8988a3'}>Borrowed Amount</Typography>
-            <InfoTooltip title={TooltipTexts.borrowedAmount} color='#8988a3' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : 'rgba(255, 255, 255, 0.3)'}>Borrowed Amount</Typography>
+            <InfoTooltip title={TooltipTexts.borrowedAmount} color={!hasNoPosition ? '#8988a3' : '#66707e'} />
           </Box>
           <StatusValue>
             {status && status.statusValues &&
@@ -36,8 +36,8 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
         </Box>
         <Box>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#8988a3'}>Collateral in Borrow Positions</Typography>
-            <InfoTooltip title={TooltipTexts.collateralInBorrow} color='#8988a3' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : 'rgba(255, 255, 255, 0.3)'}>Collateral in Borrow Positions</Typography>
+            <InfoTooltip title={TooltipTexts.collateralInBorrow} color={!hasNoPosition ? '#8988a3' : '#66707e'} />
           </Box>
           <StatusValue>
             {status && status.statusValues &&
@@ -64,7 +64,7 @@ const Wrapper = styled(Box)`
   margin-bottom: 28px;
   padding: 12px 75px 28px 75px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const StatusValue = styled(Box)`
   display: flex;

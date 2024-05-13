@@ -154,8 +154,8 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
           </Box>
           <SelectPoolBox onClick={() => setOpenChooseAsset(true)}>
             <Stack direction='row' gap={1}>
-              <Image src={ASSETS[assetIndex].tickerIcon} width={27} height={27} alt={ASSETS[assetIndex].tickerSymbol} />
-              <Typography variant='p_xlg'>{ASSETS[assetIndex].tickerSymbol}</Typography>
+              <Image src={ASSETS[assetIndex].tickerIcon} width={20} height={20} alt={ASSETS[assetIndex].tickerSymbol} />
+              <Typography variant='p_lg'>{ASSETS[assetIndex].tickerSymbol}</Typography>
             </Stack>
             <Image src={SelectArrowIcon} alt='select' />
           </SelectPoolBox>
@@ -181,7 +181,6 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
                   tickerIcon={fromPair.tickerIcon}
                   tickerSymbol={fromPair.tickerSymbol}
                   value={parseFloat(formatNumberToString(field.value, 4))}
-                  inputTitle='Collateral'
                   headerTitle="Balance"
                   headerValue={usdiBalance?.balanceVal}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,6 +232,7 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
                     tickerSymbol={ASSETS[assetIndex].tickerSymbol}
                     value={parseFloat(formatNumberToString(field.value, 5))}
                     dollarPrice={field.value * borrowDetail.oPrice}
+                    disabledInput={true}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                       const borrowAmt = parseFloat(event.currentTarget.value)
                       field.onChange(borrowAmt)
@@ -285,15 +285,15 @@ const SelectPoolBox = styled(Box)`
 	align-items: center;
 	width: 145px;
 	height: 40px;
-	background-color: rgba(37, 141, 237, 0.15);
-	border-radius: 5px;
+	border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+	border-radius: 1000px;
 	cursor: pointer;
 	padding: 8px;
   margin-top: 10px;
   margin-bottom: 25px;
 	&:hover {
 		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
-		background-color: rgba(37, 141, 237, 0.23);
   }
 `
 const WarningStack = styled(Stack)`

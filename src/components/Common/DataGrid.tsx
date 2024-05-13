@@ -92,7 +92,7 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverla
         cursor: 'pointer'
       },
       '& .MuiDataGrid-row:hover': {
-        backgroundColor: 'rgba(196, 181, 253, 0.1)'
+        backgroundColor: 'rgba(255, 255, 255, 0.08)'
       },
       '& .MuiDataGrid-cell': {
         borderBottom: '0',
@@ -109,8 +109,8 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverla
         borderRight: '1px solid #ff8e4f',
       },
       '.border-poor--row': {
-        borderLeft: '1px solid #ed2525',
-        borderRight: '1px solid #ed2525'
+        borderLeft: '1px solid #ff0084',
+        borderRight: '1px solid #ff0084'
       }
     }}
     components={{
@@ -167,7 +167,7 @@ export const CellTicker: React.FC<TickerType> = ({ tickerIcon, tickerName, ticke
       <Box sx={{ maxWidth: '200px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
         <Typography variant='p_xlg'>{tickerName}</Typography>
       </Box>
-      <Box sx={{ color: '#989898', marginLeft: { xs: '0px', md: '10px' } }}>
+      <Box sx={{ color: '#8988a3', marginLeft: { xs: '0px', md: '10px' } }}>
         <Typography variant='p_lg'>{tickerSymbol}</Typography>
       </Box>
     </Box>
@@ -175,5 +175,5 @@ export const CellTicker: React.FC<TickerType> = ({ tickerIcon, tickerName, ticke
 )
 
 export const CellDigitValue = ({ value, symbol }: { value: string | undefined, symbol?: string }) => (
-  <Typography variant='p'>{value && formatLocaleAmount(value, 5)} {symbol}</Typography>
+  <Typography variant='p_xlg'>{value && formatLocaleAmount(value, 5)} {symbol}</Typography>
 )

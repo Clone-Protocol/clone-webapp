@@ -101,10 +101,11 @@ const ValueBox = styled(Box)`
   padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: #0a080f;
 `
 const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 10px;
   padding: 24px;
 `
 const EditRowBox = styled(Box)`
@@ -112,8 +113,8 @@ const EditRowBox = styled(Box)`
   width: 100%;
   height: 80px; 
   margin-bottom: 9px;
-  border: 1px solid ${(props) => props.theme.basis.shadowGloom};
-  border-radius: 6px;
+  border: 1px solid ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 10px;
 `
 const EditBox = styled(Box)`
   display: flex;
@@ -121,9 +122,9 @@ const EditBox = styled(Box)`
   justify-content: center;
   width: 30px;
   cursor: pointer;
-  background: ${(props) => props.theme.basis.shadowGloom};
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  background: ${(props) => props.theme.basis.plumFuzz};
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 `
 const TickerBox = styled(Box)`
   background: ${(props) => props.theme.basis.darkNavy};

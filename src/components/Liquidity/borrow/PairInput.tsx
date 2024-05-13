@@ -50,7 +50,7 @@ const PairInput: React.FC<Props> = ({
 					<></>
 				)}
 			</Stack>
-			<CenterBox>
+			<CenterBox sx={disabledInput ? { border: '1px solid #332e46' } : {}}>
 				<FormStack direction="row" justifyContent="space-between" alignItems="center" noHover={disabledInput} onClick={() => ipAmount.current?.focus()} sx={disabledInput ? { border: '1px solid #414166', background: 'transparent' } : {}}>
 					<Box>
 						<InputAmount
@@ -82,10 +82,11 @@ const PairInput: React.FC<Props> = ({
 
 const CenterBox = styled(Box)`
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${(props) => props.theme.basis.cinder};
+	border-radius: 10px;
 `
 const MaxValue = styled('span')`
-	color: ${(props) => props.theme.basis.liquidityBlue};
+	color: ${(props) => props.theme.basis.melrose};
 	cursor: pointer;
 `
 const FormStack = styled(Stack) <{ noHover?: boolean }>`
@@ -110,7 +111,7 @@ const InputAmount = styled(`input`)`
 `
 const MaxButton = styled(Box)`
   border-radius: 4px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: ${(props) => props.theme.basis.cinder};
   margin-left: 6px;
 	margin-bottom: 5px;
   font-size: 10px;
@@ -120,7 +121,7 @@ const MaxButton = styled(Box)`
   color: #fff;
   cursor: pointer;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue};
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose};
 	}
 `
 const DollarAmount = styled("div")`

@@ -50,7 +50,7 @@ const DisabledRatioSlider: React.FC = () => {
 
 const InputAmount = styled(`input`)`
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: ${(props) => props.theme.basis.cinder};
 	width: 108px;
 	height: 58px;
 	border: 0px;

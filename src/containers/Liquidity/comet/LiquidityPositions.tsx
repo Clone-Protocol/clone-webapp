@@ -75,7 +75,7 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
           isBorderTopRadius={false}
           isBorderBottomRadius={false}
           noAutoHeight={(!publicKey || hasNoCollateral || (!hasNoCollateral && positions.length === 0)) === true}
-          customNoRowsOverlay={customOverlay}
+          customNoResultsOverlay={customOverlay}
           onRowClick={handleRowClick}
         />
       </Box>

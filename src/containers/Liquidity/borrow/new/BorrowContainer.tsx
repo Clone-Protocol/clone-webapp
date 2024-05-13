@@ -67,6 +67,7 @@ const StyledBox = styled(Paper)`
 const LeftBoxWrapper = styled(Box)`
 	width: 600px; 
 	padding: 8px 22px;
+  background: ${(props) => props.theme.basis.backInBlack};
 	border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
   margin-top: 23px;
 	margin-bottom: 25px;

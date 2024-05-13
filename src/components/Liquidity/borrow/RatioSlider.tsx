@@ -113,11 +113,11 @@ const ValueBox = styled(Box)`
 `
 const InputAmount = styled(`input`)`
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: ${(props) => props.theme.basis.cinder};
 	width: 108px;
 	height: 58px;
 	border: 0px;
-	border-radius: 5px;
+	border-radius: 10px;
 	line-height: 15px;
 	color: #fff;
 	font-size: 26px;

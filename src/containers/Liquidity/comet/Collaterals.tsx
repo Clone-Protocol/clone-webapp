@@ -51,7 +51,7 @@ const Collaterals = ({ hasNoCollateral, collaterals, onRefetchData }: { hasNoCol
         minHeight={108}
         noAutoHeight={!publicKey}
         isBorderTopRadius={false}
-        customNoRowsOverlay={() => CustomNoRowsOverlay(customOverlayMsg)}
+        customNoResultsOverlay={() => CustomNoRowsOverlay(customOverlayMsg)}
         onRowClick={handleRowClick}
       />
 

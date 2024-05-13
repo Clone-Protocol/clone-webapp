@@ -182,7 +182,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
                   {showCustom &&
                     <Box>
                       <StyledInput placeholder="Enter custom RPC URL" disableUnderline onChange={handleChangeCustomRPCUrl} sx={{ width: { xs: '100%', md: '322px' } }} />
-                      {errorCustomMsg && <Box><Typography variant='p' color='#ed2525'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
+                      {errorCustomMsg && <Box><Typography variant='p' color='#ff0084'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
                       <SaveBtn onClick={saveCustomURL}><Typography variant='p'>Save</Typography></SaveBtn>
                     </Box>
                   }

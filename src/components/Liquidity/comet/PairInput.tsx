@@ -119,6 +119,10 @@ const MaxButton = styled(Box)`
   padding: 2px 7px;
   color: #fff;
   cursor: pointer;
+  &:hover {
+		background-color: rgba(155, 121, 252, 0.3);
+		border: solid 1px ${(props) => props.theme.basis.melrose};
+  }
 `
 const InputAmount = styled(`input`)`
   width: 230px;

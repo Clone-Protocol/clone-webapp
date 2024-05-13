@@ -72,20 +72,18 @@ const BorrowPositions = () => {
 				rows={positions || []}
 				minHeight={108}
 				noAutoHeight={(!publicKey || positions?.length === 0) === true}
-				hasRangeIndicator={true}
-				hasTopBorderRadius={true}
-				gridType={GridType.Borrow}
-				customNoRowsOverlay={() => CustomNoRowsOverlay(customOverlayMsg)}
+				isBorderBottomRadius={false}
+				customNoResultsOverlay={() => CustomNoRowsOverlay(customOverlayMsg)}
 				onRowClick={handleRowClick}
 			/>
 
 			{publicKey &&
-				<Stack direction='row' mt='9px' onMouseOver={() => setIsBtnHover(true)} onMouseLeave={() => setIsBtnHover(false)}>
+				<Stack direction='row' onMouseOver={() => setIsBtnHover(true)} onMouseLeave={() => setIsBtnHover(false)}>
 					{positions && positions.length > 0 ?
-						<AddButton onClick={moveNewBorrowPositionPage} sx={isBtnHover ? { color: '#fff' } : { color: '#414e66' }} disableRipple>
+						<AddButton onClick={moveNewBorrowPositionPage} sx={isBtnHover ? { color: '#fff' } : { color: '#8988a3' }} disableRipple>
 							<Stack direction='row'>
-								<AddIcon color={isBtnHover ? '#fff' : '#414e66'} />
-								<Typography variant='p_lg' ml='10px' color={isBtnHover ? '#fff' : '#414e66'}>Add new borrow position</Typography>
+								<AddIcon color={isBtnHover ? '#fff' : '#8988a3'} />
+								<Typography variant='p_lg' ml='10px' color={isBtnHover ? '#fff' : '#8988a3'}>Add new borrow position</Typography>
 							</Stack>
 						</AddButton>
 						:
@@ -110,7 +108,7 @@ let columns: GridColDef[] = [
 		renderCell(params: GridRenderCellParams<string>) {
 			return params.row.borrowed > 0 ?
 				<CellTicker tickerIcon={params.row.tickerIcon} tickerName={params.row.tickerName} tickerSymbol={params.row.tickerSymbol} />
-				: <Box><Typography variant='p_xlg' color='#989898'>Please continue to close</Typography></Box>
+				: <Box><Typography variant='p_xlg' color='#8988a3'>Please continue to close</Typography></Box>
 		},
 	},
 	{
@@ -151,7 +149,7 @@ let columns: GridColDef[] = [
 		flex: 1,
 		renderHeader(params: GridColumnHeaderParams<string>) {
 			return <Stack direction='row' alignItems='center'>
-				<Typography variant='p' color='#989898'>{params.colDef.headerName}</Typography>
+				<Typography variant='p' color='#8988a3'>{params.colDef.headerName}</Typography>
 				<InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
 			</Stack>
 		},
@@ -161,8 +159,8 @@ let columns: GridColDef[] = [
 				:
 				params.row.borrowed > 0 ?
 					(<Stack direction='column' alignItems='flex-end'>
-						<Box><Typography variant='h4' color={isRisk ? '#ed2525' : '#c4b5fd'}>{formatLocaleAmount(params.value, 2)}%</Typography></Box>
-						<Box><Typography variant='p_lg' color={isRisk ? '#ed2525' : '#8988a3'}>(min {params.row.minCollateralRatio.toLocaleString()}%)</Typography></Box>
+						<Box><Typography variant='h4' color={isRisk ? '#ff0084' : '#c4b5fd'}>{formatLocaleAmount(params.value, 2)}%</Typography></Box>
+						<Box><Typography variant='p_lg' color={isRisk ? '#ff0084' : '#8988a3'}>(min {params.row.minCollateralRatio.toLocaleString()}%)</Typography></Box>
 					</Stack>)
 					: (<></>)
 		},
@@ -176,11 +174,16 @@ const AddButton = styled(Button)`
   height: 28px;
   padding: 4px 0;
   background-color: rgba(255, 255, 255, 0.01);
-  border: 1px solid ${(props) => props.theme.basis.jurassicGrey};
-  color: ${(props) => props.theme.basis.shadowGloom};
-  margin-top: 9px;
+  border: 1px solid ${(props) => props.theme.basis.plumFuzz};
+  border-top: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: ${(props) => props.theme.basis.textRaven};
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
+		border-color: rgba(255, 255, 255, 0.05);
   }
 `
 const AddButtonNoPosition = styled(AddButton)`
