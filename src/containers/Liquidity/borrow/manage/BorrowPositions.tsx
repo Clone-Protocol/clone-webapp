@@ -190,7 +190,7 @@ const AddButtonNoPosition = styled(AddButton)`
 	height: 70px;
   color: #fff;
 	border: 0px;
-	margin-top: -80px;
+	margin-top: -70px;
   &:hover {
     border-color: ${(props) => props.theme.palette.info.main};
   }

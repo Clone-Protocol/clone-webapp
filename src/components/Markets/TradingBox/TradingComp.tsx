@@ -127,7 +127,6 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   }
 
   useEffect(() => {
-    setisBuy(true)
     setOpenOrderDetails(false)
     initData()
     refetch()

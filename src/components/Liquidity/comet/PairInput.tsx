@@ -39,7 +39,7 @@ const PairInput: React.FC<Props> = ({
     <FormControl variant="standard" sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent="space-between">
         <Box>
-          <Typography variant="p_lg" color={inputTitleColor}>{inputTitle}</Typography>
+          <Typography variant="p" color={inputTitleColor}>{inputTitle}</Typography>
         </Box>
         {!balanceDisabled ? (
           <Box display='flex' alignItems='center'>

@@ -148,7 +148,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
               {formatLocaleAmount(Math.max(0, positionInfo.onassetILD), 8)} {positionInfo.tickerSymbol}
             </Typography>
             <Typography variant='p_lg' color='#8988a3' ml='10px'>
-              {`($${formatLocaleAmount(Math.max(0, positionInfo.onassetILD) * positionInfo.oraclePrice), 8})`}
+              {`($${formatLocaleAmount(Math.max(0, positionInfo.onassetILD) * positionInfo.oraclePrice, 8)})`}
             </Typography>
           </Box>
         </StackWithBorder>
@@ -298,7 +298,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
           </Box>
           :
           <SubmitButton onClick={handleSubmit(onEdit)} disabled={isNotValid}>
-            <Typography variant='p_xlg'>{positionInfo.onassetILD <= 0 && positionInfo.collateralILD <= 0 ? 'No ILD Balance' : (!ildAssetAmount && !ildCollAmount) ? 'Please adjust payment amount' : (remainingAssetILD === 0 && remainingCollILD === 0) ? 'Pay Entire ILD Balance' : 'Adjust ILD'}</Typography>
+            <Typography variant='p_xlg'>{positionInfo.onassetILD <= 0 && positionInfo.collateralILD <= 0 ? 'No ILD Balance' : (!ildAssetAmount && !ildCollAmount) ? 'Please adjust payment amount' : (remainingAssetILD === 0 && remainingCollILD === 0) ? 'Pay Entire ILD Debt' : 'Adjust ILD'}</Typography>
           </SubmitButton>
         }
       </Box>

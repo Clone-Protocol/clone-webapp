@@ -43,13 +43,13 @@ const EditCollateralInput: React.FC<Props> = ({
 
   return (
     <FormControl variant="standard" sx={{ width: "100%" }}>
-      <Box sx={{ backgroundColor: '#1a1c28' }}>
+      <Box sx={{ backgroundColor: '#201c27', borderRadius: '10px' }} mb='30px'>
         <StyledTabs value={editType} onChange={onChangeType}>
           {!isFullRepaid && <StyledTab value={0} label="Deposit Collateral" width='176px' allBorderRadius={true}></StyledTab>}
           <StyledTab value={1} label="Withdraw Collateral" width='176px' allBorderRadius={true}></StyledTab>
         </StyledTabs>
       </Box>
-      <StackWithBorder direction='row' justifyContent="space-between" alignItems='center' mt='38px'>
+      <StackWithBorder direction='row' justifyContent="space-between" alignItems='center'>
         <Typography variant="p">Current collateral amount</Typography>
         <Stack direction='row' gap={1}>
           <Typography variant="p_lg">{formatLocaleAmount(currentCollAmount)} {ON_USD}</Typography>
@@ -85,15 +85,16 @@ const EditCollateralInput: React.FC<Props> = ({
 }
 
 const StackWithBorder = styled(Stack)`
-  background: ${(props) => props.theme.basis.darkNavy};
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  background: ${(props) => props.theme.basis.nobleBlack};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 10px;
   padding: 15px 18px;
-  margin-top: 16px;
+  margin-top: 10px;
 `
 const CenterBox = styled(Box)`
   padding: 20px 17px;
-  border-radius: 5px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border-radius: 10px;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 
 export default EditCollateralInput

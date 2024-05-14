@@ -62,7 +62,7 @@ const DataBox = styled(Box)`
   margin-bottom: 12px;
   padding: 4px 16px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
 `
 
 export default PositionAnalytics

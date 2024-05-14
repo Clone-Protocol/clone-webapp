@@ -14,6 +14,7 @@ import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import { LoadingButton } from '~/components/Common/Loading'
+import { InfoMsg } from '~/components/Common/WarningMsg'
 
 const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEditForm }: { borrowId: number, borrowDetail: BorrowDetail, initEditType: number, open: boolean, onHideEditForm: () => void }) => {
   const { publicKey } = useWallet()
@@ -197,7 +198,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                 <Box>
                   <Image src={IconSmile} alt='full borrowed amount' />
                   <Box>
-                    <Typography variant='p' color='#414e66'>{hasLackBalance ? 'N/A' : 'Borrowed amount paid in full (no collateral ratio)'}</Typography>
+                    <Typography variant='p' color='#8988a3'>{hasLackBalance ? 'N/A' : 'Borrowed amount paid in full (no collateral ratio)'}</Typography>
                   </Box>
                 </Box>
                 :
@@ -218,14 +219,16 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                 </Box>}
             </RatioBox>
 
+            {(editType === 1 && isFullRepaid) && <Box my='25px'><InfoMsg>Repaying full amount is the first step of the process to close a borrow position. You can complete rest of the steps in the close tab.</InfoMsg></Box>}
+
             {isSubmitting ?
               <Box display='flex' justifyContent='center' my='15px'>
                 <LoadingButton width='100%' height='52px' />
               </Box>
               :
               <SubmitButton onClick={handleSubmit(onEdit)} disabled={!isValid} hasRisk={hasRiskRatio}>
-                {editType === 0 ? <Typography variant='p_lg'>{hasRiskRatio && 'Accept Risk and '}Borrow More</Typography>
-                  : <Typography variant='p_lg'>Repay {isFullRepaid && 'Full Amount'}</Typography>}
+                {editType === 0 ? <Typography variant='p_xlg'>{hasRiskRatio && 'Accept Risk and '}Borrow More</Typography>
+                  : <Typography variant='p_xlg'>Repay {isFullRepaid && 'Full Amount'}</Typography>}
               </SubmitButton>
             }
 
@@ -250,7 +253,7 @@ const ValueBox = styled(Box)`
   padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: #0a080f;
 `
 const RatioBox = styled(Box)`
   display: flex;
@@ -258,9 +261,10 @@ const RatioBox = styled(Box)`
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   height: 120px;
+  margin-bottom: 15px;
 `
 
 export default EditBorrowMoreDialog

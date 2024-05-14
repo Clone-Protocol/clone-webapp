@@ -50,7 +50,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
           </Stack>
 
           <Box my='15px'><Typography variant='p_lg'>Borrowed Amount</Typography></Box>
-          <EditRowBox sx={isEditBorrowHover ? { background: '#1b1b1b' } : {}}>
+          <EditRowBox>
             <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
               <Box textAlign='left'>
                 <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.borrowedOnasset), 5)}</Typography></Box>
@@ -63,7 +63,12 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
                 </Typography>
               </TickerBox>
             </Stack>
-            <EditBox onClick={onShowBorrowMore} onMouseOver={() => setIsEditBorrowHover(true)} onMouseLeave={() => setIsEditBorrowHover(false)}>
+            {isEditBorrowHover &&
+              <Box position='absolute' width='521px' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+                <Typography variant='p_lg'>Manage Borrowed Amount</Typography>
+              </Box>
+            }
+            <EditBox sx={isEditBorrowHover ? { background: '#343440' } : {}} onClick={onShowBorrowMore} onMouseOver={() => setIsEditBorrowHover(true)} onMouseLeave={() => setIsEditBorrowHover(false)}>
               <Image src={RightArrowIcon} alt='edit' />
             </EditBox>
           </EditRowBox>
@@ -71,7 +76,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
       }
 
       <Box my='15px'><Typography variant='p_lg'>Collateral Amount</Typography></Box>
-      <EditRowBox sx={isEditCollHover ? { background: '#1b1b1b' } : {}}>
+      <EditRowBox>
         <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
           <Box textAlign='left'>
             <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.collateralAmount), 5)}</Typography></Box>
@@ -84,7 +89,12 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
             </Typography>
           </TickerBox>
         </Stack>
-        <EditBox onClick={onShowEditForm} onMouseOver={() => setIsEditCollHover(true)} onMouseLeave={() => setIsEditCollHover(false)}>
+        {isEditCollHover &&
+          <Box position='absolute' width='521px' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+            <Typography variant='p_lg'>Manage Collateral</Typography>
+          </Box>
+        }
+        <EditBox sx={isEditCollHover ? { background: '#343440' } : {}} onClick={onShowEditForm} onMouseOver={() => setIsEditCollHover(true)} onMouseLeave={() => setIsEditCollHover(false)}>
           <Image src={RightArrowIcon} alt='edit' />
         </EditBox>
       </EditRowBox>
@@ -109,6 +119,7 @@ const BoxWithBorder = styled(Box)`
   padding: 24px;
 `
 const EditRowBox = styled(Box)`
+  position: relative;
   display: flex; 
   width: 100%;
   height: 80px; 
@@ -123,8 +134,8 @@ const EditBox = styled(Box)`
   width: 30px;
   cursor: pointer;
   background: ${(props) => props.theme.basis.plumFuzz};
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
 `
 const TickerBox = styled(Box)`
   background: ${(props) => props.theme.basis.darkNavy};

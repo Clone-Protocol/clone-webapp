@@ -73,7 +73,7 @@ const StackWithBorder = styled(Stack)`
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const GoButton = styled(SubmitButton)`
-  width: 170px;
+  width: 180px;
   height: 40px;
 `
 
