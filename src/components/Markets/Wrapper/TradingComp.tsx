@@ -280,20 +280,20 @@ const GetMoreStack = styled(Stack)`
   width: 100%;
   height: 80px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.slug};
-  background-color: rgba(255, 255, 255, 0.05);
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background-color: ${(props) => props.theme.basis.backInBlack};
   margin-bottom: 30px;
   cursor: pointer;
   &:hover {
-    border: solid 1px ${(props) => props.theme.basis.skylight};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `
 const MaxStack = styled(Stack)`
   width: 100%;
   height: 66px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.slug};
-  background-color: rgba(255, 255, 255, 0.05);
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background-color: ${(props) => props.theme.basis.backInBlack};
   margin-bottom: 30px;
 `
 const SwapButton = styled(IconButton)`
@@ -307,7 +307,7 @@ const SwapButton = styled(IconButton)`
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border: solid 1px ${(props) => props.theme.basis.liquidityBlue};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `
 const ConnectButton = styled(Button)`
@@ -329,9 +329,9 @@ const DisableButton = styled(Button)`
   border-radius: 5px;
 	margin-top: 10px;
   &:disabled {
-    border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-    background: transparent;
-    color: #989898;
+    border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+    background-color: ${(props) => props.theme.basis.backInBlack};
+    color: ${(props) => props.theme.basis.textRaven};
   } 
 `
 

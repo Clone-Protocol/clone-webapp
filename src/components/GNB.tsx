@@ -26,6 +26,8 @@ import TempWarningMsg from '~/components/Common/TempWarningMsg'
 import { IS_DEV } from '~/data/networks'
 import { fetchGeoBlock } from '~/utils/fetch_netlify'
 import { NETWORK_NAME } from '~/utils/constants'
+import { useCurrentLevelQuery } from '~/features/Staking/StakingInfo.query'
+import ClnWidget from './Staking/ClnWidget'
 // import useLocalStorage from '~/hooks/useLocalStorage'
 // import { IS_COMPLETE_WHITELISTED } from '~/data/localstorage'
 
@@ -76,6 +78,7 @@ const RightMenu: React.FC = () => {
 	const [openSettingDlog, setOpenSettingDlog] = useState(false)
 	const setMintUsdi = useSetAtom(mintUSDi)
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [showClnWidget, setShowClnWidget] = useState(false)
 	const [showWalletSelectPopup, setShowWalletSelectPopup] = useState(false)
 	const [showGeoblock, setShowGeoblock] = useState(false)
 	// const [showWhitelist, setShowWhitelist] = useState(false)
@@ -84,6 +87,12 @@ const RightMenu: React.FC = () => {
 
 	const GeoblockDialog = dynamic(() => import('~/components/Common/GeoblockDialog'), { ssr: false })
 	// const WhitelistDialog = dynamic(() => import('~/components/Common/WhitelistDialog'), { ssr: false })
+
+	const { data: levelData } = useCurrentLevelQuery({
+		userPubKey: publicKey,
+		refetchOnMount: true,
+		enabled: publicKey != null
+	})
 
 	useFaucet()
 
@@ -159,7 +168,10 @@ const RightMenu: React.FC = () => {
 				}
 				<HeaderButton sx={{ display: { xs: 'none', sm: 'flex' }, width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' }, fontSize: '18px', fontWeight: 'bold', paddingBottom: '20px' }} onClick={handleMoreClick}>...</HeaderButton>
 				<HeaderButton sx={{ width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' } }} onClick={() => setOpenSettingDlog(true)}><Image src={SettingsIcon} alt="settings" /></HeaderButton>
-				{connected && <C2Button sx={{ display: { xs: 'none', sm: 'block' }, width: { xs: '34px', sm: '39px' }, height: { xs: '30px', sm: '34px' } }}>C2</C2Button>}
+				<Box>
+					{connected && <ClnButton sx={{ display: { xs: 'none', sm: 'block' }, width: { xs: '34px', sm: '39px' }, height: { xs: '30px', sm: '34px' } }} onClick={() => setShowClnWidget(true)}>C{levelData ? levelData.currentLevel + 1 : 1}</ClnButton>}
+					<ClnWidget show={showClnWidget} levelData={levelData} onHide={() => setShowClnWidget(false)} />
+				</Box>
 				<MoreMenu anchorEl={anchorEl} onShowTokenFaucet={() => setOpenTokenFaucet(true)} onClose={() => setAnchorEl(null)} />
 				<Box>
 					{!connected ?
@@ -174,7 +186,7 @@ const RightMenu: React.FC = () => {
 							<Typography variant='p'>{isMobileOnSize ? publicKey!.toString().slice(0, 4) + '...' : shortenAddress(publicKey!.toString(), 10, 4)}</Typography>
 						</ConnectedButton>
 					}
-					<WalletSelectBox show={showWalletSelectPopup} onHide={() => setShowWalletSelectPopup(false)} />
+					<WalletSelectBox show={showWalletSelectPopup} levelData={levelData} onHide={() => setShowWalletSelectPopup(false)} />
 				</Box>
 			</Box >
 
@@ -242,7 +254,7 @@ const HeaderButton = styled(Button)`
   	background-color: rgba(196, 181, 253, 0.1);
 	}
 `
-const C2Button = styled(HeaderButton)`
+const ClnButton = styled(HeaderButton)`
 	min-width: 34px;
 	border: solid 1px #b5fdf9;
 	color: #b5fdf9; 

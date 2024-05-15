@@ -9,6 +9,7 @@ import { LevelInfo } from '~/features/Staking/StakingInfo.query'
 const MyLevel = ({ levelData }: { levelData: LevelInfo | undefined }) => {
   const { publicKey } = useWallet()
 
+  console.log('l', levelData)
   const isShowBenefit = publicKey && levelData && levelData.currentLevel !== 0
 
   return (

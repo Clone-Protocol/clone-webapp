@@ -26,7 +26,7 @@ const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanc
 			<Stack direction="row" justifyContent="space-between">
 				<Box><Typography variant='p_lg' color='#8988a3'>{title}</Typography></Box>
 				{!balanceDisabled ? <Box display='flex' alignItems='center'>
-					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#b5fdf9' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
+					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#c4b5fd' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
 					<MaxButton onClick={() => onMax && onMax(balance!)}>MAX</MaxButton></Box> : <></>}
 			</Stack>
 			<FormStack direction="row" justifyContent="space-between" alignItems="center">
@@ -62,7 +62,7 @@ const FormStack = styled(Stack)`
 	padding: 12px;
 	border-radius: 10px;
 	color: #fff;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: ${(props) => props.theme.basis.backInBlack};
 	&:hover {
 		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.shadowGloom} inset;
 	}
