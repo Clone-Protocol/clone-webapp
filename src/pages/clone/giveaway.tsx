@@ -9,6 +9,7 @@ import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tan
 import TicketRankingList from '~/containers/Clone/Giveaway/TicketRankingList'
 import { fetchTicketRanking } from '~/features/Giveaway/TicketRanking.query'
 import MyGiveawayStatus from '~/containers/Clone/Giveaway/MyGiveawayStatus'
+import CompleteRound from '~/components/Giveaway/CompleteRound'
 
 //SSR
 export const getStaticProps = (async () => {
@@ -47,6 +48,8 @@ const Giveaway = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
             </a>
           </Stack>
           <Box my='30px'>
+            <CompleteRound version={1} />
+
             <MyGiveawayStatus />
 
             <HydrationBoundary state={dehydratedState}>

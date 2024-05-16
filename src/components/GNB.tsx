@@ -11,21 +11,20 @@ import { withCsrOnly } from '~/hocs/CsrOnly'
 import { useWallet, useAnchorWallet } from '@solana/wallet-adapter-react'
 import { shortenAddress } from '~/utils/address'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
-import { useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { NaviMenu, SubNaviMenu } from './NaviMenu'
 import { mintUSDi } from '~/features/globalAtom'
 import dynamic from 'next/dynamic'
 import useFaucet from '~/hooks/useFaucet'
 import TokenFaucetDialog from './Account/TokenFaucetDialog'
-// import { isMobile } from 'react-device-detect';
 import MoreMenu from './Common/MoreMenu'
 import WalletSelectBox from './Common/WalletSelectBox'
-// import { NETWORK_NAME } from '~/utils/constants'
 import SettingDialog from './Common/SettingDialog'
 import TempWarningMsg from '~/components/Common/TempWarningMsg'
 import { IS_DEV } from '~/data/networks'
 import { fetchGeoBlock } from '~/utils/fetch_netlify'
 import { NETWORK_NAME } from '~/utils/constants'
+import { createAccountDialogState, declinedAccountCreationState, isCreatingAccountState, openConnectWalletGuideDlogState, showReferralCodeDlog } from '~/features/globalAtom'
 import { useCurrentLevelQuery } from '~/features/Staking/StakingInfo.query'
 import ClnWidget from './Staking/ClnWidget'
 // import useLocalStorage from '~/hooks/useLocalStorage'
@@ -81,6 +80,7 @@ const RightMenu: React.FC = () => {
 	const [showClnWidget, setShowClnWidget] = useState(false)
 	const [showWalletSelectPopup, setShowWalletSelectPopup] = useState(false)
 	const [showGeoblock, setShowGeoblock] = useState(false)
+	const atomShowReferralCodeDlog = useAtomValue(showReferralCodeDlog)
 	// const [showWhitelist, setShowWhitelist] = useState(false)
 	// const [isWhitelisted, setIsWhitelisted] = useState(false)
 	// const [isCompleteWhitelisted, setIsCompleteWhitelisted] = useLocalStorage(IS_COMPLETE_WHITELISTED, false)
@@ -160,12 +160,13 @@ const RightMenu: React.FC = () => {
 
 	return (
 		<>
+			{/* {!atomShowReferralCodeDlog &&
+				<CreateAccountSetupDialog
+					state={createAccountDialogStatus}
+					handleCreateAccount={handleCreateAccount}
+					handleClose={closeAccountSetupDialog} />
+			} */}
 			<Box display="flex" alignItems='center'>
-				{IS_DEV &&
-					<HeaderButton sx={{ display: { xs: 'none', sm: 'block' } }} onClick={() => setOpenTokenFaucet(true)}>
-						<Typography variant='p'>{NETWORK_NAME} Faucet</Typography>
-					</HeaderButton>
-				}
 				<HeaderButton sx={{ display: { xs: 'none', sm: 'flex' }, width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' }, fontSize: '18px', fontWeight: 'bold', paddingBottom: '20px' }} onClick={handleMoreClick}>...</HeaderButton>
 				<HeaderButton sx={{ width: { xs: '36px', sm: '42px' }, height: { xs: '30px', sm: '34px' } }} onClick={() => setOpenSettingDlog(true)}><Image src={SettingsIcon} alt="settings" /></HeaderButton>
 				<Box>

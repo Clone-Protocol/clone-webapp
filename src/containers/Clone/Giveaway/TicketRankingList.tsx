@@ -7,7 +7,7 @@ import { Grid } from '~/components/Common/DataGrid'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { shortenAddress } from '~/utils/address'
 import { formatLocaleAmount } from '~/utils/numbers'
-import { PointTextForPyth } from '~/components/Points/PointMultiplierText'
+import { PointTextForBonus } from '~/components/Points/PointMultiplierText'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { useTicketRankingQuery } from '~/features/Giveaway/TicketRanking.query'
 
@@ -66,7 +66,7 @@ let columns: GridColDef[] = [
         <Typography variant='p_lg'>{formatLocaleAmount(params.value)}</Typography>
         {hasPythPoint &&
           <Tooltip title={TooltipTexts.points.multiplier} placement="top">
-            <Box><PointTextForPyth pythPointTier={pythPointTier} /></Box>
+            <Box><PointTextForBonus multipleTier={pythPointTier} /></Box>
           </Tooltip>
         }
       </Box>

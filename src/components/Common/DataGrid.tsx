@@ -41,6 +41,9 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverla
         borderTopLeftRadius: isBorderTopRadius ? '10px' : '0',
         borderTopRightRadius: isBorderTopRadius ? '10px' : '0',
       },
+      '& .MuiDataGrid-virtualScroller': {
+        overflowX: 'hidden'
+      },
       '& .right--cell': {
         display: 'flex',
         justifyContent: 'flex-end',
