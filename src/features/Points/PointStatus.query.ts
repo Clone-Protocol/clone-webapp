@@ -43,7 +43,7 @@ export const fetchStatus = async ({ userPubKey }: { userPubKey: PublicKey | null
     referralPoints: userPoints[0].referral_points,
     hasPythPoint: matchPythUser !== undefined ? true : false,
     multipleTier: multipleTier,
-    hasJupPoint: matchJupUser !== undefined ? true : false, r
+    hasJupPoint: matchJupUser !== undefined ? true : false,
   }
 }
 

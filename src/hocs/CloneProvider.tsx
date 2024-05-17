@@ -24,7 +24,7 @@ export const CloneProvider: FC<CloneProviderProps> = ({ children, ...props }) =>
 				throw Error('not detect wallet')
 			}
 			if (createAccountStatus !== CreateAccountDialogStates.Closed) {
-				throw Error('the account is not initialized')
+				console.log('the account is not initialized')
 			}
 
 			if (wallet.publicKey.toString() !== mainConnectedPubKey) {

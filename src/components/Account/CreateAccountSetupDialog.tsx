@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, styled, Typography, Button, Dialog } from '@mui/material'
+import { Box, Typography, Button, Dialog } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { CreateAccountDialogStates, NETWORK_NAME } from '~/utils/constants'
 import { CloseButton } from '../Common/CommonButtons'
 import { useAtomValue } from 'jotai'
@@ -39,7 +40,7 @@ const CreateAccountSetupDialog: React.FC<CreateAccountSetupScreenProps> = ({
             </div>
           </Box>
           <TxtBox my='20px' lineHeight={1}>
-            <Typography variant='p'>Open your Clone Liquidity account on Solana Network by pressing the button below. A wallet popup will appear, requesting a transaction. Note that Solana Network requires a one-time fee of </Typography><Typography variant='p' color='#4fe5ff'>~0.07 SOL</Typography><Typography variant='p'> for the best experience with Clone Liquidity. The fee is paid to Solana Network, not Clone Protocol.</Typography>
+            <Typography variant='p'>Open your Clone Liquidity account on Solana Network by pressing the button below. A wallet popup will appear, requesting a transaction. Note that Solana Network requires a one-time fee of </Typography><Typography variant='p' color='#c4b5fd'>~0.07 SOL</Typography><Typography variant='p'> for the best experience with Clone Liquidity. The fee is paid to Solana Network, not Clone Protocol.</Typography>
           </TxtBox>
           {isCreatingAccount ?
             <Box display='flex' justifyContent='center' my='10px'>
@@ -67,7 +68,7 @@ const TextHead = styled(Box)`
   font-weight: 600;
   text-align: center;
   margin-top: 10px;
-  color: ${(props) => props.theme.basis.skylight};
+  color: ${(props) => props.theme.basis.melrose};
 `
 const TxtBox = styled(Box)`
   background-color: rgba(255, 255, 255, 0.05);
@@ -84,9 +85,9 @@ const EnterButton = styled(Button)`
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  background: ${(props) => props.theme.basis.liquidityBlue};
+  background: ${(props) => props.theme.basis.melrose};
   &:hover {
-    background: ${(props) => props.theme.basis.gloomyBlue};
+    background: ${(props) => props.theme.basis.lightSlateBlue};
   }
 `
 

@@ -15,7 +15,8 @@ export const OpaqueNoCollateral = styled(Box)`
   left: 3px;
   width: 99%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
+  opacity: .6;
+  background-color: ${(props) => props.theme.basis.backInBlack};
 `
 
 export const OpaqueAlreadyPool = styled(Box)`
@@ -23,8 +24,9 @@ export const OpaqueAlreadyPool = styled(Box)`
   top: 360px;
   left: 3px;
   width: 99%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
+  height: 300px;
+  opacity: .6;
+  background-color: ${(props) => props.theme.basis.backInBlack};
 `
 
 export const BlackDefault = styled(Box)`

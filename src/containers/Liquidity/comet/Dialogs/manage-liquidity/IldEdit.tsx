@@ -17,7 +17,7 @@ import { usePayILDMutation } from "~/features/Liquidity/comet/LiquidityPosition.
 import { LoadingButton, LoadingProgress } from "~/components/Common/Loading"
 import withSuspense from "~/hocs/withSuspense"
 import { Collateral as StableCollateral, collateralMapping } from "~/data/assets"
-import { NETWORK_NAME, ON_USD } from "~/utils/constants"
+import { ON_USD } from "~/utils/constants"
 import { formatLocaleAmount } from "~/utils/numbers"
 
 const IldEdit = ({ positionIndex }: { positionIndex: number }) => {

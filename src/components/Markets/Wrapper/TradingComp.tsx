@@ -129,7 +129,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
 
   const isValid = invalidMsg() === ''
   const isWormholeAsset = pairData.wrapTickerSymbol.slice(0, 1) === 'w'
-  const hasLinkForWrapPortUrl = isWormholeAsset || assetIndex === AssetTickers.doge
+  const hasLinkForWrapPortUrl = isWormholeAsset || assetIndex === AssetTickers.doge || assetIndex === AssetTickers.bnb
 
   return (
     <>
