@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <TransactionStateProvider>
               <DataLoadingIndicatorProvider>
                 <ErrorBoundary>
-                  <Box sx={{ display: 'flex', backgroundColor: '#0f0e14' }}>
+                  <Box sx={{ display: 'flex', backgroundColor: '#000' }}>
                     <CssBaseline />
                     <GNB />
 

@@ -185,7 +185,7 @@ const StackWithBorder = styled(Stack)`
   align-items: center;
   gap: 10px;
   padding: 21px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const GoButton = styled(SubmitButton)`
   width: 200px;

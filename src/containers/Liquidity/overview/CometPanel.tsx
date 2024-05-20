@@ -287,7 +287,7 @@ const BoxWithBorder = styled(Box)`
   border-radius: 20px;
 `
 const StackWithBorder = styled(Stack)`
-  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
   border-radius: 10px;
   padding: 18px;
   height: 52px;
@@ -343,6 +343,7 @@ const DepositCollateralButton = styled(SelectDefaultPool)`
   width: 285px;
   height: 35px;
   color: #fff;
+  border-radius: 10px;
   justify-content: center;
 `
 export default withSuspense(CometPanel, <LoadingProgress />)

@@ -110,7 +110,7 @@ const BoxWithBorder = styled(Box)`
   align-items: center;
   gap: 10px;
   padding: 18px 21px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 
 export default withSuspense(Rewards, <LoadingProgress />)

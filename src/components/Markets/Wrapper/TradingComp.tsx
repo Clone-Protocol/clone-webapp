@@ -315,7 +315,7 @@ const ConnectButton = styled(Button)`
   height: 52px;
   color: #fff;
   border: solid 1px #c4b5fd;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-top: 10px;
   &:hover {
     background: transparent;
@@ -326,7 +326,7 @@ const DisableButton = styled(Button)`
   width: 100%;
   height: 52px;
 	color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
 	margin-top: 10px;
   &:disabled {
     border: solid 1px ${(props) => props.theme.basis.plumFuzz};

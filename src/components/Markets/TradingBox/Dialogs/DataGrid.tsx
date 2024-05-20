@@ -52,7 +52,7 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, minHeight = 260, onRo
         cursor: 'pointer',
       },
       '& .MuiDataGrid-row:hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+        backgroundColor: '#16141b'
       },
       '& .MuiDataGrid-cell': {
         borderBottom: '0',

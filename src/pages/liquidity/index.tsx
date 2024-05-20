@@ -1,7 +1,7 @@
 'use client'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
-import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
+// import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
 import MainChart from '~/containers/Liquidity/overview/MainChart'
 import AssetList from '~/containers/Liquidity/overview/AssetList'
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react'
@@ -45,9 +45,9 @@ const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
   return (
     <StyledSection>
       <Box sx={{ maxWidth: '1270px' }} margin='0 auto'>
-        {IS_DEV && publicKey &&
+        {/* {IS_DEV && publicKey &&
           <GetUSDiBadge />
-        }
+        } */}
         <Box mt='15px'>
           <Box>
             <MainChart />

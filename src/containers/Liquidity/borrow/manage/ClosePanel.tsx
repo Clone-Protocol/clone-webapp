@@ -48,7 +48,7 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
             {formatLocaleAmount(Number(borrowDetail.collateralAmount))} {ON_USD}
           </Typography>
 
-          <GoButton onClick={onMoveWithdrawCollateral} disabled={!canCloseComet}><Typography variant="p" noWrap>{canCloseComet ? 'Withdraw Collateral' : 'Complete Step 1'}</Typography></GoButton>
+          <GoButton onClick={onMoveWithdrawCollateral} disabled={!canCloseComet}><Typography variant="p" noWrap>{canCloseComet ? 'Withdraw Collateral' : 'Withdraw'}</Typography></GoButton>
         </StackWithBorder>
       </Box>
     </BoxWithBorder>

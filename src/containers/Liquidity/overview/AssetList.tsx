@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { useState, useCallback } from 'react'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { useAssetsQuery } from '~/features/Liquidity/overview/Assets.query'
 import ArrowUpward from 'public/images/arrow-up.svg'
@@ -169,4 +169,4 @@ const PanelBox = styled(Box)`
 
 columns = columns.map((col) => Object.assign(col, { hideSortIcons: true, filterable: false }))
 
-export default withSuspense(AssetList, <LoadingProgress />)
+export default withSuspense(AssetList, <Box mt='10px'><LoadingSkeleton /></Box>)

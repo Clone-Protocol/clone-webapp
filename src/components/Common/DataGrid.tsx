@@ -140,10 +140,10 @@ export const Grid: React.FC<GridProps> = ({ headers, rows, customNoResultsOverla
   />
 )
 
-export const CustomNoRowsOverlay = (msg: string) => {
+export const CustomNoRowsOverlay = (msg: string, color?: string) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
-      <Typography variant='p_lg' color='#8988a3'>{msg}</Typography>
+      <Typography variant='p_lg' color={color || '#8988a3'}>{msg}</Typography>
     </Box>
   )
 }

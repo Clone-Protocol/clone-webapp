@@ -121,7 +121,7 @@ const MaxButton = styled(Box)`
   cursor: pointer;
   &:hover {
 		background-color: rgba(155, 121, 252, 0.3);
-		border: solid 1px ${(props) => props.theme.basis.melrose};
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
   }
 `
 const InputAmount = styled(`input`)`

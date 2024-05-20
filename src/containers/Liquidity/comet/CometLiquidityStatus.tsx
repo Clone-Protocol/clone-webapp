@@ -85,9 +85,9 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
 
 const Wrapper = styled(Box)`
   position: relative;
-  margin-top: 16px;
+  margin-top: 25px;
   margin-bottom: 28px;
-  padding: 12px 28px;
+  padding: 12px 32px;
   border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
@@ -109,7 +109,7 @@ const ViewVideoBox = styled(Box)`
   height: 79px;
   padding: 12px 22px 11px;
   border-radius: 10px;
-  background-color: #000e22;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   z-index: 999;
 `
 const WatchButton = styled(Button)`

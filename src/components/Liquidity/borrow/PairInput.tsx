@@ -93,7 +93,7 @@ const FormStack = styled(Stack) <{ noHover?: boolean }>`
 	display: flex;
 	width: 100%;
 	height: 84px;
-	border-radius: 5px;
+	border-radius: 10px;
 	padding: 9px 21px 8px 24px;
   &:hover {
 		${(props) => props.noHover ? 'box-shadow: 0px !important;' : `box-shadow: 0 0 0 1px #414e66 inset;`}
@@ -117,7 +117,7 @@ const MaxButton = styled(Box)`
   font-size: 10px;
   font-weight: 600;
   padding: 2px 7px;
-	border-radius: 5px;
+	border-radius: 4px;
   color: #fff;
   cursor: pointer;
 	&:hover {
