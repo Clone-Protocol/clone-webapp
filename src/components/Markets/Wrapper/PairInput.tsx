@@ -106,8 +106,9 @@ const InputAmount = styled(`input`)`
 
 const MaxButton = styled(Box)`
 	width: 38px;
-	background-color: ${(props) => props.theme.basis.cinder};
+	background-color: ${(props) => props.theme.basis.jurassicGrey};
 	margin-left: 6px;
+	margin-bottom: 5px;
 	font-size: 10px;
 	font-weight: 600;
 	padding: 2px 0px;

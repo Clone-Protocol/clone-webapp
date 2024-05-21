@@ -13,20 +13,21 @@ interface Props {
 	balanceDisabled?: boolean
 	value?: number
 	valueDisabled?: boolean
+	isDeposit: boolean
 	max?: number
 	maxDisabled?: boolean
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 	onMax?: (balance: number) => void
 }
 
-const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanceDisabled, value, valueDisabled = false, onChange, onMax, max, maxDisabled = false }) => {
+const PairInput: React.FC<Props> = ({ title, tickerIcon, ticker, balance, balanceDisabled, value, valueDisabled = false, isDeposit = true, onChange, onMax, max, maxDisabled = false }) => {
 	return (
 		<FormControl variant="standard" sx={{ width: '100%' }}>
 			<Stack direction="row" justifyContent="space-between" alignItems='center'>
 				<Box><Typography variant='p_lg' color='#8988a3'>{title}</Typography></Box>
 				{!balanceDisabled ? <Box display='flex' alignItems='center'>
-					<Typography variant='p' color='#8988a3'>Balance: </Typography> <Typography variant='p' color='#c5c7d9' ml='5px'>{formatLocaleAmount(balance, 4)}</Typography>
-					{!maxDisabled && <MaxButton onClick={() => onMax && onMax(balance!)}>MAX</MaxButton>}
+					<Typography variant='p' color='#8988a3'>{isDeposit ? 'Balance' : 'Available'}: </Typography> <Typography variant='p' color={max && max > 0 ? '#c5c7d9' : '#8988a3'} ml='5px'>{formatLocaleAmount(max, 4)}</Typography>
+					{!maxDisabled && <MaxButton onClick={() => onMax && onMax(max!)}>MAX</MaxButton>}
 				</Box> : <></>}
 			</Stack>
 			<FormStack direction="row" justifyContent="space-between" alignItems="center">
