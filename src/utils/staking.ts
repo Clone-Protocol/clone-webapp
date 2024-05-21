@@ -81,15 +81,14 @@ export const createDepositStakeIx = (
   ixns.push(
     createAddStakeInstruction(
       {
-        payer: userPubkey,
+        user: userPubkey,
         userAccount: getStakingAccountAddress(userPubkey),
         cloneStaking: clnStakingAccountAddress,
         clnTokenVault,
         clnTokenMint: CLN_TOKEN_MINT,
-        payerClnTokenAccount: clnTokenAccountAddress,
+        userClnTokenAccount: clnTokenAccountAddress,
       },
       {
-        user: userPubkey,
         amount,
       },
       CLONE_STAKING_PROGRAM_ID
