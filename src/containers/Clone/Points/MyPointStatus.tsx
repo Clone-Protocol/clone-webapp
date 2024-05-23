@@ -143,10 +143,10 @@ const MyPointStatus = () => {
               {infos?.lpPoints ? formatLocaleAmount(infos.lpPoints) : '0'}
             </Typography>
           </StatusValue>
-          <PromoteBox onClick={() => setShowPromoteDialog(true)}>
+          {/* <PromoteBox onClick={() => setShowPromoteDialog(true)}>
             <BoltIcon sx={{ fontSize: '16px', color: '#fbdc5f' }} />
             <ColoredText><Typography variant='p_sm'>2x</Typography></ColoredText>
-          </PromoteBox>
+          </PromoteBox> */}
         </BorderBox>
         <BorderBox width={isMobileOnSize ? '166px' : '200px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
@@ -226,7 +226,7 @@ const MyPointStatus = () => {
           </Box>
         </Box>
       </>}
-      {showPromoteDialog && <PromoteDialog onClose={() => setShowPromoteDialog(false)} />}
+      {/* {showPromoteDialog && <PromoteDialog onClose={() => setShowPromoteDialog(false)} />} */}
     </Wrapper>
   )
 

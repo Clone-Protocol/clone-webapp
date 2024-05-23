@@ -8,8 +8,11 @@ import { formatLocaleAmount } from '~/utils/numbers';
 import ArrowIcon from 'public/images/dropdown-show-more-arrow-right.svg'
 import Image from 'next/image';
 import StarPlusIcon from 'public/images/star-plus.svg'
+import { LEVEL_DISCOUNT_PRICING_FEES, LevelInfo } from '~/features/Staking/StakingInfo.query';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Props {
+  levelData: LevelInfo | null | undefined
   isBuy: boolean,
   onusdAmount: number,
   onassetPrice: number
@@ -22,7 +25,9 @@ interface Props {
   feesAreNonZero: boolean
 }
 
-const OrderDetails: React.FC<Props> = ({ isBuy, onusdAmount, onassetPrice, onassetAmount, tickerSymbol, priceImpact, slippage, tradeFee, estimatedFees, feesAreNonZero }) => {
+const OrderDetails: React.FC<Props> = ({ levelData, isBuy, onusdAmount, onassetPrice, onassetAmount, tickerSymbol, priceImpact, slippage, tradeFee, estimatedFees, feesAreNonZero }) => {
+  const { publicKey } = useWallet()
+  const isShowBenefit = publicKey && levelData && levelData.currentLevel !== 0
   const slippageMultiplier = (1 - (slippage / 100))
   const [minReceived, outputSymbol, tradeFeeDollar] = (() => {
     if (isBuy) {
@@ -31,16 +36,17 @@ const OrderDetails: React.FC<Props> = ({ isBuy, onusdAmount, onassetPrice, onass
       return [slippageMultiplier * onusdAmount, ON_USD, estimatedFees]
     }
   })()
-  //@TODO
-  const hasDiscountFee = true
-  const discountFee = 0.05
+
+  const finalEstimatedFees = isShowBenefit ? estimatedFees * (1 - LEVEL_DISCOUNT_PRICING_FEES[levelData.currentLevel] / 1000) : estimatedFees
+  const discountFeeRate = isShowBenefit ? tradeFee - LEVEL_DISCOUNT_PRICING_FEES[levelData.currentLevel] / 1000 : estimatedFees
+  const finalTradeFeeDollar = isShowBenefit ? tradeFeeDollar * (1 - LEVEL_DISCOUNT_PRICING_FEES[levelData.currentLevel] / 1000) : tradeFeeDollar
 
   return (
     <Wrapper>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant='p' color='#c5c7d9' display='flex' alignItems='center'>Price Impact <InfoTooltip title={TooltipTexts.priceImpact} color='#8988a3' /></Typography>
         {feesAreNonZero ?
-          <PriceImpactValue sx={{ color: priceImpact > 5 ? '#FF0084' : '#00ff99' }}>{isNaN(priceImpact) || priceImpact < 0.1 ? '<' : '~'} {isNaN(priceImpact) ? '0.1' : Math.max(priceImpact, 0.1)}%</PriceImpactValue>
+          <PriceImpactValue sx={{ color: priceImpact > 5 ? '#FF0084' : '#c4b5fd' }}>{isNaN(priceImpact) || priceImpact < 0.1 ? '<' : '~'} {isNaN(priceImpact) ? '0.1' : Math.max(priceImpact, 0.1)}%</PriceImpactValue>
           :
           <PriceImpactValue sx={{ color: '#8988a3' }}>-</PriceImpactValue>
         }
@@ -53,19 +59,19 @@ const OrderDetails: React.FC<Props> = ({ isBuy, onusdAmount, onassetPrice, onass
         </div>
       </Stack>
       <Stack mt="10px" direction="row" justifyContent="space-between" alignItems="center">
-        <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} color="#c5c7d9" variant='p' display='flex' alignItems='center'>
-          <Image src={StarPlusIcon} alt='trading-star' /> Trading Fees <InfoTooltip title={TooltipTexts.tradeFees} color='#8988a3' />
+        <TradingFeeTxt className={isShowBenefit ? 'discountFee' : ''} color="#c5c7d9" variant='p' display='flex' alignItems='center'>
+          {isShowBenefit && <Image src={StarPlusIcon} alt='trading-star' />} Trading Fees <InfoTooltip title={TooltipTexts.tradeFees} color='#8988a3' />
         </TradingFeeTxt>
         <div style={{ lineHeight: '10px', textAlign: 'right' }}>
-          <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} variant='p' fontWeight={600} color='#c4b5fd'>{isNaN(estimatedFees) ? '0' : estimatedFees?.toFixed(6)} {outputSymbol}</TradingFeeTxt>
+          <TradingFeeTxt className={isShowBenefit ? 'discountFee' : ''} variant='p' fontWeight={600} color='#c4b5fd'>{isNaN(finalEstimatedFees) ? '0' : finalEstimatedFees?.toFixed(6)} {outputSymbol}</TradingFeeTxt>
           <Box display='flex' alignItems='center' justifyContent='flex-end' mt='3px'>
             <Typography variant='p_sm' color='#8988a3' style={{ marginRight: '5px', marginTop: '1px' }}>{tradeFee.toFixed(2)}%</Typography>
-            {!hasDiscountFee ?
-              <Typography variant='p_sm' color='#8988a3'>(${isNaN(tradeFeeDollar) ? '0' : tradeFeeDollar?.toFixed(6)})</Typography>
+            {!isShowBenefit ?
+              <Typography variant='p_sm' color='#8988a3'>(${isNaN(finalTradeFeeDollar) ? '0' : finalTradeFeeDollar?.toFixed(6)})</Typography>
               :
               <Stack direction='row' alignItems='center'>
                 <Image src={ArrowIcon} alt='arrow' style={{ marginBottom: '-1px', marginRight: '2px' }} />
-                <TradingFeeTxt className={hasDiscountFee ? 'discountFee' : ''} variant='p_sm' color='#8988a3'>{discountFee.toFixed(2)}% (${isNaN(tradeFeeDollar) ? '0' : tradeFeeDollar?.toFixed(6)})</TradingFeeTxt>
+                <TradingFeeTxt className={isShowBenefit ? 'discountFee' : ''} variant='p_sm' color='#8988a3'>{discountFeeRate.toFixed(2)}% (${isNaN(finalTradeFeeDollar) ? '0' : finalTradeFeeDollar?.toFixed(6)})</TradingFeeTxt>
               </Stack>
             }
           </Box>

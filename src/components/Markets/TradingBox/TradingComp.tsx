@@ -25,6 +25,7 @@ import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus'
 import BannerSaveTrade from './BannerSaveTrade'
+import { useCurrentLevelQuery } from '~/features/Staking/StakingInfo.query'
 
 export enum ComponentEffect {
   iAssetAmount,
@@ -89,6 +90,12 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
     userPubKey: publicKey,
     index: assetIndex,
     refetchOnMount: 'always',
+    enabled: publicKey != null
+  })
+
+  const { data: levelData } = useCurrentLevelQuery({
+    userPubKey: publicKey,
+    refetchOnMount: true,
     enabled: publicKey != null
   })
 
@@ -232,7 +239,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   return (
     <>
       <div style={{ width: '100%', height: '100%' }}>
-        {isMobileOnSize && <Box mb='20px'><BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} /></Box>}
+        {isMobileOnSize && <Box mb='20px'><BannerSaveTrade open={isOpenBanner} levelData={levelData} handleClose={() => setIsOpenBanner(false)} /></Box>}
         <Box px='24px' height='100%' sx={{ paddingBottom: '18px', background: '#0a080f', borderTopRightRadius: '10px', borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
           <Stack direction="row" justifyContent="flex-end" alignItems="center" pt='12px' pb='6px'>
             <Tooltip title="Refetching latest oracle data" placement="top">
@@ -380,10 +387,10 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
               </Box>
               <Box display='flex' alignItems='center' mr='5px'><Typography variant='p' color='#c5c7d9'>Price Detail</Typography> <ArrowIcon>{openOrderDetails ? <KeyboardArrowUpSharpIcon /> : <KeyboardArrowDownSharpIcon />}</ArrowIcon></Box>
             </TitleOrderDetails>
-            {openOrderDetails && <OrderDetails isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
+            {openOrderDetails && <OrderDetails levelData={levelData} isBuy={isBuy} onusdAmount={amountOnusd} onassetPrice={round(getPrice(), 4)} onassetAmount={amountOnasset} tickerSymbol={assetData?.tickerSymbol!} slippage={slippage} priceImpact={round(getPriceImpactPct(), 2)} tradeFee={tradingFeePct()} estimatedFees={estimatedFees} feesAreNonZero={feesAreNonZero} />}
           </Box>
         </Box>
-        {!isMobileOnSize && <Box mb='15px'><BannerSaveTrade open={isOpenBanner} handleClose={() => setIsOpenBanner(false)} /></Box>}
+        {!isMobileOnSize && <Box mb='15px'><BannerSaveTrade open={isOpenBanner} levelData={levelData} handleClose={() => setIsOpenBanner(false)} /></Box>}
       </div>
     </>
   )
