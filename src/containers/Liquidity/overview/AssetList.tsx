@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
@@ -21,6 +21,7 @@ import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus
 const AssetList: React.FC = () => {
 	// const [filter, _] = useState<FilterType>('all')
 	const [searchTerm, setSearchTerm] = useState('')
+	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 	const debounceSearchTerm = useDebounce((newData) => { setSearchTerm(newData) }, 500)
 	const router = useRouter()
 
@@ -58,11 +59,16 @@ const AssetList: React.FC = () => {
 			</Stack>
 			<Grid
 				headers={columns}
+				columnVisibilityModel={isMobileOnSize ? {
+					"24hChange": false,
+					"liquidity": false,
+					"24hVolume": false
+				} : {}}
 				rows={assets || []}
 				minHeight={110}
 				noAutoHeight={false}
-				hasTopBorderRadius={true}
-				customNoRowsOverlay={() => CustomNoRowsOverlay('No assets')}
+				isBorderTopRadius={true}
+				customNoResultsOverlay={() => CustomNoRowsOverlay('No assets')}
 				onRowClick={handleRowClick}
 			/>
 		</PanelBox>

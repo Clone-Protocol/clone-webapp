@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material'
+import { Button, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useCallback, useState } from 'react'
 import { GridColDef, GridEventListener, GridRenderCellParams } from '@mui/x-data-grid'
@@ -15,6 +15,7 @@ const Collaterals = ({ hasNoCollateral, collaterals, onRefetchData }: { hasNoCol
   const { publicKey } = useWallet()
   const [openEditCollateral, setOpenEditCollateral] = useState(false)
   const [showBridge, setShowBridge] = useState(false)
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   let dataCollaterals = collaterals
   if (publicKey && hasNoCollateral) {
@@ -47,6 +48,9 @@ const Collaterals = ({ hasNoCollateral, collaterals, onRefetchData }: { hasNoCol
     <>
       <Grid
         headers={columns}
+        columnVisibilityModel={isMobileOnSize ? {
+          "usdValue": false,
+        } : {}}
         rows={rowsCollateral || []}
         minHeight={108}
         noAutoHeight={!publicKey}

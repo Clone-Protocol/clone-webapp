@@ -1,4 +1,4 @@
-import { Box, Stack, Button, Typography } from '@mui/material'
+import { Box, Stack, Button, Typography, useMediaQuery, Theme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { GridColDef, GridEventListener, GridRenderCellParams, GridColumnHeaderParams } from '@mui/x-data-grid'
@@ -20,6 +20,7 @@ import { formatLocaleAmount } from '~/utils/numbers'
 
 const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { hasNoCollateral: boolean, positions: LiquidityPosition[], onRefetchData: () => void }) => {
   const router = useRouter()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { publicKey } = useWallet()
   const [openEditLiquidity, setOpenEditLiquidity] = useState(false)
   const [editAssetId, setEditAssetId] = useState(0)
@@ -70,6 +71,10 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
       <Box>
         <Grid
           headers={columns}
+          columnVisibilityModel={isMobileOnSize ? {
+            "ild": false,
+            "rewards": false,
+          } : {}}
           rows={rowsPositions || []}
           minHeight={108}
           isBorderTopRadius={false}

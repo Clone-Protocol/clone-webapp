@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Stack, Typography, Button, Box } from '@mui/material'
+import { Stack, Typography, Button, Box, Theme, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams, GridColumnHeaderParams } from '@mui/x-data-grid'
 import { CellDigitValue, Grid, CellTicker, GridType } from '~/components/Common/DataGrid'
@@ -25,6 +25,7 @@ import { formatLocaleAmount } from '~/utils/numbers'
 const BorrowPositions = () => {
 	const { publicKey } = useWallet()
 	const router = useRouter()
+	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 	const [isBtnHover, setIsBtnHover] = useState(false)
 
 	const { data: positions } = useBorrowQuery({
@@ -69,6 +70,9 @@ const BorrowPositions = () => {
 
 			<Grid
 				headers={columns}
+				columnVisibilityModel={isMobileOnSize ? {
+					"borrowed": false,
+				} : {}}
 				rows={positions || []}
 				minHeight={108}
 				noAutoHeight={(!publicKey || positions?.length === 0) === true}
