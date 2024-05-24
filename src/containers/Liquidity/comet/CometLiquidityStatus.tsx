@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import HealthscoreView from '~/components/Liquidity/comet/HealthscoreView'
 import { CometInfoStatus } from '~/features/Liquidity/comet/CometInfo.query'
 import { OpaqueDefault } from '~/components/Common/OpaqueArea'
@@ -10,11 +10,12 @@ import { formatLocaleAmount } from '~/utils/numbers'
 
 const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined }) => {
   const { publicKey } = useWallet()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   return (
     <Wrapper>
-      <Stack direction='row' gap={16}>
-        <Box>
+      <Stack direction='row' gap={isMobileOnSize ? 6 : 12} flexWrap='wrap' justifyContent={isMobileOnSize ? 'center' : ''}>
+        <Box width='130px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>Health Score</Typography>
             <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#8988a3' />
@@ -23,7 +24,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             <HealthscoreView score={infos && infos.healthScore ? infos.healthScore : 0} />
           </Box>
         </Box>
-        <Box>
+        <Box width='130px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Liquidity</Typography>
             <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
@@ -34,7 +35,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box>
+        <Box width='130px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Collateral</Typography>
             <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#8988a3' />
@@ -45,7 +46,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box>
+        <Box width='130px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My APR</Typography>
             <InfoTooltip title={TooltipTexts.yourApy} color='#8988a3' />

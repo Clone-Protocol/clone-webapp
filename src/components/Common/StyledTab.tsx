@@ -34,6 +34,12 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
 	'& .MuiTabs-indicatorSpan': {
 		display: 'none'
 	},
+	'& .MuiTabs-flexContainer': {
+		overflowX: 'auto',
+		'&::-webkit-scrollbar': {
+			display: 'none'
+		}
+	},
 	minHeight: '36px',
 	height: '36px',
 	paddingTop: '0px'

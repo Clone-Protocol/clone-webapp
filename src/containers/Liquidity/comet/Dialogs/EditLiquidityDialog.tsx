@@ -32,7 +32,7 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
   return positionInfo ? (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ backgroundColor: '#16141b', width: '600px', minHeight: '450px' }}>
+        <DialogContent sx={{ backgroundColor: '#16141b', width: '100%', minHeight: '450px' }}>
           <BoxWrapper>
             <Box>
               <Typography variant='h3'>Manage Liquidity</Typography>

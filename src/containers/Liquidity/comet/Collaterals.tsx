@@ -49,7 +49,7 @@ const Collaterals = ({ hasNoCollateral, collaterals, onRefetchData }: { hasNoCol
       <Grid
         headers={columns}
         columnVisibilityModel={isMobileOnSize ? {
-          "usdValue": false,
+          "action": false,
         } : {}}
         rows={rowsCollateral || []}
         minHeight={108}
