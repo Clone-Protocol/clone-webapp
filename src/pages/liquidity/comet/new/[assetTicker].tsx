@@ -1,6 +1,5 @@
 'use client'
 import { StyledSection } from '../../index'
-import Container from '@mui/material/Container'
 import AssetView from '~/containers/Liquidity/overview/AssetView'
 import { Box } from '@mui/material'
 import { DEFAULT_ASSET_ID } from '~/data/assets'
@@ -12,11 +11,9 @@ const AssetPage = () => {
 
   return (
     <StyledSection>
-      <Container>
-        <Box display='flex' justifyContent='center'>
-          <AssetView assetTicker={assetTicker} />
-        </Box>
-      </Container>
+      <Box display='flex' justifyContent='center'>
+        <AssetView assetTicker={assetTicker} />
+      </Box>
     </StyledSection>
   )
 }

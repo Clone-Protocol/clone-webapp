@@ -1,5 +1,5 @@
-import { Box, Paper, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, Paper, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
@@ -10,13 +10,19 @@ import { ASSETS } from '~/data/assets'
 import Image from 'next/image'
 import InfoIcon from 'public/images/info-icon.svg'
 import TipMsg from '~/components/Common/TipMsg'
+import { useRouter } from 'next/navigation'
 import { useBorrowDetailQuery } from '~/features/Liquidity/borrow/BorrowPosition.query'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { ShowChartBtn } from '~/components/Common/CommonButtons'
+import { GoBackButton } from '~/components/Common/CommonButtons'
 
 const BorrowContainer = () => {
   const { publicKey } = useWallet()
   const [assetIndex, setAssetIndex] = useState(0)
   const [borrowAsset, setBorrowAsset] = useState(ASSETS[0])
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+  const [showChart, setShowChart] = useState(true)
+  const router = useRouter()
 
   const { data: borrowDetail } = useBorrowDetailQuery({
     userPubKey: publicKey,
@@ -25,59 +31,71 @@ const BorrowContainer = () => {
     enabled: publicKey != null
   })
 
+  useEffect(() => {
+    if (!isMobileOnSize) {
+      setShowChart(true)
+    } else {
+      setShowChart(false)
+    }
+  }, [isMobileOnSize])
+
+  const toggleShowTrading = () => {
+    setShowChart(!showChart)
+  }
+
   const handleChooseAssetIndex = (index: number) => {
     setAssetIndex(index)
     setBorrowAsset(ASSETS[index])
   }
 
   return borrowAsset ? (
-    <StyledBox>
-      <Stack direction='row' spacing={3} justifyContent="center">
-        <Box>
+    <>
+      <Stack width='100%' direction={isMobileOnSize ? 'column' : 'row'} spacing={isMobileOnSize ? 0 : 9} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
+        <LeftBoxWrapper width={isMobileOnSize ? "100%" : "600px"} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} top={isMobileOnSize ? '85px' : 'inherit'}>
+          <GoBackButton onClick={() => router.back()}><Typography variant='p'>{'<'} Go back</Typography></GoBackButton>
+          <Box mb='8px'><Typography fontSize='20px' fontWeight={500}>New Borrow Position</Typography></Box>
           <a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/borrowing" target="_blank" rel="noreferrer">
             <TipMsg><Image src={InfoIcon} alt='info' /> <Typography variant='p' ml='5px' sx={{ cursor: 'pointer' }}>You are able to borrow any clAsset by providing sufficient collateral. Click to learn more.</Typography></TipMsg>
           </a>
-          <LeftBoxWrapper>
+          <BoxWrapper mb={isMobileOnSize ? '150px' : '0px'}>
             <Box paddingY='10px'>
               <BorrowPanel assetIndex={assetIndex} borrowDetail={borrowDetail} onChooseAssetIndex={handleChooseAssetIndex} />
             </Box>
-          </LeftBoxWrapper>
-        </Box>
+          </BoxWrapper>
+        </LeftBoxWrapper>
 
-        <RightBoxWrapper>
-          <StickyBox>
-            <PriceChart assetData={borrowAsset} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
-            {borrowDetail && <PositionAnalytics price={borrowDetail.oPrice} tickerSymbol={borrowAsset.tickerSymbol} />}
-          </StickyBox>
-        </RightBoxWrapper>
+        {showChart &&
+          <RightBoxWrapper width={isMobileOnSize ? '100%' : '450px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
+            <StickyBox top={isMobileOnSize ? '0px' : '100px'} p={isMobileOnSize ? '10px' : '0px'}>
+              <PriceChart assetData={borrowAsset} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
+              {borrowDetail && <PositionAnalytics price={borrowDetail.oPrice} tickerSymbol={borrowAsset.tickerSymbol} />}
+            </StickyBox>
+          </RightBoxWrapper>
+        }
       </Stack>
-    </StyledBox>
+
+      {isMobileOnSize && <ShowChartBtn onClick={() => toggleShowTrading()}>{showChart ? 'Hide Chart' : 'Show Chart'}</ShowChartBtn>}
+    </>
   ) : <></>
 }
 
-const StyledBox = styled(Paper)`
-	font-size: 14px;
-	font-weight: 500;
-	text-align: center;
-	color: #fff;
-	border-radius: 8px;
-	text-align: left;
-	background: #000;
-`
 const LeftBoxWrapper = styled(Box)`
-	width: 600px; 
-	padding: 8px 22px;
-  background: ${(props) => props.theme.basis.backInBlack};
-	border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
-  margin-top: 23px;
-	margin-bottom: 25px;
+	padding: 8px 0px;
 `
+const BoxWrapper = styled(Box)`
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 10px;
+  margin-top: 23px;
+  margin-bottom: 25px;
+  padding: 8px 22px;
+`
+
 const RightBoxWrapper = styled(Box)`
-	width: 450px;
-	padding: 20px;
+  padding: 8px 0px;
+  height: 100%;
 `
 const StickyBox = styled(Box)`
   position: sticky;
-  top: 100px;
+  width: 100%;
 `
 export default withSuspense(BorrowContainer, <LoadingProgress />)

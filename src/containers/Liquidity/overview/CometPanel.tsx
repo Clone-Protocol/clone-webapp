@@ -3,7 +3,7 @@ import withSuspense from '~/hocs/withSuspense'
 import Image from 'next/image'
 import { LoadingButton, LoadingProgress } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { Box, Stack, FormHelperText, Typography } from '@mui/material'
+import { Box, Stack, FormHelperText, Typography, useMediaQuery, Theme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { styled } from '@mui/material/styles'
 import RatioSlider from '~/components/Liquidity/overview/RatioSlider'
@@ -40,6 +40,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
   const [assetHealthCoefficient, setAssetHealthCoefficient] = useState(0)
   const [validMintValue, setValidMintValue] = useState(false)
   const isAlreadyInitializedAccount = useAtomValue(isAlreadyInitializedAccountState)
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   const { data: positionInfo, refetch } = useLiquidityDetailQuery({
     userPubKey: publicKey,
@@ -210,7 +211,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
             </Box>
             <Box>
               <SubHeader><Typography variant='p'>Health Score</Typography> <InfoTooltip title={TooltipTexts.healthScoreCol} /></SubHeader>
-              <HealthscoreBar score={positionInfo?.totalHealthScore} width={480} hiddenThumbTitle={true} />
+              <HealthscoreBar score={positionInfo?.totalHealthScore} width={isMobileOnSize ? 330 : 480} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
             </Box>
           </BoxWithBorder>
 
@@ -258,7 +259,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
 
                 <Box mt='25px'>
                   <Box mb="15px"><Typography variant="p_lg">Projected Health Score</Typography> <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Box>
-                  <HealthscoreBar score={healthScore} width={470} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
+                  <HealthscoreBar score={healthScore} width={isMobileOnSize ? 330 : 470} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
                   {hasRiskScore &&
                     <a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/comets" target='_blank'>
                       <WarningStack direction='row'>
@@ -282,7 +283,6 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
 }
 
 const BoxWithBorder = styled(Box)`
-  // border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
   background: ${(props) => props.theme.basis.backInBlack};
   border-radius: 20px;
 `

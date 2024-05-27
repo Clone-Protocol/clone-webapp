@@ -75,3 +75,24 @@ const CloseBox = styled(Box)`
   justify-content: center;
   align-items: center;
 `
+
+export const ShowChartBtn = styled(Box)`
+  position: fixed;
+  bottom: 15px;
+  width: 95%;
+  height: 36px;
+  color: #fff;
+	border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  z-index: 9999999;
+  cursor: pointer;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background: ${(props) => props.theme.basis.backInBlack};
+	&:hover {
+		background: ${(props) => props.theme.basis.backInBlack};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
+  }
+`

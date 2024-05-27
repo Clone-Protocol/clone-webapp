@@ -1,5 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material'
-import React, { useState, useMemo } from 'react'
+import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
+import React, { useState, useMemo, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { useWallet } from '@solana/wallet-adapter-react'
@@ -12,7 +12,7 @@ import PriceChart from '~/components/Liquidity/overview/PriceChart'
 import PoolAnalytics from '~/components/Liquidity/overview/PoolAnalytics'
 import TipMsg from '~/components/Common/TipMsg'
 import InfoIcon from 'public/images/info-icon.svg'
-import { GoBackButton } from '~/components/Common/CommonButtons'
+import { GoBackButton, ShowChartBtn } from '~/components/Common/CommonButtons'
 import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_LIQUIDITY_ASSET_LINK } from '~/data/assets'
 import dynamic from 'next/dynamic'
 import { RootLiquidityDir } from '~/utils/constants'
@@ -21,8 +21,10 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 	const { publicKey } = useWallet()
 	const router = useRouter()
 	const [assetIndex, setAssetIndex] = useState(0)
+	const [showChart, setShowChart] = useState(true)
 	const [openChooseLiquidity, setOpenChooseLiquidity] = useState(false)
 	const ChooseLiquidityPoolsDialog = dynamic(() => import('./Dialogs/ChooseLiquidityPoolsDialog'), { ssr: false })
+	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
 	useMemo(() => {
 		if (assetTicker) {
@@ -41,6 +43,18 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 		refetchOnMount: "always",
 	})
 
+	useEffect(() => {
+		if (!isMobileOnSize) {
+			setShowChart(true)
+		} else {
+			setShowChart(false)
+		}
+	}, [isMobileOnSize])
+
+	const toggleShowTrading = () => {
+		setShowChart(!showChart)
+	}
+
 	const openChooseLiquidityDialog = () => {
 		setOpenChooseLiquidity(true)
 	}
@@ -53,9 +67,9 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 	}
 
 	return (
-		<Box>
-			<Stack direction='row' spacing={9} justifyContent="center">
-				<Box>
+		<>
+			<Stack width='100%' direction={isMobileOnSize ? 'column' : 'row'} spacing={isMobileOnSize ? 0 : 9} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
+				<LeftBoxWrapper width={isMobileOnSize ? "100%" : "600px"} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} top={isMobileOnSize ? '85px' : 'inherit'}>
 					<GoBackButton onClick={() => router.back()}><Typography variant='p'>{'<'} Go back</Typography></GoBackButton>
 					<Box mb='8px'>
 						<Typography variant='h3' fontWeight={500}>New Comet Liquidity Position</Typography>
@@ -67,19 +81,21 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 						</TipMsg>
 					</a>
 
-					<LeftBoxWrapper>
+					<Box padding='8px 0px' mb={isMobileOnSize ? '150px' : '0px'}>
 						<Box paddingY='15px'>
 							<CometPanel assetIndex={assetIndex} assetData={assetData} openChooseLiquidityDialog={openChooseLiquidityDialog} onRefetchData={() => refetch()} />
 						</Box>
-					</LeftBoxWrapper>
-				</Box>
+					</Box>
+				</LeftBoxWrapper>
 
-				<RightBoxWrapper>
-					<StickyBox>
-						<PriceChart assetData={assetData} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
-						{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} />}
-					</StickyBox>
-				</RightBoxWrapper>
+				{showChart &&
+					<RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
+						<StickyBox top={isMobileOnSize ? '0px' : '100px'} p={isMobileOnSize ? '10px' : '0px'}>
+							<PriceChart assetData={assetData} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
+							{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} />}
+						</StickyBox>
+					</RightBoxWrapper>
+				}
 			</Stack>
 
 			<ChooseLiquidityPoolsDialog
@@ -87,22 +103,22 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 				handleChoosePool={handleChoosePool}
 				handleClose={() => setOpenChooseLiquidity(false)}
 			/>
-		</Box>
+
+			{isMobileOnSize && <ShowChartBtn onClick={() => toggleShowTrading()}>{showChart ? 'Hide Chart' : 'Show Chart'}</ShowChartBtn>}
+		</>
 	)
 }
 
 const LeftBoxWrapper = styled(Box)`
-	width: 600px; 
 	padding: 8px 0px;
-	margin-bottom: 65px;
 `
 const RightBoxWrapper = styled(Box)`
-	width: 472px;
 	padding: 8px 0px;
+	height: 100%;
 `
 const StickyBox = styled(Box)`
+	width: 100%;
   position: sticky;
-  top: 100px;
 `
 
 export default withSuspense(AssetView, <LoadingProgress />)
