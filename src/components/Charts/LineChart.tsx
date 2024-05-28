@@ -52,7 +52,7 @@ const LineChart: React.FC<LineChartProps> = ({
 }
 
 const Wrapper = styled(Card)`
-  background: #000;
+  background: transparent;
   width: 100%;
   max-width: 472px;
   margin: 30px 0px;

@@ -16,7 +16,7 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
   })
 
   return (
-    <Wrapper>
+    <Wrapper p={isMobileOnSize ? '12px 5px' : '12px 75px'}>
       <Stack direction='row' gap={isMobileOnSize ? 6 : 10}>
         <Box width='180px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
@@ -63,7 +63,6 @@ const Wrapper = styled(Box)`
   height: 120px;
   margin-top: 16px;
   margin-bottom: 28px;
-  padding: 12px 75px 28px 75px;
   border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `

@@ -45,9 +45,6 @@ const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
   return (
     <StyledSection>
       <Box sx={{ maxWidth: '1270px' }} margin='0 auto'>
-        {/* {IS_DEV && publicKey &&
-          <GetUSDiBadge />
-        } */}
         <Box mt='15px'>
           <Box>
             <MainChart />
@@ -69,7 +66,7 @@ export const StyledSection = styled('section')`
 		padding-top: 130px;
 	}
 	${(props) => props.theme.breakpoints.down('md')} {
-		padding: 110px 0px;
+		padding: 100px 0px;
 	}
 `
 

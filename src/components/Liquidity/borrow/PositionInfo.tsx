@@ -64,7 +64,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
               </TickerBox>
             </Stack>
             {isEditBorrowHover &&
-              <Box position='absolute' width='521px' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+              <Box position='absolute' width='94%' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
                 <Typography variant='p_lg'>Manage Borrowed Amount</Typography>
               </Box>
             }
@@ -90,7 +90,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
           </TickerBox>
         </Stack>
         {isEditCollHover &&
-          <Box position='absolute' width='521px' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+          <Box position='absolute' width='94%' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
             <Typography variant='p_lg'>Manage Collateral</Typography>
           </Box>
         }
@@ -138,7 +138,6 @@ const EditBox = styled(Box)`
   border-bottom-right-radius: 9px;
 `
 const TickerBox = styled(Box)`
-  background: ${(props) => props.theme.basis.darkNavy};
   border-radius: 100px;
   padding: 3px 10px 3px 5px;
 `

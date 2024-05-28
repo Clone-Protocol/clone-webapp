@@ -58,15 +58,15 @@ const BorrowContainer = () => {
             <TipMsg><Image src={InfoIcon} alt='info' /> <Typography variant='p' ml='5px' sx={{ cursor: 'pointer' }}>You are able to borrow any clAsset by providing sufficient collateral. Click to learn more.</Typography></TipMsg>
           </a>
           <BoxWrapper mb={isMobileOnSize ? '150px' : '0px'}>
-            <Box paddingY='10px'>
+            <Box py='10px'>
               <BorrowPanel assetIndex={assetIndex} borrowDetail={borrowDetail} onChooseAssetIndex={handleChooseAssetIndex} />
             </Box>
           </BoxWrapper>
         </LeftBoxWrapper>
 
         {showChart &&
-          <RightBoxWrapper width={isMobileOnSize ? '100%' : '450px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
-            <StickyBox top={isMobileOnSize ? '0px' : '100px'} p={isMobileOnSize ? '10px' : '0px'}>
+          <RightBoxWrapper width={isMobileOnSize ? '100%' : '450px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} py={isMobileOnSize ? '0px' : '8px'} zIndex={99}>
+            <StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
               <PriceChart assetData={borrowAsset} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
               {borrowDetail && <PositionAnalytics price={borrowDetail.oPrice} tickerSymbol={borrowAsset.tickerSymbol} />}
             </StickyBox>
@@ -80,7 +80,7 @@ const BorrowContainer = () => {
 }
 
 const LeftBoxWrapper = styled(Box)`
-	padding: 8px 0px;
+	padding: 8px 10px;
 `
 const BoxWrapper = styled(Box)`
   background: ${(props) => props.theme.basis.backInBlack};
@@ -89,10 +89,9 @@ const BoxWrapper = styled(Box)`
   margin-bottom: 25px;
   padding: 8px 22px;
 `
-
 const RightBoxWrapper = styled(Box)`
-  padding: 8px 0px;
   height: 100%;
+  padding-bottom: 55px;
 `
 const StickyBox = styled(Box)`
   position: sticky;

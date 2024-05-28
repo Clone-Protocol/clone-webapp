@@ -89,8 +89,8 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 				</LeftBoxWrapper>
 
 				{showChart &&
-					<RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
-						<StickyBox top={isMobileOnSize ? '0px' : '100px'} p={isMobileOnSize ? '10px' : '0px'}>
+					<RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} py={isMobileOnSize ? '0px' : '8px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
+						<StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
 							<PriceChart assetData={assetData} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
 							{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} />}
 						</StickyBox>
@@ -110,11 +110,11 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 }
 
 const LeftBoxWrapper = styled(Box)`
-	padding: 8px 0px;
+	padding: 8px 10px;
 `
 const RightBoxWrapper = styled(Box)`
-	padding: 8px 0px;
 	height: 100%;
+	padding-bottom: 55px;
 `
 const StickyBox = styled(Box)`
 	width: 100%;

@@ -69,6 +69,7 @@ const PairInput: React.FC<Props> = ({
               onChange={onChange}
               min={0}
               max={!balanceDisabled ? balance : 1000}
+              sx={{ width: { xs: '180px', sm: '230px' } }}
             />
             <DollarAmount>
               {valueDollarPrice && valueDollarPrice > 0
@@ -95,7 +96,6 @@ const CenterBox = styled(Box)`
   border-radius: 10px;
 `
 const FormStack = styled(Stack)`
-  display: flex;
   width: 100%;
   height: 84px;
   padding: 18px 12px;
@@ -125,7 +125,6 @@ const MaxButton = styled(Box)`
   }
 `
 const InputAmount = styled(`input`)`
-  width: 230px;
   border: 0px;
   background-color: transparent;
   font-size: 26px;

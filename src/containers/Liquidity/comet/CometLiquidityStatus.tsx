@@ -15,7 +15,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
   return (
     <Wrapper>
       <Stack direction='row' gap={isMobileOnSize ? 6 : 12} flexWrap='wrap' justifyContent={isMobileOnSize ? 'center' : ''}>
-        <Box width='130px'>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>Health Score</Typography>
             <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#8988a3' />
@@ -24,7 +24,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             <HealthscoreView score={infos && infos.healthScore ? infos.healthScore : 0} />
           </Box>
         </Box>
-        <Box width='130px'>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Liquidity</Typography>
             <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
@@ -35,7 +35,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box width='130px'>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Collateral</Typography>
             <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#8988a3' />
@@ -46,7 +46,7 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box width='130px'>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My APR</Typography>
             <InfoTooltip title={TooltipTexts.yourApy} color='#8988a3' />
