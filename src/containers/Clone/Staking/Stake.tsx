@@ -89,12 +89,40 @@ const Stake = () => {
     }
   }
 
+
   const isValid = invalidMsg() === ''
 
   //@TODO
   const maxWithdrawable = stakeData?.stakedAmt
-  const cooldownEpochs = stakeData?.minWithdrawalSlot
-  const cooldownHours = 24 * parseInt(cooldownEpochs)
+  const ableToWithdraw = stakeData?.minWithdrawalSlot !== undefined && stakeData?.currentSlot !== undefined && stakeData?.minWithdrawalSlot - stakeData?.currentSlot <= 0
+
+  const cooldownDialog = (tab: number) => {
+    if (tab === 0) {
+      // Should let user know about withdraw cooldown after staking. Provide estimate.
+      let msg = "CLN deposits have a mandatory cooldown period before withdrawals."
+      if (stakeData) {
+        const cooldownSecs = stakeData.stakingPeriodSlots * stakeData.secsPerSlot
+        console.log("COOLDOWN:", cooldownSecs, stakeData.secsPerSlot)
+        const cooldownHours = cooldownSecs / 3600
+        const cooldownMinutes = cooldownSecs / 60
+        msg += ` Current cooldown is ${stakeData.stakingPeriodSlots} slots (~${cooldownHours.toFixed(0)}h ${cooldownMinutes.toFixed(0)}m).`
+      }
+      return msg
+    } else {
+      if (stakeData && stakeData.minWithdrawalSlot !== undefined && stakeData.currentSlot !== undefined) {
+        const slotDiff = stakeData.minWithdrawalSlot - stakeData.currentSlot;
+        if (slotDiff > 0) {
+          const estimatedHours = (slotDiff * stakeData.secsPerSlot / 3600)
+          const estimatedMinutes = (estimatedHours % 1) * 60
+          return `Unable to withdraw CLN. Cooldown period ends in ${slotDiff} slots. (~${estimatedHours.toFixed(0)}h ${estimatedMinutes.toFixed(0)}m)`
+        } else {
+          return `Cooldown period has ended. You may withdraw your CLN.`
+        }
+      }
+      return `Available CLN may be less than staked due to cooldown period.`
+    }
+  }
+
 
   return (
     <Wrapper width={isMobileOnSize ? '100%' : '299px'}>
@@ -156,7 +184,7 @@ const Stake = () => {
           {!publicKey ? <ConnectButton onClick={() => setOpen(true)}>
             <Typography variant='h4'>Connect Wallet</Typography>
           </ConnectButton> :
-            isValid ? <ActionButton onClick={handleSubmit(onConfirm)} disabled={loading} sx={loading ? { border: '1px solid #c4b5fd' } : {}}>
+            isValid ? <ActionButton onClick={handleSubmit(onConfirm)} disabled={loading || (tab === 1 && !ableToWithdraw)} sx={loading ? { border: '1px solid #c4b5fd' } : {}}>
               {!loading ?
                 <Typography variant='p_lg'>{tab === 0 ? 'Deposit' : 'Withdraw'}</Typography>
                 :
@@ -176,9 +204,7 @@ const Stake = () => {
             <InfoOutlineIcon />
             <Box maxWidth='205px' lineHeight={1}>
               <Typography variant='p'>
-                {tab === 0 ? `CLN deposits have a mandatory cooldown period before withdrawals. Current cooldown is ${cooldownEpochs} epochs (~${cooldownHours} hours).`
-                  : `Available CLN may be less than staked due to cooldown (${cooldownEpochs} epochs, ~${cooldownHours} hours).`
-                }
+                {cooldownDialog(tab)}
               </Typography>
             </Box>
           </CooldownStack>

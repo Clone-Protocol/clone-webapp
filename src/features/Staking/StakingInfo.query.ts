@@ -80,10 +80,16 @@ export const fetchStakingInfo = async ({
 	let stakedAmt = 0
 	let balance = 0
 	let minWithdrawalSlot = undefined
+	let currentSlot = undefined
+	let secsPerSlot = 0.400 // Estimated
+	let stakingPeriodSlots = 0
 
-	const [stakingAccountResult, balanceInfoResult] = await Promise.allSettled([
+	const [stakingAccountResult, balanceInfoResult, currentSlotResult, performanceSamplesResult, stakingInfoResult] = await Promise.allSettled([
 		getStakingAccount(userPubKey, program.provider.connection),
-		getCLNTokenBalance(userPubKey, program.provider.connection)
+		getCLNTokenBalance(userPubKey, program.provider.connection),
+		program.provider.connection.getSlot(),
+		program.provider.connection.getRecentPerformanceSamples(60),
+		getClnStakingInitInfo(program.provider.connection),
 	])
 
 	const scalingFactor = Math.pow(10, -CLN_TOKEN_SCALE)
@@ -96,10 +102,27 @@ export const fetchStakingInfo = async ({
 		balance = Number(balanceInfoResult.value.amount) * scalingFactor
 	}
 
+	if (currentSlotResult.status === "fulfilled") {
+		currentSlot = currentSlotResult.value
+	}
+
+	if (performanceSamplesResult.status === "fulfilled") {
+		const totalSlots = performanceSamplesResult.value.reduce((acc, sample) => acc + sample.numSlots, 0)
+		const totalPeriodSecs = performanceSamplesResult.value.reduce((acc, sample) => acc + sample.samplePeriodSecs, 0)
+		secsPerSlot = totalPeriodSecs / totalSlots
+	}
+
+	if (stakingInfoResult.status === "fulfilled") {
+		stakingPeriodSlots = Number(stakingInfoResult.value.stakingPeriodSlots)
+	}
+
 	return {
 		stakedAmt,
 		balance,
-		minWithdrawalSlot
+		minWithdrawalSlot,
+		currentSlot,
+		stakingPeriodSlots,
+		secsPerSlot
 	}
 }
 
