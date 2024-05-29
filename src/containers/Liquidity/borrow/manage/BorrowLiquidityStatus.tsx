@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import { useStatusQuery } from '~/features/Liquidity/borrow/Status.query'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { TooltipTexts } from '~/data/tooltipTexts'
@@ -8,6 +8,7 @@ import { formatLocaleAmount } from '~/utils/numbers'
 
 const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolean }) => {
   const { publicKey } = useWallet()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { data: status } = useStatusQuery({
     userPubKey: publicKey,
     refetchOnMount: "always",
@@ -15,12 +16,12 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
   })
 
   return (
-    <Wrapper>
-      <Stack direction='row' gap={16}>
-        <Box>
+    <Wrapper p={isMobileOnSize ? '12px 5px' : '12px 75px'}>
+      <Stack direction='row' gap={isMobileOnSize ? 6 : 10}>
+        <Box width='180px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#66707e'}>Borrowed Amount</Typography>
-            <InfoTooltip title={TooltipTexts.borrowedAmount} color='#66707e' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : 'rgba(255, 255, 255, 0.3)'} whiteSpace={'nowrap'}>Borrowed Amount</Typography>
+            <InfoTooltip title={TooltipTexts.borrowedAmount} color={!hasNoPosition ? '#8988a3' : '#66707e'} />
           </Box>
           <StatusValue>
             {status && status.statusValues &&
@@ -34,10 +35,10 @@ const BorrowLiquidityStatus = ({ hasNoPosition = true }: { hasNoPosition: boolea
             }
           </StatusValue>
         </Box>
-        <Box>
+        <Box width='180px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
-            <Typography variant='p' color={!hasNoPosition ? '#fff' : '#66707e'}>Collateral in Borrow Positions</Typography>
-            <InfoTooltip title={TooltipTexts.collateralInBorrow} color='#66707e' />
+            <Typography variant='p' color={!hasNoPosition ? '#fff' : 'rgba(255, 255, 255, 0.3)'} whiteSpace={'nowrap'}>Collateral in Borrow Positions</Typography>
+            <InfoTooltip title={TooltipTexts.collateralInBorrow} color={!hasNoPosition ? '#8988a3' : '#66707e'} />
           </Box>
           <StatusValue>
             {status && status.statusValues &&
@@ -62,9 +63,8 @@ const Wrapper = styled(Box)`
   height: 120px;
   margin-top: 16px;
   margin-bottom: 28px;
-  padding: 12px 75px 28px 75px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const StatusValue = styled(Box)`
   display: flex;

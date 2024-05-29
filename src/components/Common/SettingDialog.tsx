@@ -182,7 +182,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
                   {showCustom &&
                     <Box>
                       <StyledInput placeholder="Enter custom RPC URL" disableUnderline onChange={handleChangeCustomRPCUrl} sx={{ width: { xs: '100%', md: '322px' } }} />
-                      {errorCustomMsg && <Box><Typography variant='p' color='#ed2525'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
+                      {errorCustomMsg && <Box><Typography variant='p' color='#ff0084'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
                       <SaveBtn onClick={saveCustomURL}><Typography variant='p'>Save</Typography></SaveBtn>
                     </Box>
                   }
@@ -190,7 +190,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
 
                 <Box my='20px'>
                   <Box><Typography variant="p_lg">Priority Fee Setting</Typography></Box>
-                  <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8988a3">Expedite your transaction with higher priority fees. Please visit Helius web page to <a href="https://docs.helius.dev/solana-rpc-nodes/alpha-priority-fee-api" target='_blank' style={{ color: '#fff', textDecoration: 'underline' }}>learn more.</a></Typography></Box>
+                  <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8894a3">Expedite your transaction with higher priority fees. Please visit Helius web page to <a href="https://docs.helius.dev/solana-rpc-nodes/alpha-priority-fee-api" target='_blank' style={{ color: '#fff', textDecoration: 'underline' }}>learn more.</a></Typography></Box>
                   <CommonSelectBox value={atomPriorityFeeIndex} handleChange={handleChangePriorityFee}>
                     {PRIORITY_FEES.map((fee, index) => (
                       <SelectMenuItem key={index} value={index}>

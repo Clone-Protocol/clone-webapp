@@ -33,7 +33,7 @@ const MyGiveawayStatus = () => {
           <StatusValue1>
             <Image src={TrophyGold} alt='TrophyGold' />
             <Typography variant='p_lg'>
-              {formatLocaleAmount(100000)} pts
+              {formatLocaleAmount(200000)} pts
             </Typography>
           </StatusValue1>
         </BorderBox>
@@ -44,7 +44,7 @@ const MyGiveawayStatus = () => {
           <StatusValue2>
             <Image src={TrophySilver} alt='TrophySilver' />
             <Typography variant='p_lg'>
-              {formatLocaleAmount(25000)} pts
+              {formatLocaleAmount(50000)} pts
             </Typography>
           </StatusValue2>
         </BorderBox>
@@ -55,7 +55,7 @@ const MyGiveawayStatus = () => {
           <StatusValue3>
             <Image src={TrophyBronze} alt='TrophyBronze' />
             <Typography variant='p_lg'>
-              {formatLocaleAmount(10000)} pts
+              {formatLocaleAmount(20000)} pts
             </Typography>
           </StatusValue3>
         </BorderBox>

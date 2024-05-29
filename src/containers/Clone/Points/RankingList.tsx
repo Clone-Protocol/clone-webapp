@@ -1,4 +1,4 @@
-import { Box, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material'
+import { Box, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { LoadingProgress } from '~/components/Common/Loading'
@@ -10,9 +10,11 @@ import { shortenAddress } from '~/utils/address'
 import { RankingList, useRankingQuery } from '~/features/Points/Ranking.query'
 import { formatLocaleAmount } from '~/utils/numbers'
 import { PythSymbolIcon } from '~/components/Common/SvgIcons'
-import { PointTextForPyth } from '~/components/Points/PointMultiplierText'
+import { PointTextForBonus } from '~/components/Points/PointMultiplierText'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { LightTooltip } from '~/components/Common/InfoTooltip'
+import IconJupSymbol from 'public/images/jup_symbol.svg'
+import Image from 'next/image'
 
 const RankingList = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -68,6 +70,7 @@ let columns: GridColDef[] = [
     flex: 3,
     renderCell(params: GridRenderCellParams<{ name: string | undefined, address: string }>) {
       const hasPythPoint = params.row.hasPythPoint
+      const hasJupPoint = params.row.hasJupPoint
 
       return <Box display='flex' alignItems='center' gap={1}>
         <a href={`https://solana.fm/address/${params.value!.address.toString()}`} target='_blank' rel='noreferrer' style={{ color: '#fff' }}>
@@ -77,6 +80,13 @@ let columns: GridColDef[] = [
           <LightTooltip title={TooltipTexts.points.pythSymbol} placement="top">
             <Box display='flex' alignItems='center' sx={{ color: '#e6dafe', ':hover': { color: '#9b90b1' } }}>
               <PythSymbolIcon />
+            </Box>
+          </LightTooltip>
+        }
+        {hasJupPoint &&
+          <LightTooltip title={TooltipTexts.points.jupSymbol} placement="top">
+            <Box display='flex' alignContent='center' sx={{ ':hover': { opacity: 0.6 } }}>
+              <Image src={IconJupSymbol} alt='jup_symbol' width={20} height={20} />
             </Box>
           </LightTooltip>
         }
@@ -131,16 +141,14 @@ let columns: GridColDef[] = [
     headerName: 'Total Points',
     flex: 3,
     renderCell(params: GridRenderCellParams<string>) {
-      const hasPythPoint = params.row.hasPythPoint
-      const pythPointTier = params.row.pythPointTier
+      const multipleTier = params.row.multipleTier
 
       return <Box display='flex' alignItems='center' gap='7px'>
         <Typography variant='p'>{formatLocaleAmount(params.value)}</Typography>
-        {hasPythPoint &&
-          <LightTooltip title={TooltipTexts.points.multiplier} placement="top">
-            <Box><PointTextForPyth pythPointTier={pythPointTier} /></Box>
-          </LightTooltip>
-        }
+
+        <LightTooltip title={TooltipTexts.points.multiplier} placement="top">
+          <Box><PointTextForBonus multipleTier={multipleTier} /></Box>
+        </LightTooltip>
       </Box>
     },
   },

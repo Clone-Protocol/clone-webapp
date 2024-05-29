@@ -37,11 +37,11 @@ const PairInput: React.FC<Props> = ({
 		<FormControl variant="standard" sx={{ width: '100%' }}>
 			<Stack direction="row" justifyContent="space-between">
 				<Box>
-					<Typography variant="p_lg" color='#66707e'>{inputTitle}</Typography>
+					<Typography variant="p_lg" color='#8988a3'>{inputTitle}</Typography>
 				</Box>
 				{headerTitle ? (
 					<Stack direction="row" justifyContent="flex-end">
-						<Typography variant='p' color='#66707e'>
+						<Typography variant='p' color='#8988a3'>
 							{headerTitle}: {headerValue || headerValue == 0 ? (<MaxValue onClick={() => onMax && onMax(headerValue)}>{formatLocaleAmount(headerValue, 5)}</MaxValue>) : '_'}
 						</Typography>
 						{(headerValue || headerValue == 0) && <MaxButton onClick={() => onMax && onMax(headerValue)}>MAX</MaxButton>}
@@ -50,7 +50,7 @@ const PairInput: React.FC<Props> = ({
 					<></>
 				)}
 			</Stack>
-			<CenterBox>
+			<CenterBox sx={disabledInput ? { border: '1px solid #332e46' } : {}}>
 				<FormStack direction="row" justifyContent="space-between" alignItems="center" noHover={disabledInput} onClick={() => ipAmount.current?.focus()} sx={disabledInput ? { border: '1px solid #414166', background: 'transparent' } : {}}>
 					<Box>
 						<InputAmount
@@ -82,17 +82,18 @@ const PairInput: React.FC<Props> = ({
 
 const CenterBox = styled(Box)`
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${(props) => props.theme.basis.cinder};
+	border-radius: 10px;
 `
 const MaxValue = styled('span')`
-	color: ${(props) => props.theme.basis.liquidityBlue};
+	color: ${(props) => props.theme.basis.melrose};
 	cursor: pointer;
 `
 const FormStack = styled(Stack) <{ noHover?: boolean }>`
 	display: flex;
 	width: 100%;
 	height: 84px;
-	border-radius: 5px;
+	border-radius: 10px;
 	padding: 9px 21px 8px 24px;
   &:hover {
 		${(props) => props.noHover ? 'box-shadow: 0px !important;' : `box-shadow: 0 0 0 1px #414e66 inset;`}
@@ -110,17 +111,17 @@ const InputAmount = styled(`input`)`
 `
 const MaxButton = styled(Box)`
   border-radius: 4px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: ${(props) => props.theme.basis.cinder};
   margin-left: 6px;
 	margin-bottom: 5px;
   font-size: 10px;
   font-weight: 600;
   padding: 2px 7px;
-	border-radius: 5px;
+	border-radius: 4px;
   color: #fff;
   cursor: pointer;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue};
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose};
 	}
 `
 const DollarAmount = styled("div")`

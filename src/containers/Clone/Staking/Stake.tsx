@@ -10,6 +10,7 @@ import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { useStakingInfoQuery } from '~/features/Staking/StakingInfo.query'
 import { useStakingMutation } from '~/features/Staking/Staking.mutation'
 import { formatLocaleAmount } from '~/utils/numbers'
+import { InfoOutlineIcon } from '~/components/Common/SvgIcons'
 
 const Stake = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -90,6 +91,11 @@ const Stake = () => {
 
   const isValid = invalidMsg() === ''
 
+  //@TODO
+  const maxWithdrawable = stakeData?.stakedAmt
+  const cooldownEpochs = stakeData?.minWithdrawalSlot
+  const cooldownHours = 24 * parseInt(cooldownEpochs)
+
   return (
     <Wrapper width={isMobileOnSize ? '100%' : '299px'}>
       <Box padding="20px 25px 20px 20px">
@@ -129,11 +135,12 @@ const Stake = () => {
               tickerIcon={LogosClone}
               ticker={'CLN'}
               value={field.value}
-              title={tab === 0 ? 'Deposit' : 'Withdraw'}
+              isDeposit={isDeposit}
+              title={isDeposit ? 'Deposit' : 'Withdraw'}
               balance={stakeData ? stakeData.balance : 0}
-              balanceDisabled={!isDeposit}
-              max={stakeData?.balance}
-              maxDisabled={!isDeposit || !stakeData || stakeData?.balance === 0}
+              // balanceDisabled={!isDeposit}
+              max={isDeposit ? stakeData?.balance : maxWithdrawable}
+              maxDisabled={isDeposit ? (!stakeData || stakeData?.balance === 0) : maxWithdrawable === 0}
               onChange={(event: React.FormEvent<HTMLInputElement>) => {
                 const collAmt = parseFloat(event.currentTarget.value)
                 field.onChange(collAmt)
@@ -155,7 +162,7 @@ const Stake = () => {
                 :
                 <Stack direction='row' alignItems='center' gap={2}>
                   <CircularProgress sx={{ color: '#c4b5fd' }} size={15} thickness={4} />
-                  <Typography variant='p_lg' color='#fff'>{tab === 0 ? 'Depositing' : 'Withdrawing'}</Typography>
+                  <Typography variant='p_lg'>{tab === 0 ? 'Depositing' : 'Withdrawing'}</Typography>
                 </Stack>}
             </ActionButton> :
               <DisableButton disabled={true}>
@@ -163,6 +170,19 @@ const Stake = () => {
               </DisableButton>
           }
         </Box>
+
+        {publicKey &&
+          <CooldownStack direction='row' mt='15px'>
+            <InfoOutlineIcon />
+            <Box maxWidth='205px' lineHeight={1}>
+              <Typography variant='p'>
+                {tab === 0 ? `CLN deposits have a mandatory cooldown period before withdrawals. Current cooldown is ${cooldownEpochs} epochs (~${cooldownHours} hours).`
+                  : `Available CLN may be less than staked due to cooldown (${cooldownEpochs} epochs, ~${cooldownHours} hours).`
+                }
+              </Typography>
+            </Box>
+          </CooldownStack>
+        }
       </Box>
     </Wrapper>
   )
@@ -215,7 +235,7 @@ const ActionButton = styled(Button)`
     opacity: 0.9;
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.9;
   } 
 `
 const DisableButton = styled(Button)`
@@ -228,6 +248,15 @@ const DisableButton = styled(Button)`
     background:  ${(props) => props.theme.basis.backInBlack};
     color: ${(props) => props.theme.basis.textRaven};
   } 
+`
+const CooldownStack = styled(Stack)`
+  width: 259px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+  gap: 10px;
+  padding: 14px 13px;
+  border-radius: 10px;
+  color: ${(props) => props.theme.basis.textRaven};
+  align-items: center;
 `
 
 export default Stake

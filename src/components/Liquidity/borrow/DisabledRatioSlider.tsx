@@ -28,7 +28,7 @@ const DisabledRatioSlider: React.FC = () => {
 			<Box display='flex' mb='25px'>
 				<Box display='flex'>
 					<InputAmount id="ip-amount" type="number" min={0} placeholder="" disabled />
-					<div style={{ marginLeft: '-26px', marginRight: '5px', marginTop: '10px' }}><Typography fontSize='26px' color='#66707e'>%</Typography></div>
+					<div style={{ marginLeft: '-26px', marginRight: '5px', marginTop: '10px' }}><Typography fontSize='26px' color='#8988a3'>%</Typography></div>
 				</Box>
 				<Box width="100%">
 					<StyledSlider
@@ -50,7 +50,7 @@ const DisabledRatioSlider: React.FC = () => {
 
 const InputAmount = styled(`input`)`
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: ${(props) => props.theme.basis.cinder};
 	width: 108px;
 	height: 58px;
 	border: 0px;

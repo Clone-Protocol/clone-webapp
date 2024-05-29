@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import HealthscoreView from '~/components/Liquidity/comet/HealthscoreView'
 import { CometInfoStatus } from '~/features/Liquidity/comet/CometInfo.query'
 import { OpaqueDefault } from '~/components/Common/OpaqueArea'
@@ -10,23 +10,24 @@ import { formatLocaleAmount } from '~/utils/numbers'
 
 const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined }) => {
   const { publicKey } = useWallet()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   return (
     <Wrapper>
-      <Stack direction='row' gap={16}>
-        <Box>
+      <Stack direction='row' gap={isMobileOnSize ? 6 : 12} flexWrap='wrap' justifyContent={isMobileOnSize ? 'center' : ''}>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>Health Score</Typography>
-            <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.cometdHealthScore} color='#8988a3' />
           </Box>
           <Box mt='15px'>
             <HealthscoreView score={infos && infos.healthScore ? infos.healthScore : 0} />
           </Box>
         </Box>
-        <Box>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Liquidity</Typography>
-            <InfoTooltip title={TooltipTexts.totalLiquidity} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -34,10 +35,10 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My Collateral</Typography>
-            <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.totalCollateralValue} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -45,10 +46,10 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
             </Typography>
           </StatusValue>
         </Box>
-        <Box>
+        <Box width='140px'>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <Typography variant='p'>My APR</Typography>
-            <InfoTooltip title={TooltipTexts.yourApy} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.yourApy} color='#8988a3' />
           </Box>
           <StatusValue>
             {(infos && infos.positions.length > 0 && !isNaN(infos.totalApy)) &&
@@ -85,9 +86,9 @@ const CometLiquidityStatus = ({ infos }: { infos: CometInfoStatus | undefined })
 
 const Wrapper = styled(Box)`
   position: relative;
-  margin-top: 16px;
+  margin-top: 25px;
   margin-bottom: 28px;
-  padding: 12px 28px;
+  padding: 12px 32px;
   border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
@@ -109,7 +110,7 @@ const ViewVideoBox = styled(Box)`
   height: 79px;
   padding: 12px 22px 11px;
   border-radius: 10px;
-  background-color: #000e22;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   z-index: 999;
 `
 const WatchButton = styled(Button)`
@@ -118,7 +119,7 @@ const WatchButton = styled(Button)`
   margin: 8px 0 0;
   padding: 8px 33px;
   border-radius: 5px;
-  background-color: #4fe5ff;
+  background-color: #c4b5fd;
   font-size: 12px;
   font-weight: 500;
 `

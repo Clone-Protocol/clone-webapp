@@ -11,7 +11,7 @@ import { RISK_RATIO_VAL } from '~/data/riskfactors'
 import { CloseButton, SubmitButton } from '~/components/Common/CommonButtons'
 import { Collateral as StableCollateral, collateralMapping } from '~/data/assets'
 import Image from 'next/image'
-import IconSmile from 'public/images/liquidity/icon-smile.svg'
+import IconHealthScoreGraph from 'public/images/liquidity/healthscore-graph.svg'
 import WarningMsg, { InfoMsg } from '~/components/Common/WarningMsg'
 import { useRouter } from 'next/navigation'
 import InfoTooltip from '~/components/Common/InfoTooltip'
@@ -152,13 +152,13 @@ const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEd
   return (
     <>
       <Dialog open={open} onClose={onHideEditForm} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ background: '#000916', width: '600px' }}>
+        <DialogContent sx={{ background: '#16141b', width: '100%' }}>
           <BoxWrapper>
             <Typography variant='h3'>Manage Borrow Position: Collateral</Typography>
 
             {!isFullRepaid &&
               <Stack direction='row' gap={3} mt='38px'>
-                <ValueBox width='220px'>
+                <ValueBox width='220px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                   <Box mb='6px'><Typography variant='p'>Borrowed Asset</Typography></Box>
                   <Box display="flex" alignItems='center'>
                     <Image src={fromPair.tickerIcon} width={28} height={28} alt={fromPair.tickerSymbol!} />
@@ -167,11 +167,11 @@ const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEd
                     </Typography>
                   </Box>
                 </ValueBox>
-                <ValueBox width='300px'>
+                <ValueBox width='300px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                   <Box mb='6px'><Typography variant='p'>Collateral Ratio</Typography></Box>
                   <Stack direction='row' gap={1} alignItems='center'>
                     <Typography variant='h3' fontWeight={500}>{borrowDetail.collateralRatio.toFixed(2)}%</Typography>
-                    <Typography variant='p_lg' color='#66707e'>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
+                    <Typography variant='p_lg' color='#8988a3' whiteSpace={'nowrap'}>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
                   </Stack>
                 </ValueBox>
               </Stack>
@@ -222,26 +222,26 @@ const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEd
             <RatioBox>
               {hasInvalidRatio || isFullRepaid ?
                 <Box>
-                  <Image src={IconSmile} alt='paidInFull' />
+                  <Image src={IconHealthScoreGraph} alt='healthscore' />
                   <Box>
-                    <Typography variant='p' color='#414e66'>{isFullWithdrawal ? 'Borrowed amount paid in full (no collateral ratio)' : 'Projected Collateral Ratio Unavailable'}</Typography>
+                    <Typography variant='p' color='#8988a3'>{isFullWithdrawal ? 'Borrowed amount paid in full (no collateral ratio)' : 'Projected Collateral Ratio Unavailable'}</Typography>
                   </Box>
                 </Box>
                 :
                 <Box>
                   <Box>
                     <Typography variant='p'>Projected Collateral Ratio</Typography>
-                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#8988a3' />
                   </Box>
                   <Stack direction='row' gap={1} mt='8px'>
                     <Typography variant='h3' fontWeight={500} color={editType === 1 && hasRiskRatio ? '#ff0084' : '#fff'}>
                       {expectedCollRatio.toFixed(2)}%
                     </Typography>
-                    <Typography variant='p_xlg' color={editType === 1 ? '#ff0084' : '#4fe5ff'}>
+                    <Typography variant='p_xlg' color={editType === 1 ? '#ff0084' : '#c4b5fd'}>
                       {editType === 0 ? '+' : '-'}{(Math.abs(expectedCollRatio - borrowDetail.collateralRatio)).toFixed(2)}%
                     </Typography>
                   </Stack>
-                  <Typography variant='p_lg' color={editType === 1 && hasRiskRatio ? '#ff0084' : '#66707e'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
+                  <Typography variant='p_lg' color={editType === 1 && hasRiskRatio ? '#ff0084' : '#8988a3'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
                 </Box>}
             </RatioBox>
 
@@ -257,11 +257,11 @@ const EditDetailDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEd
               :
               <SubmitButton onClick={handleSubmit(isClose ? onClose : onEdit)} disabled={!isValid} hasRisk={hasRiskRatio && !isFullRepaid}>
                 {isClose ?
-                  <Typography variant='p_lg'>
+                  <Typography variant='p_xlg'>
                     Withdraw and Close This Borrow Position
                   </Typography>
                   :
-                  <Typography variant='p_lg'>
+                  <Typography variant='p_xlg'>
                     {editType === 0 ?
                       collAmount > maxCollVal ? 'Exceeded Wallet Balance' : 'Deposit More Collateral'
                       :
@@ -290,10 +290,10 @@ const ValueBox = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 78px;
-  padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: #0a080f;
+  text-wrap: nowrap;
 `
 const RatioBox = styled(Box)`
   display: flex;
@@ -301,9 +301,10 @@ const RatioBox = styled(Box)`
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   height: 120px;
+  margin-bottom: 15px;
 `
 
 export default EditDetailDialog

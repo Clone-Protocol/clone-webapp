@@ -59,7 +59,7 @@ const BenefitLevels = ({ levelData }: { levelData: LevelInfo | undefined }) => {
       <GridBackground>
         <LevelStack ref={scrollRef} direction='row' display={isMobileOnSize ? '-webkit-box' : 'flex'} alignContent='center' justifyContent='center' gap='20px' width={isMobileOnSize ? '330px' : '100%'} sx={{ overflowX: { xs: 'auto', md: 'hidden' }, scrollMarginLeft: { xs: '30px', md: '0px' } }}>
           {tab === 0 && LEVEL_TRADING_FEES.map((fee, index) =>
-            publicKey && index === levelData.currentLevel ?
+            publicKey && index === levelData?.currentLevel ?
               <BorderBox className='selected' key={index}>
                 <Box><SelectedTxt variant='p_xlg'>{fee} bps</SelectedTxt></Box>
                 <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>
@@ -72,7 +72,7 @@ const BenefitLevels = ({ levelData }: { levelData: LevelInfo | undefined }) => {
           )}
           {tab === 1 && publicKey &&
             LEVEL_COMET_APYS.map((apy, index) =>
-              index === levelData.currentLevel ?
+              index === levelData?.currentLevel ?
                 <BorderBox className='selected' key={index}>
                   <Box><SelectedTxt variant='p_xlg'>{apy}%</SelectedTxt></Box>
                   <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>
@@ -87,7 +87,7 @@ const BenefitLevels = ({ levelData }: { levelData: LevelInfo | undefined }) => {
             <Box><Typography variant='p'>Connect your wallet to view APY</Typography></Box>
           }
           {tab === 2 && LEVEL_POINTS_BOOSTS.map((points, index) =>
-            publicKey && index === levelData.currentLevel ?
+            publicKey && index === levelData?.currentLevel ?
               <BorderBox className='selected' key={index}>
                 <Box><SelectedTxt variant='p_xlg'>{points > 1 ? `${points}X` : '-'}</SelectedTxt></Box>
                 <Box><SelectedSubTxt variant='p'>cloner {index + 1}</SelectedSubTxt></Box>

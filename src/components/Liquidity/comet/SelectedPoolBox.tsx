@@ -33,7 +33,8 @@ const SelectedPoolBox: React.FC<Props> = ({ positionInfo }) => {
 }
 
 const StackWrapper = styled(Stack)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  background-color: #0a080f;
+  border-radius: 10px;
   padding: 5px 23px;
 `
 

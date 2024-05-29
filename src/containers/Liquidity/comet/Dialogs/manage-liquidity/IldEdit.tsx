@@ -17,7 +17,7 @@ import { usePayILDMutation } from "~/features/Liquidity/comet/LiquidityPosition.
 import { LoadingButton, LoadingProgress } from "~/components/Common/Loading"
 import withSuspense from "~/hocs/withSuspense"
 import { Collateral as StableCollateral, collateralMapping } from "~/data/assets"
-import { NETWORK_NAME, ON_USD } from "~/utils/constants"
+import { ON_USD } from "~/utils/constants"
 import { formatLocaleAmount } from "~/utils/numbers"
 
 const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
@@ -112,14 +112,14 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
   if (balanceOnAsset === 0) {
     warningMsgForAsset = 'You wallet balance is zero'
   } else if (positionInfo && Math.max(0, positionInfo.onassetILD) - ildAssetAmount > 0) {
-    warningMsgForAsset = 'Not enough wallet balance to fully payoff clAsset ILD Amount. You can acquire more on Clone Markets or borrow on Clone Liquidity.'
+    warningMsgForAsset = 'Not enough wallet balance to fully payoff clAsset ILD Amount. You can acquire more or borrow to payoff.'
   }
 
   let warningMsgForColl = ''
   if (balanceColl === 0) {
     warningMsgForColl = 'You wallet balance is zero'
   } else if (positionInfo && Math.max(0, positionInfo.collateralILD) - balanceColl > 0) {
-    warningMsgForColl = `Not enough wallet balance to fully payoff ${ON_USD} ILD Amount. You can acquire more on ${NETWORK_NAME} faucet.`
+    warningMsgForColl = `Not enough wallet balance to fully payoff ${ON_USD} ILD Amount.`
   }
 
   const isNotValid = positionInfo ?
@@ -137,7 +137,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
       <Box>
         <Box>
           <Typography variant='p_lg'>clAsset ILD</Typography>
-          <InfoTooltip title={TooltipTexts.ildDebt} color='#66707e' />
+          <InfoTooltip title={TooltipTexts.ildDebt} color='#8988a3' />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
           <Box>
@@ -147,8 +147,8 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
             <Typography variant='p_lg'>
               {formatLocaleAmount(Math.max(0, positionInfo.onassetILD), 8)} {positionInfo.tickerSymbol}
             </Typography>
-            <Typography variant='p_lg' color='#66707e' ml='10px'>
-              {`($${formatLocaleAmount(Math.max(0, positionInfo.onassetILD) * positionInfo.oraclePrice), 8})`}
+            <Typography variant='p_lg' color='#8988a3' ml='10px'>
+              {`($${formatLocaleAmount(Math.max(0, positionInfo.onassetILD) * positionInfo.oraclePrice, 8)})`}
             </Typography>
           </Box>
         </StackWithBorder>
@@ -183,11 +183,11 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
               <StackWithBorder direction='row' justifyContent='space-between' sx={{ background: 'transparent' }}>
                 <Box>
                   <Typography variant='p'>Projected Remaining clAsset ILD</Typography>
-                  <InfoTooltip title={TooltipTexts.projectedRemainingILD} color='#66707e' />
+                  <InfoTooltip title={TooltipTexts.projectedRemainingILD} color='#8988a3' />
                 </Box>
                 <Box>
                   <Typography variant='p_lg'>{ildAssetAmount > balanceOnAsset ? 'N/A' : formatLocaleAmount(remainingAssetILD, 8)}</Typography>
-                  <Typography variant='p_lg' color='#66707e' ml='5px'>{ildAssetAmount > balanceOnAsset ? 'N/A' : remainingAssetILD === 0 ? '(Paid Off)' : `($${formatLocaleAmount(remainingAssetILD, 8)})`}</Typography>
+                  <Typography variant='p_lg' color='#8988a3' ml='5px'>{ildAssetAmount > balanceOnAsset ? 'N/A' : remainingAssetILD === 0 ? '(Paid Off)' : `($${formatLocaleAmount(remainingAssetILD, 8)})`}</Typography>
                 </Box>
               </StackWithBorder>
             }
@@ -206,7 +206,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
         <Box>
           <Box>
             <Typography variant='p_lg'>{ON_USD} ILD</Typography>
-            <InfoTooltip title={TooltipTexts.onUSDILD} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.onUSDILD} color='#8988a3' />
           </Box>
           <StackWithBorder direction='row' justifyContent='space-between'>
             <Typography variant='p_lg'>{ON_USD} ILD</Typography>
@@ -245,11 +245,11 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
                 <StackWithBorder direction='row' justifyContent='space-between' sx={{ background: 'transparent' }}>
                   <Box>
                     <Typography variant='p'>Projected Remaining {ON_USD} ILD</Typography>
-                    {/* <InfoTooltip title={TooltipTexts.projectedRemainingILD} color='#66707e' /> */}
+                    {/* <InfoTooltip title={TooltipTexts.projectedRemainingILD} color='#8988a3' /> */}
                   </Box>
                   <Box>
                     <Typography variant='p_lg'>{ildCollAmount > balanceColl ? 'N/A' : formatLocaleAmount(remainingCollILD, 8)}</Typography>
-                    <Typography variant='p_lg' color='#66707e' ml='5px'>{ildCollAmount > balanceColl ? 'N/A' : remainingCollILD === 0 ? '(Paid Off)' : `($${formatLocaleAmount(remainingCollILD, 8)})`}</Typography>
+                    <Typography variant='p_lg' color='#8988a3' ml='5px'>{ildCollAmount > balanceColl ? 'N/A' : remainingCollILD === 0 ? '(Paid Off)' : `($${formatLocaleAmount(remainingCollILD, 8)})`}</Typography>
                   </Box>
                 </StackWithBorder>
               }
@@ -276,7 +276,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
             (ildAssetAmount > 0 || ildCollAmount > 0) ?
               <HealthBox padding='15px 20px'>
                 <Box display='flex' justifyContent='center'>
-                  <Typography variant='p'>Projected Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#66707e' /></Typography>
+                  <Typography variant='p'>Projected Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Typography>
                 </Box>
                 <Box mt='10px' display='flex' justifyContent='center'>
                   <HealthscoreView score={healthScore ? healthScore : positionInfo.healthScore} />
@@ -285,8 +285,8 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
               :
               <HealthBox padding='36px 20px' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                 <Image src={IconHealthScoreGraph} alt='healthscore' />
-                <Box mt='7px'>
-                  <Typography variant='p' color='#414e66'>Projected health score unavailable</Typography>
+                <Box>
+                  <Typography variant='p' color='#8988a3'>Projected health score unavailable</Typography>
                 </Box>
               </HealthBox>
           }
@@ -298,7 +298,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
           </Box>
           :
           <SubmitButton onClick={handleSubmit(onEdit)} disabled={isNotValid}>
-            <Typography variant='p_xlg'>{positionInfo.onassetILD <= 0 && positionInfo.collateralILD <= 0 ? 'No ILD Balance' : (!ildAssetAmount && !ildCollAmount) ? 'Please adjust payment amount' : (remainingAssetILD === 0 && remainingCollILD === 0) ? 'Pay Entire ILD Balance' : 'Adjust ILD'}</Typography>
+            <Typography variant='p_xlg'>{positionInfo.onassetILD <= 0 && positionInfo.collateralILD <= 0 ? 'No ILD Balance' : (!ildAssetAmount && !ildCollAmount) ? 'Please adjust payment amount' : (remainingAssetILD === 0 && remainingCollILD === 0) ? 'Pay Entire ILD Debt' : 'Adjust ILD'}</Typography>
           </SubmitButton>
         }
       </Box>
@@ -314,11 +314,11 @@ const StackWithBorder = styled(Stack)`
   margin-top: 10px;
   margin-bottom: 15px;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   gap: 10px;
   padding: 18px 21px;
-  background: ${(props) => props.theme.basis.darkNavy};
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  background: ${(props) => props.theme.basis.nobleBlack};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const BoxWithBorder = styled(Box)`
   width: 100%;
@@ -331,7 +331,9 @@ const BoxWithBorder = styled(Box)`
   border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
 `
 const HealthBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+  color: ${(props) => props.theme.basis.textRaven};
+  border-radius: 10px;
   margin-top: 38px;
   margin-bottom: 30px;
 `

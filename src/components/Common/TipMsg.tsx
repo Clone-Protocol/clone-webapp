@@ -16,13 +16,14 @@ const StyledBox = styled(Box)`
 	align-items: center;
 	font-size: 12px;
 	font-weight: 500;
-	text-align: center;
-	background-color: ${(props) => props.theme.basis.darkNavy};
-	color: rgba(255, 255, 255, 0.8);
-	border-radius: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: ${(props) => props.theme.basis.revolver};
+	color: ${(props) => props.theme.basis.melrose};
+	border-radius: 10px;
 	height: 38px;
 	&:hover {
-    background-color: ${(props) => props.theme.basis.jurassicGrey};
+    background-color: ${(props) => props.theme.basis.nobleBlack};
   }
 `
 

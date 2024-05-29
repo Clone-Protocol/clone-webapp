@@ -36,7 +36,7 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
 export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple iconPosition="start" {...props} />)(({ theme }) => ({
 	'&.MuiTab-root': {
 		height: '29px',
-		width: '100px',
+		width: '120px',
 		minHeight: '0px',
 		maxHeight: '29px',
 		paddingLeft: '2px',
@@ -46,12 +46,10 @@ export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple ic
 	},
 	textTransform: 'none',
 	fontWeight: '500',
-	fontSize: '12px',
-	color: '#989898',
+	fontSize: '14px',
+	color: '#8988a3',
 	'&.Mui-selected': {
 		color: '#fff',
-		textDecoration: 'underline',
-		textUnderlinePosition: 'under'
 	},
 	'&.Mui-focusVisible': {
 		backgroundColor: '#3d3d3d',

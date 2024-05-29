@@ -3,7 +3,7 @@ import withSuspense from '~/hocs/withSuspense'
 import Image from 'next/image'
 import { LoadingButton, LoadingProgress } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { Box, Stack, FormHelperText, Typography } from '@mui/material'
+import { Box, Stack, FormHelperText, Typography, useMediaQuery, Theme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { styled } from '@mui/material/styles'
 import RatioSlider from '~/components/Liquidity/overview/RatioSlider'
@@ -40,6 +40,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
   const [assetHealthCoefficient, setAssetHealthCoefficient] = useState(0)
   const [validMintValue, setValidMintValue] = useState(false)
   const isAlreadyInitializedAccount = useAtomValue(isAlreadyInitializedAccountState)
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   const { data: positionInfo, refetch } = useLiquidityDetailQuery({
     userPubKey: publicKey,
@@ -210,7 +211,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
             </Box>
             <Box>
               <SubHeader><Typography variant='p'>Health Score</Typography> <InfoTooltip title={TooltipTexts.healthScoreCol} /></SubHeader>
-              <HealthscoreBar score={positionInfo?.totalHealthScore} width={480} hiddenThumbTitle={true} />
+              <HealthscoreBar score={positionInfo?.totalHealthScore} width={isMobileOnSize ? 330 : 480} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
             </Box>
           </BoxWithBorder>
 
@@ -221,7 +222,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
               <Box>
                 <Box mb='10px'>
                   <Typography variant='p_lg'>Select Liquidity Pool</Typography>
-                  <InfoTooltip title={TooltipTexts.selectLiquidityPool} color='#66707e' />
+                  <InfoTooltip title={TooltipTexts.selectLiquidityPool} color='#8988a3' />
                 </Box>
                 {positionInfo?.hasAlreadyPool ?
                   <SelectDefaultPool onClick={() => openChooseLiquidityDialog()}>
@@ -240,7 +241,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
                 <Box mt='20px'>
                   <Box>
                     <Typography variant='p_lg'>Liquidity Amount</Typography>
-                    <InfoTooltip title={TooltipTexts.liquidityAmount} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.liquidityAmount} color='#8988a3' />
                   </Box>
                   <Box mt='15px' mb='10px' p='5px'>
                     <RatioSlider min={0} max={100} value={mintRatio} hideValueBox onChange={handleChangeMintRatio} />
@@ -251,14 +252,14 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
                 <StackWithBorder direction='row' justifyContent='space-between' alignItems='center'>
                   <Box display='flex' alignItems='center'>
                     <Typography variant="p">Liquidity Value</Typography>
-                    <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.newLiquidityValue} color='#8988a3' />
                   </Box>
                   <Box display='flex' alignItems='center'><Typography variant="p_lg">${formatLocaleAmount(totalLiquidity)}</Typography></Box>
                 </StackWithBorder>
 
                 <Box mt='25px'>
-                  <Box mb="15px"><Typography variant="p_lg">Projected Health Score</Typography> <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#66707e' /></Box>
-                  <HealthscoreBar score={healthScore} width={470} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
+                  <Box mb="15px"><Typography variant="p_lg">Projected Health Score</Typography> <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Box>
+                  <HealthscoreBar score={healthScore} width={isMobileOnSize ? 330 : 470} hasRiskScore={hasRiskScore} hiddenThumbTitle={true} />
                   {hasRiskScore &&
                     <a href="https://docs.clone.so/clone-mainnet-guide/clone-liquidity-or-for-lps/comets" target='_blank'>
                       <WarningStack direction='row'>
@@ -282,11 +283,14 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
 }
 
 const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 20px;
 `
 const StackWithBorder = styled(Stack)`
   border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border-radius: 10px;
   padding: 18px;
+  height: 52px;
 `
 const WarningStack = styled(Stack)`
   justify-content: center;
@@ -294,7 +298,7 @@ const WarningStack = styled(Stack)`
   cursor: pointer;
   margin-top: 10px;
   padding: 13px;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: rgba(255, 0, 214, 0.15);
   color: #ff0084;
   &:hover {
@@ -310,34 +314,36 @@ const SelectPoolBox = styled(Box)`
 	align-items: center;
 	width: 190px;
 	height: 40px;
-	background-color: rgba(37, 141, 237, 0.15);
-	border-radius: 5px;
+	border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+	border-radius: 1000px;
 	cursor: pointer;
 	padding: 8px;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
-		background-color: rgba(37, 141, 237, 0.23);
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
   }
 `
 const SelectDefaultPool = styled(Box)`
-  width: 134px;
+  width: 142px;
   height: 40px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
-  border-radius: 5px;
+  padding: 8px 12px;
+  border-radius: 1000px;
   cursor: pointer;
-  border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   &:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
   }
 `
 const DepositCollateralButton = styled(SelectDefaultPool)`
   width: 285px;
   height: 35px;
   color: #fff;
+  border-radius: 10px;
   justify-content: center;
 `
 export default withSuspense(CometPanel, <LoadingProgress />)

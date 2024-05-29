@@ -154,8 +154,8 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
 
   return collData ? (
     <>
-      <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={400}>
-        <DialogContent sx={{ backgroundColor: '#000916', width: '400px' }}>
+      <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition}>
+        <DialogContent sx={{ backgroundColor: '#16141b' }}>
           <BoxWrapper>
             <Box mb='20px'>
               <Typography variant='h3'>Manage Collateral</Typography>
@@ -219,7 +219,7 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
                   (tab === 0 && collAmount > 0) || (tab === 1 && collAmount > 0 && collAmount < maxWithdrawable) ?
                     <CometHealthBox padding='15px 20px'>
                       <Box display='flex' justifyContent='center'>
-                        <Typography variant='p'>Projected Comet Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#66707e' /></Typography>
+                        <Typography variant='p'>Projected Comet Health Score <InfoTooltip title={TooltipTexts.projectedHealthScore} color='#8988a3' /></Typography>
                       </Box>
                       <Box mt='10px' display='flex' justifyContent='center'>
                         <HealthscoreView score={healthScore ? healthScore : collData.prevHealthScore} />
@@ -228,8 +228,8 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
                     :
                     <CometHealthBox padding='36px 20px' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                       <Image src={IconHealthScoreGraph} alt='healthscore' />
-                      <Box mt='7px'>
-                        <Typography variant='p' color='#414e66'>Projected health score unavailable</Typography>
+                      <Box>
+                        <Typography variant='p' color='#8988a3'>Projected health score unavailable</Typography>
                       </Box>
                     </CometHealthBox>
                 }
@@ -286,8 +286,9 @@ const BoxWrapper = styled(Box)`
   overflow-x: hidden;
 `
 const CometHealthBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
-  margin-bottom: 30px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+  margin-bottom: 15px;
+  border-radius: 10px;
 `
 const ZeroAmountBox = styled(Box)`
   width: 100%;
@@ -296,7 +297,7 @@ const ZeroAmountBox = styled(Box)`
   justify-content: center;
   align-items: center;
   padding: 7px 17px;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #989898;
   border: solid 1px ${(props) => props.theme.basis.shadowGloom};
 `

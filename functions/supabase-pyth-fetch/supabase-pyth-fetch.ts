@@ -9,7 +9,7 @@ export const handler: Handler = async (event, context) => {
     const { data, error } = await supabase
       .from('notices')
       .select()
-      .eq('channel', 'liquidity-pyth')
+      .eq('channel', 'markets-pyth')
       .eq('show', true)
 
     return {

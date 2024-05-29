@@ -32,8 +32,8 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
   return positionInfo ? (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ backgroundColor: '#000916', width: '600px', minHeight: '450px' }}>
-          <BoxWrapper>
+        <DialogContent sx={{ backgroundColor: '#16141b', width: '100%', minHeight: '450px' }}>
+          <BoxWrapper sx={{ padding: { xs: '4px 0px', md: '4px 18px' } }}>
             <Box>
               <Typography variant='h3'>Manage Liquidity</Typography>
             </Box>
@@ -43,7 +43,7 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
                 <SelectedPoolBox positionInfo={positionInfo} />
               </Box>
 
-              <Box mb='33px' sx={{ backgroundColor: '#1a1c28' }}>
+              <Box mb='33px' sx={{ backgroundColor: '#201c27', borderRadius: '10px' }}>
                 <StyledTabs value={tab} onChange={handleChangeTab}>
                   <StyledTab value={0} label="Liquidity" allBorderRadius={true} />
                   <StyledTab value={1} label="ILD" width='78px' allBorderRadius={true} />
@@ -91,7 +91,6 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
 }
 
 const BoxWrapper = styled(Box)`
-  padding: 8px 18px; 
   color: #fff;
   overflow-x: hidden;
 `

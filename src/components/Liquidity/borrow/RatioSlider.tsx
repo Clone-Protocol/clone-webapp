@@ -71,7 +71,7 @@ const RatioSlider: React.FC<Props> = ({ min = 0, value, hideValueBox = false, sh
 				{showChangeRatio &&
 					<Box display='flex'>
 						<InputAmount id="ip-amount" type="number" min={0} style={hasLowerMin ? { border: '1px solid #ff0084' } : {}} placeholder="0.00" value={value >= 1000 ? Number(value).toFixed(0) : formatLocaleAmount(Number(value), 1)} onChange={(event) => onChange && onChange(event, parseFloat(event.currentTarget.value))} />
-						<div style={{ marginLeft: '-23px', marginRight: '5px', marginTop: '10px' }}><Typography fontSize='26px' color={value > 0 ? '#fff' : '#66707e'}>%</Typography></div>
+						<div style={{ marginLeft: '-25px', marginRight: '0px', marginTop: '10px' }}><Typography fontSize='26px' color={value > 0 ? '#fff' : '#8988a3'}>%</Typography></div>
 					</Box>
 				}
 				<Box width="100%">
@@ -92,9 +92,9 @@ const RatioSlider: React.FC<Props> = ({ min = 0, value, hideValueBox = false, sh
 						onChange={onChange}
 						valueLabelDisplay={'on'}
 					/>
-					<Box display='flex'>
-						<Box marginLeft='20px'><Stick /><FlagBox sx={hasLowerMin ? { borderColor: '#ff0084' } : {}}><Typography variant='p'>min {min}%</Typography></FlagBox></Box>
-						<Box marginLeft='38px'><Stick /><FlagBox><Typography variant='p'>safer {min + 50}%</Typography></FlagBox></Box>
+					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+						<Box marginLeft='16px'><Stick /><FlagBox sx={hasLowerMin ? { borderColor: '#ff0084' } : {}}><Typography variant='p'>min {min}%</Typography></FlagBox></Box>
+						<Box marginLeft='33px'><Stick /><FlagBox><Typography variant='p'>safer {min + 50}%</Typography></FlagBox></Box>
 					</Box>
 				</Box>
 			</Box>
@@ -113,11 +113,11 @@ const ValueBox = styled(Box)`
 `
 const InputAmount = styled(`input`)`
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: ${(props) => props.theme.basis.cinder};
 	width: 108px;
 	height: 58px;
 	border: 0px;
-	border-radius: 5px;
+	border-radius: 10px;
 	line-height: 15px;
 	color: #fff;
 	font-size: 26px;

@@ -14,6 +14,7 @@ import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import { LoadingButton } from '~/components/Common/Loading'
+import { InfoMsg } from '~/components/Common/WarningMsg'
 
 const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHideEditForm }: { borrowId: number, borrowDetail: BorrowDetail, initEditType: number, open: boolean, onHideEditForm: () => void }) => {
   const { publicKey } = useWallet()
@@ -126,12 +127,12 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
   return (
     <>
       <Dialog open={open} onClose={onHideEditForm} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ background: '#000916', width: '600px' }}>
+        <DialogContent sx={{ background: '#16141b', width: '100%' }}>
           <BoxWrapper>
             <Typography variant='h3'>Manage Borrow Position: Borrowed Amount</Typography>
 
             <Stack direction='row' gap={3} mt='38px'>
-              <ValueBox width='220px'>
+              <ValueBox width='220px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                 <Box mb='6px'><Typography variant='p'>Borrowed Asset</Typography></Box>
                 <Box display="flex" alignItems='center'>
                   <Image src={fromPair.tickerIcon} width={28} height={28} alt={fromPair.tickerSymbol!} />
@@ -140,11 +141,11 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                   </Typography>
                 </Box>
               </ValueBox>
-              <ValueBox width='300px'>
+              <ValueBox width='300px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                 <Box mb='6px'><Typography variant='p'>Collateral Ratio</Typography></Box>
                 <Stack direction='row' gap={1} alignItems='center'>
                   <Typography variant='h3'>{borrowDetail.collateralRatio.toFixed(2)}%</Typography>
-                  <Typography variant='p_lg' color='#66707e'>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
+                  <Typography variant='p_lg' color='#8988a3' whiteSpace={'nowrap'}>(min {borrowDetail.minCollateralRatio.toFixed(0)}%)</Typography>
                 </Stack>
               </ValueBox>
             </Stack>
@@ -197,26 +198,28 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                 <Box>
                   <Image src={IconSmile} alt='full borrowed amount' />
                   <Box>
-                    <Typography variant='p' color='#414e66'>{hasLackBalance ? 'N/A' : 'Borrowed amount paid in full (no collateral ratio)'}</Typography>
+                    <Typography variant='p' color='#8988a3'>{hasLackBalance ? 'N/A' : 'Borrowed amount paid in full (no collateral ratio)'}</Typography>
                   </Box>
                 </Box>
                 :
                 <Box>
                   <Box>
                     <Typography variant='p'>Projected Collateral Ratio</Typography>
-                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#66707e' />
+                    <InfoTooltip title={TooltipTexts.projectedCollateralRatio} color='#8988a3' />
                   </Box>
                   <Stack direction='row' gap={1} mt='8px'>
                     <Typography variant='h3' fontWeight={500} color={editType === 0 && hasRiskRatio ? '#ff0084' : '#fff'}>
                       {expectedCollRatio.toFixed(2)}%
                     </Typography>
-                    <Typography variant='p_xlg' color={editType === 0 ? '#ff0084' : '#4fe5ff'}>
+                    <Typography variant='p_xlg' color={editType === 0 ? '#ff0084' : '#c4b5fd'}>
                       {editType === 1 ? '+' : '-'}{(Math.abs(expectedCollRatio - borrowDetail.collateralRatio)).toFixed(2)}%
                     </Typography>
                   </Stack>
-                  <Typography variant='p_lg' color={editType === 0 && hasRiskRatio ? '#ff0084' : '#66707e'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
+                  <Typography variant='p_lg' color={editType === 0 && hasRiskRatio ? '#ff0084' : '#8988a3'}>(min {borrowDetail.minCollateralRatio}%)</Typography>
                 </Box>}
             </RatioBox>
+
+            {(editType === 1 && isFullRepaid) && <Box my='25px'><InfoMsg>Repaying full amount is the first step of the process to close a borrow position. You can complete rest of the steps in the close tab.</InfoMsg></Box>}
 
             {isSubmitting ?
               <Box display='flex' justifyContent='center' my='15px'>
@@ -224,8 +227,8 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
               </Box>
               :
               <SubmitButton onClick={handleSubmit(onEdit)} disabled={!isValid} hasRisk={hasRiskRatio}>
-                {editType === 0 ? <Typography variant='p_lg'>{hasRiskRatio && 'Accept Risk and '}Borrow More</Typography>
-                  : <Typography variant='p_lg'>Repay {isFullRepaid && 'Full Amount'}</Typography>}
+                {editType === 0 ? <Typography variant='p_xlg'>{hasRiskRatio && 'Accept Risk and '}Borrow More</Typography>
+                  : <Typography variant='p_xlg'>Repay {isFullRepaid && 'Full Amount'}</Typography>}
               </SubmitButton>
             }
 
@@ -247,10 +250,10 @@ const ValueBox = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 78px;
-  padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: #0a080f;
+  text-wrap: nowrap;
 `
 const RatioBox = styled(Box)`
   display: flex;
@@ -258,9 +261,10 @@ const RatioBox = styled(Box)`
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.basis.darkNavy};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.basis.nobleBlack};
   height: 120px;
+  margin-bottom: 15px;
 `
 
 export default EditBorrowMoreDialog

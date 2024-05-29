@@ -13,7 +13,7 @@ export const InfoMsg = ({ children }: { children?: React.ReactNode }) => {
   )
 }
 const InfoStack = styled(Stack)`
-  color: ${(props) => props.theme.basis.skylight};
+  color: ${(props) => props.theme.basis.melrose};
   cursor: pointer;
   align-items: center;
   padding: 13px;
@@ -21,8 +21,8 @@ const InfoStack = styled(Stack)`
   gap: 13px;
   cursor: pointer;
   line-height: 1.33;
-  border-radius: 5px;
-  background-color: rgba(79, 229, 255, 0.1);
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.basis.revolver};
   // &:hover {
   //   background-color: rgba(79, 229, 255, 0.05);
   // }

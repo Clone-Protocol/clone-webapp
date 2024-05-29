@@ -67,18 +67,18 @@ const Rewards = ({ positionIndex }: { positionIndex: number, }) => {
       <Box>
         <Box>
           <Typography variant='p_lg'>clAsset Rewards</Typography>
-          <InfoTooltip title={TooltipTexts.rewards} color='#66707e' />
+          <InfoTooltip title={TooltipTexts.rewards} color='#8988a3' />
         </Box>
         <BoxWithBorder>
           <Typography variant='p_lg'>
             {formatLocaleAmount(Math.max(0, -positionInfo.onassetILD), 8)} {positionInfo.tickerSymbol}</Typography>
-          <Typography variant='p_lg' color='#66707e'>(${formatLocaleAmount(Math.abs(Math.max(0, -positionInfo.onassetILD) * positionInfo.oraclePrice), 6)} USD)</Typography>
+          <Typography variant='p_lg' color='#8988a3'>(${formatLocaleAmount(Math.abs(Math.max(0, -positionInfo.onassetILD) * positionInfo.oraclePrice), 6)} USD)</Typography>
         </BoxWithBorder>
       </Box>
       <Box>
         <Box>
           <Typography variant='p_lg'>{ON_USD} Rewards</Typography>
-          <InfoTooltip title={TooltipTexts.usdRewards} color='#66707e' />
+          <InfoTooltip title={TooltipTexts.usdRewards} color='#8988a3' />
         </Box>
         <BoxWithBorder>
           <Typography variant='p_lg'>
@@ -106,11 +106,11 @@ const BoxWithBorder = styled(Box)`
   margin-top: 5px;
   margin-bottom: 28px;
   justify-content: flex-start;
-  border-radius: 5px;
+  border-radius: 10px;
   align-items: center;
   gap: 10px;
   padding: 18px 21px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 
 export default withSuspense(Rewards, <LoadingProgress />)

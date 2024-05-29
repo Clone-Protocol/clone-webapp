@@ -27,7 +27,7 @@ const PairInput: React.FC<Props> = ({
   rightHeaderTitle,
   balance,
   inputTitle,
-  inputTitleColor = '#66707e',
+  inputTitleColor = '#8988a3',
   balanceDisabled = false,
   hideMaxButton = false,
   onChange,
@@ -43,7 +43,7 @@ const PairInput: React.FC<Props> = ({
         </Box>
         {!balanceDisabled ? (
           <Box display='flex' alignItems='center'>
-            <Typography variant="p" color="#66707e">
+            <Typography variant="p" color="#8988a3">
               {rightHeaderTitle}:{" "}
             </Typography>
             <MaxPointerValue>
@@ -69,6 +69,7 @@ const PairInput: React.FC<Props> = ({
               onChange={onChange}
               min={0}
               max={!balanceDisabled ? balance : 1000}
+              sx={{ width: { xs: '150px', sm: '230px' } }}
             />
             <DollarAmount>
               {valueDollarPrice && valueDollarPrice > 0
@@ -90,13 +91,15 @@ const PairInput: React.FC<Props> = ({
 
 const CenterBox = styled(Box)`
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${(props) => props.theme.basis.cinder};
+  margin-top: 5px;
+  border-radius: 10px;
 `
 const FormStack = styled(Stack)`
-  display: flex;
   width: 100%;
   height: 84px;
   padding: 18px 12px;
+  border-radius: 10px;
   &:hover {
     box-shadow: 0 0 0 1px ${(props) => props.theme.basis.shadowGloom} inset;
   }
@@ -104,7 +107,7 @@ const FormStack = styled(Stack)`
 const MaxPointerValue = styled(Box)`
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.basis.liquidityBlue};
+  color: ${(props) => props.theme.basis.melrose};
   margin-left: 4px;
 `
 const MaxButton = styled(Box)`
@@ -116,9 +119,12 @@ const MaxButton = styled(Box)`
   padding: 2px 7px;
   color: #fff;
   cursor: pointer;
+  &:hover {
+		background-color: rgba(155, 121, 252, 0.3);
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
+  }
 `
 const InputAmount = styled(`input`)`
-  width: 230px;
   border: 0px;
   background-color: transparent;
   font-size: 26px;
@@ -134,7 +140,6 @@ const DollarAmount = styled("div")`
   margin-left: 2px;
 `
 const TickerBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
   border-radius: 10px;
   padding: 3px 10px 3px 5px;
 `

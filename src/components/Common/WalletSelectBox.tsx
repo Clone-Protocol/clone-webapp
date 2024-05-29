@@ -18,9 +18,9 @@ import { useClickOutside } from '~/hooks/useClickOutside';
 import BenefitLevel from '../Staking/BenefitLevel';
 import Image from 'next/image';
 import ArrowTopIcon from 'public/images/arrow-top-right.svg'
-import { useCurrentLevelQuery } from '~/features/Staking/StakingInfo.query';
+import { LevelInfo } from '~/features/Staking/StakingInfo.query';
 
-const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }) => {
+const WalletSelectBox = ({ show, levelData, onHide }: { show: boolean, levelData: LevelInfo, onHide: () => void }) => {
   const { enqueueSnackbar } = useSnackbar()
   const { getCloneApp } = useClone()
   const wallet = useAnchorWallet()
@@ -37,12 +37,6 @@ const WalletSelectBox = ({ show, onHide }: { show: boolean, onHide: () => void }
   const { data: balance } = useBalanceQuery({
     userPubKey: publicKey,
     refetchOnMount: 'always',
-    enabled: publicKey != null
-  })
-
-  const { data: levelData, refetch } = useCurrentLevelQuery({
-    userPubKey: publicKey,
-    refetchOnMount: "always",
     enabled: publicKey != null
   })
 
@@ -135,7 +129,7 @@ const AssetBox = styled(Box)`
 	color: #fff;
 	background-color: rgba(255, 255, 255, 0.05);
 `
-const GoStakingButton = styled(Button)`
+export const GoStakingButton = styled(Button)`
   width: 98px;
   height: 23px;
   display: flex;
@@ -150,6 +144,7 @@ const GoStakingButton = styled(Button)`
   background-color: #201c27;
   color: #8988a3;
   &:hover {
+    background-color: #000;
     border-style: solid;
     border-width: 1px;
     border-image-source: linear-gradient(101deg, #b5fdf9 1%, #c4b5fd 93%);

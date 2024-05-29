@@ -55,15 +55,16 @@ export const getiAssetInfos = async (connection: Connection, program: CloneClien
     const pool = pools.pools[poolIndex];
     const status = pool.status
     const oracle = oracles.oracles[Number(pool.assetInfo.oracleInfoIndex)];
+    const pythUsdcOraclePrice = data.productPrice.get("Crypto.USDC/USD")?.aggregate.price!
     const committedCollateral = fromScale(pool.committedCollateralLiquidity, program.clone.collateral.scale)
     const poolCollateralIld = fromScale(pool.collateralIld, program.clone.collateral.scale)
     const poolOnassetIld = fromCloneScale(pool.onassetIld)
     const { pythSymbol } = assetMapping(poolIndex)
     const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
-    const oraclePrice = rescaleFactor * (data.productPrice.get(pythSymbol)?.aggregate.price ?? fromScale(oracle.price, oracle.expo));
+    const oraclePrice = rescaleFactor * data.productPrice.get(pythSymbol)?.aggregate.price! / pythUsdcOraclePrice;
     const poolPrice = (committedCollateral - poolCollateralIld) / (committedCollateral / oraclePrice - poolOnassetIld)
     const liquidity = committedCollateral * 2;
-    iassetInfo.push({ status, poolIndex, poolPrice, liquidity });
+    iassetInfo.push({ status, poolIndex, poolPrice, liquidity, oraclePrice });
   }
   return iassetInfo;
 }
@@ -75,6 +76,7 @@ export type AggregatedStats = {
   previousFees: number,
   liquidityUSD: number,
   previousLiquidity: number
+  apy: number
 }
 
 export const getAggregatedPoolStats = async (pools: Pools, userAddressForApy?: PublicKey): Promise<AggregatedStats[]> => {

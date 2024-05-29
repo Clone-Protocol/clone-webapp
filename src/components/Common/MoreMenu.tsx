@@ -11,14 +11,11 @@ import TwitterHoverIcon from 'public/images/more/twitter-hover.svg'
 import DiscordHoverIcon from 'public/images/more/discord-hover.svg'
 import ShareLinkIcon from 'public/images/more/call-made.svg'
 import { useState } from 'react'
-import { CAREER_URL, DISCORD_URL, DOCS_URL, LIQUIDITY_APP, OFFICIAL_WEB, TWITTER_URL, AUDIT_URL, TERMS_URL } from '~/data/social'
-import { IS_DEV } from '~/data/networks'
-import { NETWORK_NAME } from '~/utils/constants'
-// import { NETWORK_NAME } from '~/utils/constants'
+import { CAREER_URL, DISCORD_URL, DOCS_URL, OFFICIAL_WEB, TWITTER_URL, AUDIT_URL, TERMS_URL } from '~/data/social'
 
 interface Props {
   anchorEl: null | HTMLElement
-  onShowTokenFaucet: () => void
+  onShowTokenFaucet?: () => void
   onClose?: () => void
 }
 
@@ -54,7 +51,7 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
   >
-    {IS_DEV &&
+    {/* {IS_DEV &&
       <StyledMenuItem onClick={onShowTokenFaucet}>
         <HoverStack direction='row' alignItems='center'>
           <Box width='184px'>
@@ -63,7 +60,7 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
           </Box>
         </HoverStack>
       </StyledMenuItem>
-    }
+    } */}
     <a href={DOCS_URL} target='_blank' rel="noreferrer">
       <StyledMenuItem>
         <HoverStack direction='row' alignItems='center'>

@@ -21,7 +21,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
 		backgroundColor: '#fff',
 		border: '3px solid #809cff',
 		'&:hover': {
-			boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+			boxShadow: '0 0 0 4px #8988a3',
 		},
 	},
 	'& .MuiSlider-track': {
@@ -65,7 +65,7 @@ const RatioSlider: React.FC<Props> = ({ min = 0, max = 200, value, hideValueBox 
 						'& .MuiSlider-valueLabel': {
 							border: `solid 1px #fff`,
 							borderRadius: '4px',
-							color: value >= 100 ? '#ed2525' : ''
+							color: value >= 100 ? '#ff0084' : ''
 						},
 						'& .MuiSlider-thumb': {
 							border: `0px`,

@@ -148,12 +148,12 @@ const MarketList = () => {
 		<Box
 			sx={{
 				width: '100%',
-				background: '#000',
+				background: '#0f0e14',
 				paddingBottom: '25px',
 				color: '#fff',
 				borderRadius: '10px',
 				'& .super-app-theme--header': { color: '#9d9d9d', fontSize: '11px' },
-				'& .non-hover-row': { ':hover': { background: '#000' } }
+				'& .non-hover-row': { ':hover': { background: '#0f0e14' } }
 			}}>
 
 			<Box mb='9px'><Typography variant='p_xlg'>All clAssets on Clone Protocol</Typography></Box>

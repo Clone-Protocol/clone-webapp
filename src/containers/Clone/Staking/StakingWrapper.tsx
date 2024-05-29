@@ -14,9 +14,9 @@ const StakingWrapper = () => {
   // const [currLevel, setCurrLevel] = useState(3)
   const { publicKey } = useWallet()
 
-  const { data: levelData, refetch } = useCurrentLevelQuery({
+  const { data: levelData } = useCurrentLevelQuery({
     userPubKey: publicKey,
-    refetchOnMount: "always",
+    refetchOnMount: true,
     enabled: publicKey != null
   })
 

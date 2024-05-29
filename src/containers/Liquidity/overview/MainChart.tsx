@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount } from '~/utils/numbers'
 // import LineChartAlt from '~/components/Charts/LineChartAlt'
@@ -111,4 +111,4 @@ const SelectValue = styled(Box)`
   margin-top: 5px;
 `
 
-export default withSuspense(MainChart, <LoadingProgress />)
+export default withSuspense(MainChart, <Box mt='10px'><LoadingSkeleton /></Box>)

@@ -45,6 +45,7 @@ const sendRawTransaction = async (
     }
   }
 
+  console.log('dt', tx)
   tx = await provider.wallet.signTransaction(tx)
   const rawTx = tx.serialize()
   const sendOptions = opts && {

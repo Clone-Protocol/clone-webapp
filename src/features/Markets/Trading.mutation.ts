@@ -107,8 +107,7 @@ export const callTrading = async ({
 	const threshold = data.estimatedSwapResult * (quantityIsInput ? 1. - slippage : 1. + slippage);
 	const scaledThreshold = (quantityIsCollateral && quantityIsInput) || (!quantityIsCollateral && !quantityIsInput) ? toCloneScale(threshold) : toScale(threshold, collateralScale)
 
-	ixns.push(program.updatePricesInstruction(oracles))
-	ixns.push(program.swapInstruction(
+	let swapIx = program.swapInstruction(
 		poolIndex,
 		scaledQuantity,
 		quantityIsInput,
@@ -119,7 +118,13 @@ export const callTrading = async ({
 		onassetTokenAccountInfo.address,
 		treasuryCollateralAssociatedTokenInfo.address,
 		treasuryOnassetAssociatedTokenInfo.address,
-	))
+	)
+	swapIx.keys = [
+		...swapIx.keys,
+		{ pubkey: oracles.oracles[program.clone.collateral.oracleInfoIndex].address, isSigner: false, isWritable: false },
+		{ pubkey: oracles.oracles[pool.assetInfo.oracleInfoIndex].address, isSigner: false, isWritable: false },
+	]
+	ixns.push(swapIx)
 
 	//socket handler
 	const subscriptionId = program.provider.connection.onAccountChange(

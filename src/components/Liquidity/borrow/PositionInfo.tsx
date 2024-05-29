@@ -24,11 +24,11 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
   const borrowedDollarPrice = Number(positionInfo.borrowedOnasset) * positionInfo.price
 
   return positionInfo ? (
-    <BoxWithBorder>
+    <BoxWithBorder sx={{ padding: { xs: '10px', md: '24px' } }}>
       {Number(positionInfo.borrowedOnasset) > 0 &&
         <Box>
           <Stack direction='row' gap={3}>
-            <ValueBox width='220px'>
+            <ValueBox width='220px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
               <Box mb='6px'><Typography variant='p'>Borrowed clAsset</Typography></Box>
               <Box display="flex" alignItems='center'>
                 <Image src={positionInfo.tickerIcon} width={28} height={28} alt={positionInfo.tickerSymbol!} />
@@ -37,24 +37,24 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
                 </Typography>
               </Box>
             </ValueBox>
-            <ValueBox width='300px'>
+            <ValueBox width='300px' sx={{ padding: { xs: '8px 10px', md: '8px 30px' } }}>
               <Box mb='6px'>
                 <Typography variant='p'>Collateral Ratio</Typography>
-                <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#66707e' />
+                <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
               </Box>
               <Stack direction='row' gap={1} alignItems='center'>
                 <Typography variant='h3'>{positionInfo.collateralRatio.toFixed(2)}%</Typography>
-                <Typography variant='p_lg' color='#66707e'>(min {positionInfo.minCollateralRatio}%)</Typography>
+                <Typography variant='p_lg' color='#8988a3'>(min {positionInfo.minCollateralRatio}%)</Typography>
               </Stack>
             </ValueBox>
           </Stack>
 
           <Box my='15px'><Typography variant='p_lg'>Borrowed Amount</Typography></Box>
-          <EditRowBox sx={isEditBorrowHover ? { background: '#1b1b1b' } : {}}>
+          <EditRowBox>
             <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
               <Box textAlign='left'>
                 <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.borrowedOnasset), 5)}</Typography></Box>
-                <Box mt='-5px'><Typography variant='p' color='#66707e'>${formatLocaleAmount(borrowedDollarPrice)}</Typography></Box>
+                <Box mt='-5px'><Typography variant='p' color='#8988a3'>${formatLocaleAmount(borrowedDollarPrice)}</Typography></Box>
               </Box>
               <TickerBox display="flex" alignItems='center'>
                 <Image src={positionInfo.tickerIcon} width={22} height={22} alt={positionInfo.tickerSymbol!} />
@@ -63,7 +63,12 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
                 </Typography>
               </TickerBox>
             </Stack>
-            <EditBox onClick={onShowBorrowMore} onMouseOver={() => setIsEditBorrowHover(true)} onMouseLeave={() => setIsEditBorrowHover(false)}>
+            {isEditBorrowHover &&
+              <Box position='absolute' width='94%' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+                <Typography variant='p_lg'>Manage Borrowed Amount</Typography>
+              </Box>
+            }
+            <EditBox sx={isEditBorrowHover ? { background: '#343440' } : {}} onClick={onShowBorrowMore} onMouseOver={() => setIsEditBorrowHover(true)} onMouseLeave={() => setIsEditBorrowHover(false)}>
               <Image src={RightArrowIcon} alt='edit' />
             </EditBox>
           </EditRowBox>
@@ -71,11 +76,11 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
       }
 
       <Box my='15px'><Typography variant='p_lg'>Collateral Amount</Typography></Box>
-      <EditRowBox sx={isEditCollHover ? { background: '#1b1b1b' } : {}}>
+      <EditRowBox>
         <Stack width='100%' direction='row' justifyContent='space-between' alignItems='center' padding='14px'>
           <Box textAlign='left'>
             <Box><Typography fontSize='26px'>{formatLocaleAmount(Number(positionInfo.collateralAmount), 5)}</Typography></Box>
-            <Box mt='-5px'><Typography variant='p' color='#66707e'>${formatLocaleAmount(Number(positionInfo.collateralAmount))}</Typography></Box>
+            <Box mt='-5px'><Typography variant='p' color='#8988a3'>${formatLocaleAmount(Number(positionInfo.collateralAmount))}</Typography></Box>
           </Box>
           <TickerBox display="flex" alignItems='center'>
             <Image src={collateralMapping(Collateral.onUSD).collateralIcon} width={22} height={22} alt={'dev-usd'} />
@@ -84,11 +89,16 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
             </Typography>
           </TickerBox>
         </Stack>
-        <EditBox onClick={onShowEditForm} onMouseOver={() => setIsEditCollHover(true)} onMouseLeave={() => setIsEditCollHover(false)}>
+        {isEditCollHover &&
+          <Box position='absolute' width='94%' height='100%' display='flex' justifyContent='center' alignItems='center' sx={{ background: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px' }}>
+            <Typography variant='p_lg'>Manage Collateral</Typography>
+          </Box>
+        }
+        <EditBox sx={isEditCollHover ? { background: '#343440' } : {}} onClick={onShowEditForm} onMouseOver={() => setIsEditCollHover(true)} onMouseLeave={() => setIsEditCollHover(false)}>
           <Image src={RightArrowIcon} alt='edit' />
         </EditBox>
       </EditRowBox>
-    </BoxWithBorder>
+    </BoxWithBorder >
   ) : (
     <></>
   )
@@ -98,22 +108,23 @@ const ValueBox = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 78px;
-  padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
-  background-color: ${(props) => props.theme.basis.jurassicGrey};
+  background-color: #0a080f;
+  text-wrap: nowrap;
 `
 const BoxWithBorder = styled(Box)`
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
-  padding: 24px;
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 10px;
 `
 const EditRowBox = styled(Box)`
+  position: relative;
   display: flex; 
   width: 100%;
   height: 80px; 
   margin-bottom: 9px;
-  border: 1px solid ${(props) => props.theme.basis.shadowGloom};
-  border-radius: 6px;
+  border: 1px solid ${(props) => props.theme.basis.plumFuzz};
+  border-radius: 10px;
 `
 const EditBox = styled(Box)`
   display: flex;
@@ -121,12 +132,11 @@ const EditBox = styled(Box)`
   justify-content: center;
   width: 30px;
   cursor: pointer;
-  background: ${(props) => props.theme.basis.shadowGloom};
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  background: ${(props) => props.theme.basis.plumFuzz};
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
 `
 const TickerBox = styled(Box)`
-  background: ${(props) => props.theme.basis.darkNavy};
   border-radius: 100px;
   padding: 3px 10px 3px 5px;
 `

@@ -20,7 +20,7 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
       <Box mt='24px'>
         <Box>
           <Typography variant='p_lg'>Step 1: Repay full borrowed amount</Typography>
-          <InfoTooltip title={TooltipTexts.repayFullBorrow} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.repayFullBorrow} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
           <Typography variant='p_lg'>
@@ -41,14 +41,14 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
       <Box>
         <Box>
           <Typography variant='p_lg'>Step 2 (Final Step): Withdraw entire collateral</Typography>
-          <InfoTooltip title={TooltipTexts.withdrawEntire} color="#66707e" />
+          <InfoTooltip title={TooltipTexts.withdrawEntire} color="#8988a3" />
         </Box>
         <StackWithBorder direction='row' justifyContent='space-between'>
           <Typography variant='p_lg'>
             {formatLocaleAmount(Number(borrowDetail.collateralAmount))} {ON_USD}
           </Typography>
 
-          <GoButton onClick={onMoveWithdrawCollateral} disabled={!canCloseComet}><Typography variant="p" noWrap>{canCloseComet ? 'Withdraw Collateral' : 'Complete Step 1'}</Typography></GoButton>
+          <GoButton onClick={onMoveWithdrawCollateral} disabled={!canCloseComet}><Typography variant="p" noWrap>{canCloseComet ? 'Withdraw Collateral' : 'Withdraw'}</Typography></GoButton>
         </StackWithBorder>
       </Box>
     </BoxWithBorder>
@@ -56,23 +56,26 @@ const ClosePanel = ({ borrowDetail, onMoveRepayPosition, onMoveWithdrawCollatera
 }
 
 const BoxWithBorder = styled(Box)`
+  background: ${(props) => props.theme.basis.backInBlack};
+  border-radius: 10px;
   border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
   padding: 0px 24px;
 `
 const StackWithBorder = styled(Stack)`
   width: 100%;
-  height: 52px;
-  margin-top: 10px;
-  margin-bottom: 38px;
-  border-radius: 5px;
+  height: 60px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
   align-items: center;
   gap: 10px;
-  padding: 18px 21px;
-  border: solid 1px ${(props) => props.theme.basis.jurassicGrey};
+  padding: 18px 15px;
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const GoButton = styled(SubmitButton)`
-  width: 180px;
+  width: 160px;
   height: 40px;
+  text-wrap: nowrap;
 `
 
 export default withSuspense(ClosePanel, <LoadingProgress />)

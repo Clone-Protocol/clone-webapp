@@ -15,11 +15,12 @@ import PromoteDialog from '~/components/Points/PromoteDialog'
 import { useEffect, useState } from 'react'
 import ContentCopyIcon from 'public/images/content-copy.svg'
 import { PythSymbolIcon } from '~/components/Common/SvgIcons'
-import { PointTextForPyth } from '~/components/Points/PointMultiplierText'
+import { PointTextForBonus } from '~/components/Points/PointMultiplierText'
 import Image from 'next/image'
 import { ReferralStatus } from '~/utils/constants'
 import { useSnackbar } from 'notistack'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import IconJupSymbol from 'public/images/jup_symbol.svg'
 
 const MyPointStatus = () => {
   const { publicKey } = useWallet()
@@ -97,11 +98,11 @@ const MyPointStatus = () => {
         </BorderBox>
         <BorderBox width={isMobileOnSize ? '166px' : '350px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' height='20px'>
-            <Typography variant='p_lg'>My Total Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.totalPoints} color='#66707e' />
+            <Typography variant='p'>My Total Points</Typography>
+            <InfoTooltip title={TooltipTexts.points.totalPoints} color='#8988a3' />
           </Box>
           <StatusValue>
-            {infos?.hasPythPoint &&
+            {(infos?.hasPythPoint || infos?.hasJupPoint) &&
               <Box width='42px'></Box>
             }
             <Typography variant='h3' fontWeight={500}>
@@ -109,50 +110,59 @@ const MyPointStatus = () => {
             </Typography>
             {infos?.hasPythPoint &&
               <Tooltip title={TooltipTexts.points.multiplier} placement="top">
-                <Box width='42px'><PointTextForPyth pythPointTier={infos?.pythPointTier} /></Box>
+                <Box width='42px'><PointTextForBonus multipleTier={infos?.multipleTier} /></Box>
               </Tooltip>
             }
           </StatusValue>
-          {infos?.hasPythPoint &&
-            <Tooltip title={TooltipTexts.points.pythSymbol} placement="top">
-              <PythBox>
-                <PythSymbolIcon />
-              </PythBox>
-            </Tooltip>
-          }
+          <BottomSymbolBox>
+            {(infos?.hasPythPoint || infos?.hasJupPoint) &&
+              <Tooltip title={TooltipTexts.points.pythSymbol} placement="top">
+                <Box width='38px' height='37px' display='flex' alignItems='center' justifyContent='center'>
+                  <PythSymbolIcon />
+                </Box>
+              </Tooltip>
+            }
+            {infos?.hasJupPoint &&
+              <Tooltip title={TooltipTexts.points.jupSymbol} placement="top">
+                <Box width='38px' height='37px' display='flex' alignItems='center' justifyContent='center'>
+                  <Image src={IconJupSymbol} alt='jup_symbol' width={20} height={20} />
+                </Box>
+              </Tooltip>
+            }
+          </BottomSymbolBox>
         </BorderBox>
       </Stack>
       <Stack direction='row' gap={2} flexWrap={'wrap'} mt='18px' justifyContent='center'>
         <BorderBox width={isMobileOnSize ? '166px' : '200px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Liquidity Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.lpPoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.lpPoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
               {infos?.lpPoints ? formatLocaleAmount(infos.lpPoints) : '0'}
             </Typography>
           </StatusValue>
+          {/* <PromoteBox onClick={() => setShowPromoteDialog(true)}>
+            <BoltIcon sx={{ fontSize: '16px', color: '#fbdc5f' }} />
+            <ColoredText><Typography variant='p_sm'>2x</Typography></ColoredText>
+          </PromoteBox> */}
         </BorderBox>
         <BorderBox width={isMobileOnSize ? '166px' : '200px'} position='relative'>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Trade Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.tradePoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.tradePoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
               {infos?.tradePoints ? formatLocaleAmount(infos.tradePoints) : '0'}
             </Typography>
           </StatusValue>
-          <PromoteBox onClick={() => setShowPromoteDialog(true)}>
-            <BoltIcon sx={{ fontSize: '16px', color: '#fbdc5f' }} />
-            <ColoredText><Typography variant='p_sm'>1.5x Multiplier</Typography></ColoredText>
-          </PromoteBox>
         </BorderBox>
         <BorderBox width={isMobileOnSize ? '166px' : '200px'}>
           <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
             <Typography variant='p'>My Social Points</Typography>
-            <InfoTooltip title={TooltipTexts.points.socialPoints} color='#66707e' />
+            <InfoTooltip title={TooltipTexts.points.socialPoints} color='#8988a3' />
           </Box>
           <StatusValue>
             <Typography variant='p_xlg'>
@@ -170,7 +180,7 @@ const MyPointStatus = () => {
               <Box mt='8px'>
                 <Box display='flex' justifyContent='center' alignItems='center' ml='10px'>
                   <Typography variant='p'>My Referral Points</Typography>
-                  <InfoTooltip title={TooltipTexts.points.referralPoints} color='#66707e' />
+                  <InfoTooltip title={TooltipTexts.points.referralPoints} color='#8988a3' />
                 </Box>
                 <StatusValue>
                   <Typography variant='p_xlg'>
@@ -216,7 +226,7 @@ const MyPointStatus = () => {
           </Box>
         </Box>
       </>}
-      {showPromoteDialog && <PromoteDialog onClose={() => setShowPromoteDialog(false)} />}
+      {/* {showPromoteDialog && <PromoteDialog onClose={() => setShowPromoteDialog(false)} />} */}
     </Wrapper>
   )
 
@@ -249,14 +259,19 @@ const GenerateReferralBorderBox = styled(BorderBox)`
   padding: 0px;
   background-color: #000;
   &.hover {
+    content: "";
     background-color: #000;
     border-style: solid;
     border-width: 1px;
+    border-color: transparent;
     border-image-source: linear-gradient(to bottom, #fbdc5f, #3dddff);
     border-image-slice: 1;
     background-image: linear-gradient(to bottom, #000, #000), linear-gradient(to bottom, #fbdc5f, #3dddff);
     background-origin: border-box;
     background-clip: content-box, border-box;
+    -webkit-mask: /*4*/
+     linear-gradient(#fff 0 0) padding-box, 
+     linear-gradient(#fff 0 0);
   }
 `
 const PromoteBox = styled(Box)`
@@ -266,26 +281,34 @@ const PromoteBox = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 110px;
+  width: 44px;
   height: 24px;
   cursor: pointer;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 8px;
   background-color: rgba(255, 255, 255, 0.07);
 `
-const ReferralBox = styled(PromoteBox)`
+const ReferralBox = styled(Box)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 140px;
+  height: 24px;
+  cursor: pointer;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.07);
 `
-const PythBox = styled(Box)`
+const BottomSymbolBox = styled(Box)`
   position: absolute;
   bottom: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 38px;
-  height: 37px;
-  color: #e6dafe;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 8px;
   background-color: rgba(255, 255, 255, 0.07);
@@ -323,6 +346,7 @@ const ReferralButton = styled(Button)`
   color: #fff;
   padding: 0;
   &:hover {
+    content: "";
     background-color: #1c1c1c;
     border-style: solid;
     border-width: 1px;
@@ -331,6 +355,9 @@ const ReferralButton = styled(Button)`
     background-image: linear-gradient(to bottom, #1c1c1c, #1c1c1c), linear-gradient(to bottom, #fbdc5f, #3dddff);
     background-origin: border-box;
     background-clip: content-box, border-box;
+    -webkit-mask: /*4*/
+     linear-gradient(#fff 0 0) padding-box, 
+     linear-gradient(#fff 0 0);
   }
 `
 

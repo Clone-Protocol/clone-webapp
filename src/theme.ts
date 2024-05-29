@@ -107,6 +107,9 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 					'& .MuiBackdrop-root': {
 						background: 'rgba(13, 13, 13, 0.4)',
 						backdropFilter: 'blur(3px)',
+					},
+					'& .MuiDialogContent-root': {
+						padding: '20px 24px'
 					}
 				}
 			}
@@ -196,9 +199,9 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 			white: '#ffffff',
 		},
 		primary: {
-			light: '#4fe5ff',
-			main: '#4fe5ff',
-			dark: '#4fe5ff',
+			light: '#c4b5fd',
+			main: '#c4b5fd',
+			dark: '#c4b5fd',
 		},
 		hover: '#37a0b3',
 		info: {
@@ -258,7 +261,7 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 		purpleMetallic: 'linear-gradient(84deg, #8925ed 1%, #7d4fff 25%, #ab96ff 36%, #fff 48%, #ab96ff 60%, #7d4fff 72%, #8925ed 95%)',
 		simple: 'linear-gradient(to right, #fff 21%, #4fe5ff 96%)',
 		temperatureH2L: 'linear-gradient(to right, #ff8e4f 0%, #fff 100%)',
-		healthscore: 'linear-gradient(to right, #ff006b 0%, #4fe5ff 100%)',
+		healthscore: 'linear-gradient(to right, #ff006b 0%, #c4b5fd 53%)',
 		cloneLevel: 'linear-gradient(to right, #b5fdf9 2%, #c4b5fd 93%)',
 	}
 })

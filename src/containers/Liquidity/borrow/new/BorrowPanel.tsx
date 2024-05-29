@@ -148,125 +148,124 @@ const BorrowPanel = ({ assetIndex, borrowDetail, onChooseAssetIndex }: { assetIn
     <>
       <Box>
         <Box>
-          <Box>
-            <Typography variant='p_lg'>clAsset to Borrow</Typography>
-            <InfoTooltip title={TooltipTexts.onAssetToBorrow} color='#66707e' />
+          <Typography variant='p_lg'>clAsset to Borrow</Typography>
+          <InfoTooltip title={TooltipTexts.onAssetToBorrow} color='#8988a3' />
+        </Box>
+        <SelectPoolBox onClick={() => setOpenChooseAsset(true)}>
+          <Stack direction='row' gap={1}>
+            <Image src={ASSETS[assetIndex].tickerIcon} width={20} height={20} alt={ASSETS[assetIndex].tickerSymbol} />
+            <Typography variant='p_lg'>{ASSETS[assetIndex].tickerSymbol}</Typography>
+          </Stack>
+          <Image src={SelectArrowIcon} alt='select' />
+        </SelectPoolBox>
+        <Box>
+          <Box mb='5px'>
+            <Typography variant='p_lg'>Collateral Amount</Typography>
+            <InfoTooltip title={TooltipTexts.collateralAmount} color='#8988a3' />
           </Box>
-          <SelectPoolBox onClick={() => setOpenChooseAsset(true)}>
-            <Stack direction='row' gap={1}>
-              <Image src={ASSETS[assetIndex].tickerIcon} width={27} height={27} alt={ASSETS[assetIndex].tickerSymbol} />
-              <Typography variant='p_xlg'>{ASSETS[assetIndex].tickerSymbol}</Typography>
-            </Stack>
-            <Image src={SelectArrowIcon} alt='select' />
-          </SelectPoolBox>
+          <Controller
+            name="collAmount"
+            control={control}
+            rules={{
+              validate(value) {
+                if (!value || value <= 0) {
+                  return ''
+                } else if (value > usdiBalance?.balanceVal) {
+                  return 'The collateral amount cannot exceed the balance.'
+                }
+              }
+            }}
+            render={({ field }) => (
+              <PairInput
+                tickerIcon={fromPair.tickerIcon}
+                tickerSymbol={fromPair.tickerSymbol}
+                value={parseFloat(formatNumberToString(field.value, 4))}
+                headerTitle="Balance"
+                headerValue={usdiBalance?.balanceVal}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const collAmt = parseFloat(event.currentTarget.value)
+                  field.onChange(collAmt)
+                  calculateBorrowAmount(collAmt, collRatio)
+                }}
+                onMax={(balance: number) => {
+                  field.onChange(balance)
+                  calculateBorrowAmount(balance, collRatio)
+                }}
+              />
+            )}
+          />
+          {/* <FormHelperText error={!!errors.collAmount?.message}>{errors.collAmount?.message}</FormHelperText> */}
+        </Box>
+
+        <Box mt='25px' mb='5px'>
+          <Typography variant='p_lg'>Collateral Ratio</Typography>
+          <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
+        </Box>
+        <Box>
+          {!isNaN(collAmount) && collAmount > 0 ?
+            <RatioSlider min={borrowDetail?.minCollateralRatio} value={collRatio} hasRiskRatio={hasRiskRatio} hasLowerMin={hasLowerMin} showChangeRatio hideValueBox onChange={handleChangeCollRatio} />
+            :
+            <DisabledRatioSlider />
+          }
+        </Box>
+
+        <Box mb='10px'>
+          <Box mt='25px' mb='5px'>
+            <Typography variant='p_lg'>Borrow Amount</Typography>
+            <InfoTooltip title={TooltipTexts.borrowAmount} color='#8988a3' />
+          </Box>
           <Box>
-            <Box mb='5px'>
-              <Typography variant='p_lg'>Collateral Amount</Typography>
-              <InfoTooltip title={TooltipTexts.collateralAmount} color='#66707e' />
-            </Box>
             <Controller
-              name="collAmount"
+              name="borrowAmount"
               control={control}
               rules={{
                 validate(value) {
                   if (!value || value <= 0) {
                     return ''
-                  } else if (value > usdiBalance?.balanceVal) {
-                    return 'The collateral amount cannot exceed the balance.'
                   }
                 }
               }}
               render={({ field }) => (
                 <PairInput
-                  tickerIcon={fromPair.tickerIcon}
-                  tickerSymbol={fromPair.tickerSymbol}
-                  value={parseFloat(formatNumberToString(field.value, 4))}
-                  inputTitle='Collateral'
-                  headerTitle="Balance"
-                  headerValue={usdiBalance?.balanceVal}
+                  tickerIcon={ASSETS[assetIndex].tickerIcon}
+                  tickerSymbol={ASSETS[assetIndex].tickerSymbol}
+                  value={parseFloat(formatNumberToString(field.value, 5))}
+                  dollarPrice={field.value * borrowDetail.oPrice}
+                  disabledInput={true}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    const collAmt = parseFloat(event.currentTarget.value)
-                    field.onChange(collAmt)
-                    calculateBorrowAmount(collAmt, collRatio)
-                  }}
-                  onMax={(balance: number) => {
-                    field.onChange(balance)
-                    calculateBorrowAmount(balance, collRatio)
+                    const borrowAmt = parseFloat(event.currentTarget.value)
+                    field.onChange(borrowAmt)
+                    calculateCollRatio(borrowAmt)
                   }}
                 />
               )}
             />
-            {/* <FormHelperText error={!!errors.collAmount?.message}>{errors.collAmount?.message}</FormHelperText> */}
+            <FormHelperText error={!!errors.borrowAmount?.message}>{errors.borrowAmount?.message}</FormHelperText>
           </Box>
+        </Box>
 
-          <Box mt='25px' mb='5px'>
-            <Typography variant='p_lg'>Collateral Ratio</Typography>
-            <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#66707e' />
+        {hasRiskRatio && !hasLowerMin &&
+          <WarningStack direction='row'>
+            <WarningAmberIcon sx={{ color: '#ff0084', width: '15px' }} />
+            <Typography variant='p' ml='8px'>Due to low collateral ratio, this borrow position will have high possibility to become subject to liquidation.</Typography>
+          </WarningStack>
+        }
+
+        {showPoolStatus(borrowDetail.status) ?
+          <Box display='flex' justifyContent='center'>
+            <PoolStatusButton status={borrowDetail.status} />
           </Box>
-          <Box>
-            {!isNaN(collAmount) && collAmount > 0 ?
-              <RatioSlider min={borrowDetail?.minCollateralRatio} value={collRatio} hasRiskRatio={hasRiskRatio} hasLowerMin={hasLowerMin} showChangeRatio hideValueBox onChange={handleChangeCollRatio} />
-              :
-              <DisabledRatioSlider />
-            }
-          </Box>
-
-          <Box mb='10px'>
-            <Box mt='25px' mb='5px'>
-              <Typography variant='p_lg'>Borrow Amount</Typography>
-              <InfoTooltip title={TooltipTexts.borrowAmount} color='#66707e' />
-            </Box>
-            <Box>
-              <Controller
-                name="borrowAmount"
-                control={control}
-                rules={{
-                  validate(value) {
-                    if (!value || value <= 0) {
-                      return ''
-                    }
-                  }
-                }}
-                render={({ field }) => (
-                  <PairInput
-                    tickerIcon={ASSETS[assetIndex].tickerIcon}
-                    tickerSymbol={ASSETS[assetIndex].tickerSymbol}
-                    value={parseFloat(formatNumberToString(field.value, 5))}
-                    dollarPrice={field.value * borrowDetail.oPrice}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                      const borrowAmt = parseFloat(event.currentTarget.value)
-                      field.onChange(borrowAmt)
-                      calculateCollRatio(borrowAmt)
-                    }}
-                  />
-                )}
-              />
-              <FormHelperText error={!!errors.borrowAmount?.message}>{errors.borrowAmount?.message}</FormHelperText>
-            </Box>
-          </Box>
-
-          {hasRiskRatio && !hasLowerMin &&
-            <WarningStack direction='row'>
-              <WarningAmberIcon sx={{ color: '#ff0084', width: '15px' }} />
-              <Typography variant='p' ml='8px'>Due to low collateral ratio, this borrow position will have high possibility to become subject to liquidation.</Typography>
-            </WarningStack>
-          }
-
-          {showPoolStatus(borrowDetail.status) ?
-            <Box display='flex' justifyContent='center'>
-              <PoolStatusButton status={borrowDetail.status} />
+          :
+          isSubmitting ?
+            <Box display='flex' justifyContent='center' my='15px'>
+              <LoadingButton width='100%' height='52px' />
             </Box>
             :
-            isSubmitting ?
-              <Box display='flex' justifyContent='center' my='15px'>
-                <LoadingButton width='100%' height='52px' />
-              </Box>
-              :
-              <SubmitButton onClick={handleSubmit(onBorrow)} disabled={!isValid} hasRisk={hasRiskRatio}>
-                <Typography variant='p_lg'>{(isNaN(collAmount) || collAmount === 0) ? 'Enter Collateral Amount' : hasLowerMin ? 'Minimum Collateral Ratio is 150%' : collAmount > usdiBalance?.balanceVal ? 'Exceeded Wallet Balance' : hasRiskRatio ? 'Accept Risk and Open Borrow Position' : 'Borrow'}</Typography>
-              </SubmitButton>
-          }
-        </Box>
+            <SubmitButton onClick={handleSubmit(onBorrow)} disabled={!isValid} hasRisk={hasRiskRatio}>
+              <Typography variant='p_lg'>{(isNaN(collAmount) || collAmount === 0) ? 'Enter Collateral Amount' : hasLowerMin ? 'Minimum Collateral Ratio is 150%' : collAmount > usdiBalance?.balanceVal ? 'Exceeded Wallet Balance' : hasRiskRatio ? 'Accept Risk and Open Borrow Position' : 'Borrow'}</Typography>
+            </SubmitButton>
+        }
+
       </Box>
 
       <ChooseAssetDialog
@@ -285,15 +284,15 @@ const SelectPoolBox = styled(Box)`
 	align-items: center;
 	width: 145px;
 	height: 40px;
-	background-color: rgba(37, 141, 237, 0.15);
-	border-radius: 5px;
+	border: solid 1px ${(props) => props.theme.basis.lightSlateBlue};
+  background-color: ${(props) => props.theme.basis.nobleBlack};
+	border-radius: 1000px;
 	cursor: pointer;
 	padding: 8px;
   margin-top: 10px;
   margin-bottom: 25px;
 	&:hover {
 		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.melrose} inset;
-		background-color: rgba(37, 141, 237, 0.23);
   }
 `
 const WarningStack = styled(Stack)`

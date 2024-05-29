@@ -13,6 +13,7 @@ import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import ChartSwitch from '~/components/Markets/TradingBox/ChartSwitch';
 import { LoadingSkeleton } from '~/components/Common/Loading';
+import { ShowChartBtn } from '~/components/Common/CommonButtons';
 
 //SSR
 export const getStaticPaths = (async () => {
@@ -66,8 +67,6 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
     }
   }, [isMobileOnSize])
 
-  const isShowChart = showChart
-
   return (
     <div>
       <StyledSection
@@ -75,7 +74,7 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
           backgroundColor: '#0f0e14',
         }}>
         <Stack direction={isMobileOnSize ? 'column' : 'row'} gap={5} justifyContent="center" alignItems={isMobileOnSize ? "center" : ""}>
-          {isShowChart &&
+          {showChart &&
             <Box minWidth={isMobileOnSize ? '360px' : '750px'} width={isMobileOnSize ? '100%' : '750px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
               <HydrationBoundary state={dehydratedState}>
                 <MarketDetail assetId={assetId} />
@@ -88,7 +87,7 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
           </Box>
         </Stack>
       </StyledSection>
-      <Box display={isMobileOnSize ? 'block' : 'none'}><ShowTradingBtn onClick={() => toggleShowTrading()}>{showChart ? 'Hide Chart' : 'Show Chart'}</ShowTradingBtn></Box>
+      <Box display={isMobileOnSize ? 'block' : 'none'}><ShowChartBtn onClick={() => toggleShowTrading()}>{showChart ? 'Hide Chart' : 'Show Chart'}</ShowChartBtn></Box>
     </div>
   )
 }
@@ -100,27 +99,6 @@ const StyledSection = styled('section')`
 	${(props) => props.theme.breakpoints.down('md')} {
 		padding: 70px 0px 110px 0px;
 	}
-`
-
-const ShowTradingBtn = styled(Box)`
-  position: fixed;
-  bottom: 15px;
-  width: 95%;
-  height: 36px;
-  color: #fff;
-	border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  z-index: 9999999;
-  cursor: pointer;
-  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
-  background: ${(props) => props.theme.basis.backInBlack};
-	&:hover {
-		background: ${(props) => props.theme.basis.backInBlack};
-    border: solid 1px ${(props) => props.theme.basis.melrose};
-  }
 `
 
 export default AssetPage

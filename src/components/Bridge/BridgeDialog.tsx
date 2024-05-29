@@ -19,9 +19,9 @@ const BridgeDialog = ({ open, handleClose }: { open: boolean, handleClose: () =>
   return (
     <>
       <Dialog open={open} onClose={close} TransitionComponent={FadeTransition} sx={{ overflowX: 'hidden' }}>
-        <DialogContent sx={{ backgroundColor: '#0f0e14', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: isInitStep ? '500px' : '540px', overflow: 'hidden', width: { xs: '100%', md: '340px' } }}>
+        <DialogContent sx={{ backgroundColor: '#201c27', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: isInitStep ? '500px' : '540px', overflow: 'hidden', width: { xs: '100%', md: '350px' } }}>
           <BoxWrapper>
-            <Box position='absolute' top='0px' width='100%' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#0f0e14' }}>
+            <Box position='absolute' top='0px' width='100%' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#201c27' }}>
               <Stack direction='row' justifyContent='space-between' >
                 {isInitStep ?
                   <TitleBox ml='25px' mt='10px'><Typography variant='p_lg'>Bridge</Typography></TitleBox>
@@ -39,13 +39,13 @@ const BridgeDialog = ({ open, handleClose }: { open: boolean, handleClose: () =>
               <>
                 <Box mt='80px'><Image src={BridgeIcon} alt='icStatus' /></Box>
 
-                <Box lineHeight={1} m='0 auto' my='12px' maxWidth='290px'>
+                <Box lineHeight={1} m='0 auto' my='12px' maxWidth='320px'>
                   <Typography variant='p_lg'>
-                    Bridge your funds to Solana and dive into multi-chain trading experience with Clone.
+                    Bridge your funds to Solana and fully utilize the power of Comet Liquidity System.
                   </Typography>
                 </Box>
 
-                <BridgeButton onClick={() => setIsInitStep(false)}><Typography variant='p_xlg'>Bridge now</Typography></BridgeButton>
+                <BridgeButton onClick={() => setIsInitStep(false)}><Typography variant='p_xlg'>Swap</Typography></BridgeButton>
 
                 <Box mt='50px'><Image src={PoweredByDebridge} alt='powered_by_pyth' /></Box>
               </>

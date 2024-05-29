@@ -34,6 +34,12 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
 	'& .MuiTabs-indicatorSpan': {
 		display: 'none'
 	},
+	'& .MuiTabs-flexContainer': {
+		overflowX: 'auto',
+		'&::-webkit-scrollbar': {
+			display: 'none'
+		}
+	},
 	minHeight: '36px',
 	height: '36px',
 	paddingTop: '0px'
@@ -46,9 +52,7 @@ export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple ic
 		maxHeight: '55px',
 		display: 'flex',
 		whiteSpace: 'nowrap',
-		// borderRadius: '5px',
-		borderTopLeftRadius: '5px',
-		borderTopRightRadius: '5px',
+		borderRadius: '10px',
 		'&:hover': {
 			color: '#fff',
 		}
@@ -56,10 +60,10 @@ export const StyledTab = styled((props: StyledTabProps) => <Tab disableRipple ic
 	fontWeight: '500',
 	fontSize: '14px',
 	marginLeft: '0px',
-	color: '#66707e',
+	color: '#8988a3',
 	'&.Mui-selected': {
-		border: 'solid 1px #b5fdf9',
-		backgroundColor: '#071031',
+		border: 'solid 1px #c4b5fd',
+		backgroundColor: '#1d142e',
 		color: '#fff',
 	},
 }))
@@ -69,15 +73,32 @@ export const CommonTab = styled((props: StyledTabProps) => (
 ))({
 	width: '138px',
 	'&.Mui-selected': {
-		background: '#201c27',
+		background: '#16141b',
 		borderStyle: 'solid',
+		borderTopLeftRadius: '10px',
+		borderTopRightRadius: '10px',
+		borderBottomLeftRadius: '0px',
+		borderBottomRightRadius: '0px',
+		border: 'none'
+	}
+})
+
+export const LiquidityTab = styled((props: StyledTabProps) => (
+	<StyledTab {...props} />
+))({
+	width: '138px',
+	'&.Mui-selected': {
+		background: '#201c27',
 		borderColor: 'transparent',
 		borderTopColor: '#332e46',
 		borderLeftColor: '#332e46',
 		borderRightColor: '#332e46',
+		borderWidth: '1px',
+		borderStyle: 'solid',
 		borderTopLeftRadius: '10px',
 		borderTopRightRadius: '10px',
-		borderWidth: '1px',
+		borderBottomLeftRadius: '0px',
+		borderBottomRightRadius: '0px',
 	}
 })
 

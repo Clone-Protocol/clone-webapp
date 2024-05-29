@@ -15,8 +15,8 @@ const BenefitLevel = ({ levelData }: { levelData: LevelInfo | undefined }) => {
   return (
     <Box color='#8988a3'>
       <Typography variant='p_lg'>Your Level</Typography>
-      <BorderBox mt='20px' mb='30px'>
-        {publicKey && levelData?.currentLevel ?
+      <BorderBox my='20px'>
+        {publicKey && levelData ?
           <>
             <TitleTxt>cloner</TitleTxt>
             <LevelTxt>{levelData.currentLevel + 1}</LevelTxt>

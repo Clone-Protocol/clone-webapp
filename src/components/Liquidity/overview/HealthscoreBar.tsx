@@ -26,7 +26,7 @@ const HealthscoreBar: React.FC<Props> = ({ score, prevScore, hasRiskScore = fals
           </Box >
           <Box width='100%' margin='0 auto'>
             <ScoreBar />
-            {!hideIndicator && <Box display="flex" justifyContent='space-between' color='#66707e'>
+            {!hideIndicator && <Box display="flex" justifyContent='space-between' color='#8988a3'>
               <Box><Typography variant='p_sm'>0 (Poor)</Typography></Box>
               <Box><Typography variant='p_sm'>(Excellent) 100</Typography></Box>
             </Box>}
@@ -44,7 +44,7 @@ const HealthscoreBar: React.FC<Props> = ({ score, prevScore, hasRiskScore = fals
         <Box py='6px'>
           <Box width='100%' margin='0 auto'>
             <ScoreBar />
-            <Box display="flex" justifyContent='space-between' color='#66707e'>
+            <Box display="flex" justifyContent='space-between' color='#8988a3'>
               <Box><Typography variant='p_sm'>0 (Poor)</Typography></Box>
               <Box><Typography variant='p_sm'>(Excellent) 100</Typography></Box>
             </Box>

@@ -1,4 +1,4 @@
-import { Box, Stack, Button, Typography } from '@mui/material'
+import { Box, Stack, Button, Typography, useMediaQuery, Theme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { GridColDef, GridEventListener, GridRenderCellParams, GridColumnHeaderParams } from '@mui/x-data-grid'
@@ -20,6 +20,7 @@ import { formatLocaleAmount } from '~/utils/numbers'
 
 const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { hasNoCollateral: boolean, positions: LiquidityPosition[], onRefetchData: () => void }) => {
   const router = useRouter()
+  const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { publicKey } = useWallet()
   const [openEditLiquidity, setOpenEditLiquidity] = useState(false)
   const [editAssetId, setEditAssetId] = useState(0)
@@ -62,7 +63,7 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
   if (!publicKey) {
     customOverlay = () => CustomNoRowsOverlay('Please connect wallet.')
   } else if (hasNoCollateral) {
-    customOverlay = () => CustomNoRowsOverlay('Add collateral in order to start providing liquidity!', '#fff')
+    customOverlay = () => CustomNoRowsOverlay('Please add collateral first to initiate liquidity positions.', '#fff')
   }
 
   return (
@@ -70,12 +71,16 @@ const LiquidityPositions = ({ hasNoCollateral, positions, onRefetchData }: { has
       <Box>
         <Grid
           headers={columns}
+          columnVisibilityModel={isMobileOnSize ? {
+            "ild": false,
+            "rewards": false,
+          } : {}}
           rows={rowsPositions || []}
           minHeight={108}
           isBorderTopRadius={false}
           isBorderBottomRadius={false}
           noAutoHeight={(!publicKey || hasNoCollateral || (!hasNoCollateral && positions.length === 0)) === true}
-          customNoRowsOverlay={customOverlay}
+          customNoResultsOverlay={customOverlay}
           onRowClick={handleRowClick}
         />
       </Box>
@@ -227,7 +232,7 @@ const AddButtonNoPosition = styled(AddButton)`
   height: 70px;
   color: #fff;
   border: 0px;
-  margin-top: -80px;
+  margin-top: -70px;
   &:hover {
     border-color: ${(props) => props.theme.palette.info.main};
   }

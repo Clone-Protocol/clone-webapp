@@ -22,12 +22,12 @@ const useCircleStyles = makeStyles(() => ({
 export const LoadingButton = ({ width, height, buttonTxt = 'Confirming' }: { width?: string, height?: string, buttonTxt?: string }) => {
   const classes = useCircleStyles({});
   return (
-    <Button sx={{ display: 'flex', alignItems: 'center', background: '#000e22', border: 'solid 1px #24abc2', borderRadius: '5px', width, height }} disabled>
+    <Button sx={{ display: 'flex', alignItems: 'center', background: '#000e22', border: 'solid 1px #c4b5fd', borderRadius: '10px', width, height }} disabled>
       <Stack direction='row' alignItems='center' gap={2}>
         <Box display='flex' alignItems='center'>
           <svg width="8" height="6">
             <linearGradient id="linearColors" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="25%" stopColor="#6cffff" />
+              <stop offset="25%" stopColor="#c4b5fd" />
               <stop offset="90%" stopColor="rgba (0, 133, 255, 0.0)" />
             </linearGradient>
           </svg>

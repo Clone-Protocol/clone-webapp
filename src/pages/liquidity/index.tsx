@@ -1,16 +1,18 @@
 'use client'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
-import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
+// import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
 import MainChart from '~/containers/Liquidity/overview/MainChart'
 import AssetList from '~/containers/Liquidity/overview/AssetList'
-import { useWallet } from '@solana/wallet-adapter-react'
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react'
 import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
 import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { fetchAssets } from '~/features/Liquidity/overview/Assets.query'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { fetchTotalVolume } from '~/features/Chart/Liquidity.query'
+import useInitialized from '~/hooks/useInitialized'
+import { useCreateAccount } from '~/hooks/useCreateAccount'
 
 //SSR
 export const getStaticProps = (async () => {
@@ -34,18 +36,18 @@ export const getStaticProps = (async () => {
 }>
 
 const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { publicKey } = useWallet()
+  const { publicKey, connected } = useWallet()
+  const wallet = useAnchorWallet()
+  // on initialize, set to open account creation
+  useInitialized(connected, publicKey, wallet, true)
+  useCreateAccount()
 
   return (
     <StyledSection>
       <Box sx={{ maxWidth: '1270px' }} margin='0 auto'>
-        {IS_DEV && publicKey &&
-          <GetUSDiBadge />
-        }
-        <Box mt='15px'>
-          <Box>
-            <MainChart />
-          </Box>
+        <Box mt='10px'>
+          <MainChart />
+
           <HydrationBoundary state={dehydratedState}>
             <AssetList />
           </HydrationBoundary>
@@ -63,7 +65,7 @@ export const StyledSection = styled('section')`
 		padding-top: 130px;
 	}
 	${(props) => props.theme.breakpoints.down('md')} {
-		padding: 110px 0px;
+		padding: 100px 0px;
 	}
 `
 

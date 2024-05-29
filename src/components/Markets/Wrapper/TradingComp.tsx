@@ -129,7 +129,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
 
   const isValid = invalidMsg() === ''
   const isWormholeAsset = pairData.wrapTickerSymbol.slice(0, 1) === 'w'
-  const hasLinkForWrapPortUrl = isWormholeAsset || assetIndex === AssetTickers.doge
+  const hasLinkForWrapPortUrl = isWormholeAsset || assetIndex === AssetTickers.doge || assetIndex === AssetTickers.bnb
 
   return (
     <>
@@ -143,9 +143,9 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
                   <Box display='flex' flexDirection='column' alignItems='flex-start'>
                     <Box display='flex' gap={1} alignItems='center' mb='4px'>
                       <Typography variant='p_lg' color='#fff'>Get more {pairData.wrapTickerSymbol}</Typography>
-                      {hasLinkForWrapPortUrl && <Box color='#66707e' mb='-3px'><LearnMoreIcon /></Box>}
+                      {hasLinkForWrapPortUrl && <Box color='#8988a3' mb='-3px'><LearnMoreIcon /></Box>}
                     </Box>
-                    <Typography variant='p' color='#66707e' textAlign='left' whiteSpace='nowrap'>Port over {pairData.tickerSymbol.slice(2).toUpperCase()} as {pairData.wrapTickerSymbol} to Solana</Typography>
+                    <Typography variant='p' color='#8988a3' textAlign='left' whiteSpace='nowrap'>Port over {pairData.tickerSymbol.slice(2).toUpperCase()} as {pairData.wrapTickerSymbol} to Solana</Typography>
                   </Box>
                   <Image src={isWormholeAsset ? WormholeIcon : DebridgeIcon} alt='debridge' />
                 </GetMoreStack>
@@ -190,7 +190,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, onShowSearchAsset, onShowWra
               :
               <Box>
                 <MaxStack direction="row" justifyContent="space-between" alignItems="center" px='20px'>
-                  <Typography variant='p_lg' color='#66707e'>Max Unwrappable</Typography>
+                  <Typography variant='p_lg' color='#8988a3'>Max Unwrappable</Typography>
                   <Typography variant='p_xlg'>{myBalance?.maxUnwrappableVal! >= 0.01 ? myBalance?.maxUnwrappableVal.toFixed(2) : '<0.01'} {pairData.tickerSymbol}</Typography>
                 </MaxStack>
 
@@ -280,20 +280,20 @@ const GetMoreStack = styled(Stack)`
   width: 100%;
   height: 80px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.slug};
-  background-color: rgba(255, 255, 255, 0.05);
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background-color: ${(props) => props.theme.basis.backInBlack};
   margin-bottom: 30px;
   cursor: pointer;
   &:hover {
-    border: solid 1px ${(props) => props.theme.basis.skylight};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `
 const MaxStack = styled(Stack)`
   width: 100%;
   height: 66px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.basis.slug};
-  background-color: rgba(255, 255, 255, 0.05);
+  border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+  background-color: ${(props) => props.theme.basis.backInBlack};
   margin-bottom: 30px;
 `
 const SwapButton = styled(IconButton)`
@@ -307,15 +307,15 @@ const SwapButton = styled(IconButton)`
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border: solid 1px ${(props) => props.theme.basis.liquidityBlue};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `
 const ConnectButton = styled(Button)`
   width: 100%;
   height: 52px;
   color: #fff;
-  border: solid 1px #4fe5ff;
-  border-radius: 5px;
+  border: solid 1px #c4b5fd;
+  border-radius: 10px;
   margin-top: 10px;
   &:hover {
     background: transparent;
@@ -326,12 +326,12 @@ const DisableButton = styled(Button)`
   width: 100%;
   height: 52px;
 	color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
 	margin-top: 10px;
   &:disabled {
-    border: solid 1px ${(props) => props.theme.basis.shadowGloom};
-    background: transparent;
-    color: #989898;
+    border: solid 1px ${(props) => props.theme.basis.plumFuzz};
+    background-color: ${(props) => props.theme.basis.backInBlack};
+    color: ${(props) => props.theme.basis.textRaven};
   } 
 `
 
