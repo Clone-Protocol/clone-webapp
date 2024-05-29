@@ -45,10 +45,9 @@ const Overview = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticP
   return (
     <StyledSection>
       <Box sx={{ maxWidth: '1270px' }} margin='0 auto'>
-        <Box mt='15px'>
-          <Box>
-            <MainChart />
-          </Box>
+        <Box mt='10px'>
+          <MainChart />
+
           <HydrationBoundary state={dehydratedState}>
             <AssetList />
           </HydrationBoundary>

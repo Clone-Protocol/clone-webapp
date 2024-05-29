@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { useState, useCallback } from 'react'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { useAssetsQuery } from '~/features/Liquidity/overview/Assets.query'
 import ArrowUpward from 'public/images/arrow-up.svg'
@@ -50,7 +50,7 @@ const AssetList: React.FC = () => {
 	}, [])
 
 	return (
-		<PanelBox sx={{ '& .non-hover-row': { ':hover': { background: '#000' } } }}>
+		<PanelBox sx={{ padding: { xs: '18px 10px', sm: '18px 36px' }, '& .non-hover-row': { ':hover': { background: '#000' } } }}>
 			<Stack mb={2} direction="row" justifyContent="space-between" alignItems="center">
 				<Box></Box>
 				<Box width='320px'>
@@ -165,7 +165,6 @@ let columns: GridColDef[] = [
 ]
 
 const PanelBox = styled(Box)`
-	padding: 18px 36px;
   color: #fff;
   & .super-app-theme--header { 
     color: #9d9d9d; 

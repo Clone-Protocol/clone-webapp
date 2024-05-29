@@ -86,11 +86,10 @@ const BoxWrapper = styled(Box)`
   background: ${(props) => props.theme.basis.backInBlack};
   border-radius: 10px;
   margin-top: 23px;
-  margin-bottom: 25px;
   padding: 8px 22px;
 `
 const RightBoxWrapper = styled(Box)`
-  height: 100%;
+  height: 100vh;
   padding-bottom: 55px;
 `
 const StickyBox = styled(Box)`

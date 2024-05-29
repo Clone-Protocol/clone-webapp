@@ -99,7 +99,7 @@ const LeftBoxWrapper = styled(Box)`
   padding: 8px 10px;
 `
 const RightBoxWrapper = styled(Box)`
-  height: 100%;
+  height: 100vh;
   padding-bottom: 55px;
 `
 const StickyBox = styled(Box)`

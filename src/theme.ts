@@ -107,6 +107,9 @@ export const theme: ReturnType<typeof createTheme> = createTheme({
 					'& .MuiBackdrop-root': {
 						background: 'rgba(13, 13, 13, 0.4)',
 						backdropFilter: 'blur(3px)',
+					},
+					'& .MuiDialogContent-root': {
+						padding: '20px 24px'
 					}
 				}
 			}

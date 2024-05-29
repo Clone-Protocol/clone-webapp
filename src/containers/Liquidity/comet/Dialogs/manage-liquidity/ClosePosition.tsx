@@ -184,12 +184,13 @@ const StackWithBorder = styled(Stack)`
   border-radius: 10px;
   align-items: center;
   gap: 10px;
-  padding: 21px;
+  padding: 15px;
   border: solid 1px ${(props) => props.theme.basis.plumFuzz};
 `
 const GoButton = styled(SubmitButton)`
-  width: 180px;
+  width: 160px;
   height: 40px;
+  text-wrap: nowrap;
 `
 
 export default withSuspense(ClosePosition, <LoadingProgress />)

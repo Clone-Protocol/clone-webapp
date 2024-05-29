@@ -43,7 +43,7 @@ const ChooseLiquidityPoolsDialog = ({ open, handleChoosePool, handleClose }: { o
 
 const BoxWrapper = styled(Box)`
   color: #fff; 
-  min-width: 375px;
+  min-width: 305px;
 `
 const StyledDivider = styled(Divider)`
   background-color: #414166;

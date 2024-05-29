@@ -16,7 +16,8 @@ const StyledBox = styled(Box)`
 	align-items: center;
 	font-size: 12px;
 	font-weight: 500;
-	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
 	background-color: ${(props) => props.theme.basis.revolver};
 	color: ${(props) => props.theme.basis.melrose};
 	border-radius: 10px;

@@ -20,6 +20,7 @@ export const SubmitButton = styled(Button) <{ hasRisk?: boolean }>`
   border-radius: 10px;
   margin-top: 15px;
 	margin-bottom: 15px;
+  text-wrap: nowrap;
   &:hover {
     background-color: ${(props) => props.hasRisk ? '#af256c' : props.theme.basis.lightSlateBlue};
   }

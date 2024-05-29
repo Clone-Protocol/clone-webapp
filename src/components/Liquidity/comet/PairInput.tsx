@@ -69,7 +69,7 @@ const PairInput: React.FC<Props> = ({
               onChange={onChange}
               min={0}
               max={!balanceDisabled ? balance : 1000}
-              sx={{ width: { xs: '180px', sm: '230px' } }}
+              sx={{ width: { xs: '150px', sm: '230px' } }}
             />
             <DollarAmount>
               {valueDollarPrice && valueDollarPrice > 0
@@ -140,7 +140,6 @@ const DollarAmount = styled("div")`
   margin-left: 2px;
 `
 const TickerBox = styled(Box)`
-  background-color: ${(props) => props.theme.basis.darkNavy};
   border-radius: 10px;
   padding: 3px 10px 3px 5px;
 `

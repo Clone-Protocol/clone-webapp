@@ -71,6 +71,7 @@ const BorrowPositions = () => {
 			<Grid
 				headers={columns}
 				columnVisibilityModel={isMobileOnSize ? {
+					"collateral": false,
 					"borrowed": false,
 				} : {}}
 				rows={positions || []}

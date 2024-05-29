@@ -132,7 +132,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
             <Typography variant='h3'>Manage Borrow Position: Borrowed Amount</Typography>
 
             <Stack direction='row' gap={3} mt='38px'>
-              <ValueBox width='220px'>
+              <ValueBox width='220px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                 <Box mb='6px'><Typography variant='p'>Borrowed Asset</Typography></Box>
                 <Box display="flex" alignItems='center'>
                   <Image src={fromPair.tickerIcon} width={28} height={28} alt={fromPair.tickerSymbol!} />
@@ -141,7 +141,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
                   </Typography>
                 </Box>
               </ValueBox>
-              <ValueBox width='300px'>
+              <ValueBox width='300px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
                 <Box mb='6px'><Typography variant='p'>Collateral Ratio</Typography></Box>
                 <Stack direction='row' gap={1} alignItems='center'>
                   <Typography variant='h3'>{borrowDetail.collateralRatio.toFixed(2)}%</Typography>
@@ -250,10 +250,10 @@ const ValueBox = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 78px;
-  padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
   background-color: #0a080f;
+  text-wrap: nowrap;
 `
 const RatioBox = styled(Box)`
   display: flex;

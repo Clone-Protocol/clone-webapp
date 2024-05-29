@@ -24,11 +24,11 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
   const borrowedDollarPrice = Number(positionInfo.borrowedOnasset) * positionInfo.price
 
   return positionInfo ? (
-    <BoxWithBorder>
+    <BoxWithBorder sx={{ padding: { xs: '10px', md: '24px' } }}>
       {Number(positionInfo.borrowedOnasset) > 0 &&
         <Box>
           <Stack direction='row' gap={3}>
-            <ValueBox width='220px'>
+            <ValueBox width='220px' sx={{ padding: { xs: '8px 12px', md: '8px 30px' } }}>
               <Box mb='6px'><Typography variant='p'>Borrowed clAsset</Typography></Box>
               <Box display="flex" alignItems='center'>
                 <Image src={positionInfo.tickerIcon} width={28} height={28} alt={positionInfo.tickerSymbol!} />
@@ -37,7 +37,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
                 </Typography>
               </Box>
             </ValueBox>
-            <ValueBox width='300px'>
+            <ValueBox width='300px' sx={{ padding: { xs: '8px 10px', md: '8px 30px' } }}>
               <Box mb='6px'>
                 <Typography variant='p'>Collateral Ratio</Typography>
                 <InfoTooltip title={TooltipTexts.borrowedCollRatio} color='#8988a3' />
@@ -98,7 +98,7 @@ const PositionInfo: React.FC<Props> = ({ positionInfo, onShowEditForm, onShowBor
           <Image src={RightArrowIcon} alt='edit' />
         </EditBox>
       </EditRowBox>
-    </BoxWithBorder>
+    </BoxWithBorder >
   ) : (
     <></>
   )
@@ -108,15 +108,14 @@ const ValueBox = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 78px;
-  padding: 8px 30px;
   border-radius: 10px;
   line-height: 24px;
   background-color: #0a080f;
+  text-wrap: nowrap;
 `
 const BoxWithBorder = styled(Box)`
   background: ${(props) => props.theme.basis.backInBlack};
   border-radius: 10px;
-  padding: 24px;
 `
 const EditRowBox = styled(Box)`
   position: relative;

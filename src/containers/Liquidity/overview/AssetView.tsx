@@ -77,7 +77,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 					<a href="https://docs.clone.so/system-architecture/comet-liquidity-system" target="_blank" rel="noreferrer">
 						<TipMsg>
 							<Image src={InfoIcon} alt='info' />
-							<Typography variant='p' ml='5px' sx={{ cursor: 'pointer' }}>Comet Liquidity System is built to introduce hyper liquidity to clAssets. Click to learn more.</Typography>
+							<Typography variant='p' ml='10px' sx={{ cursor: 'pointer' }}>Comet Liquidity System is built to introduce hyper liquidity to clAssets. Click to learn more.</Typography>
 						</TipMsg>
 					</a>
 
@@ -113,7 +113,7 @@ const LeftBoxWrapper = styled(Box)`
 	padding: 8px 10px;
 `
 const RightBoxWrapper = styled(Box)`
-	height: 100%;
+	height: 100vh;
 	padding-bottom: 55px;
 `
 const StickyBox = styled(Box)`
