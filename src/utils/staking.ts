@@ -2,7 +2,7 @@ import { Connection, PublicKey, TransactionInstruction } from "@solana/web3.js"
 import {
   getAssociatedTokenAddressSync,
   getAccount,
-  createAssociatedTokenAccountInstruction,
+  createAssociatedTokenAccountIdempotentInstruction,
 } from "@solana/spl-token"
 import { BN } from "@coral-xyz/anchor"
 import {
@@ -98,29 +98,23 @@ export const createDepositStakeIx = (
   return ixns
 }
 
-export const createWithdrawStakeIx = async (
+export const createWithdrawStakeIx = (
   userPubkey: PublicKey,
   amount: BN, // Should be the scaled amount.
-  connection: Connection
-): Promise<TransactionInstruction[]> => {
+): TransactionInstruction[] => {
   const { clnStakingAccountAddress, clnTokenVault } = getCloneStakingAccounts()
   const clnTokenAccountAddress = getAssociatedTokenAddressSync(CLN_TOKEN_MINT, userPubkey, true)
 
   let ixns: TransactionInstruction[] = []
 
-  // Check if they have an account.
-  try {
-    await getAccount(connection, clnTokenAccountAddress, "confirmed")
-  } catch {
-    ixns.push(
-      createAssociatedTokenAccountInstruction(
-        userPubkey,
-        clnTokenAccountAddress,
-        userPubkey,
-        CLN_TOKEN_MINT
-      )
+  ixns.push(
+    createAssociatedTokenAccountIdempotentInstruction(
+      userPubkey,
+      clnTokenAccountAddress,
+      userPubkey,
+      CLN_TOKEN_MINT
     )
-  }
+  )
 
   ixns.push(
     createWithdrawStakeInstruction(
