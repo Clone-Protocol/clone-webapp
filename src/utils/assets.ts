@@ -3,46 +3,11 @@ import { Pools, Status } from "clone-protocol-sdk/sdk/generated/clone";
 import { MAX_POOLS_FOR_SHOW, assetMapping } from "~/data/assets";
 import { PythHttpClient, getPythProgramKeyForCluster } from "@pythnetwork/client"
 import { Connection, PublicKey } from "@solana/web3.js"
-import { fetchBorrowStats, StatsData, fetchOHLCV, fetchStatsData as netlifyFetchStatsData, BorrowStats, fetchPoolApy, fetchUserApy, fetchPoolAnalytics } from "./fetch_netlify";
+import { fetchBorrowStats, fetchOHLCV, BorrowStats, fetchPoolApy, fetchUserApy, fetchPoolAnalytics } from "./fetch_netlify";
 import { IS_DEV } from "~/data/networks";
 
 export type Interval = 'day' | 'hour';
 export type Filter = 'day' | 'week' | 'month' | 'year';
-
-export type ResponseValue = {
-  datetime: string;
-  pool_index: string;
-  total_liquidity: string;
-  trading_volume: string;
-  total_trading_fees: string;
-  total_treasury_fees: string;
-};
-
-export const generateDates = (start: Date, interval: Interval): Date[] => {
-  const currentDate = new Date(start.getTime()); // Create a new date object to avoid mutating the original
-  const dates = [new Date(currentDate)]; // Include the start date in the array
-  const now = new Date(); // Get current timestamp
-
-  while (currentDate < now) {
-    if (interval === 'hour') {
-      currentDate.setHours(currentDate.getHours() + 1);
-    } else if (interval === 'day') {
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Only add the date if it's before the current time
-    if (currentDate < now) {
-      dates.push(new Date(currentDate)); // Create a new date object to avoid references to the same object
-    }
-  }
-  return dates;
-}
-
-export const fetchStatsData = async (filter: Filter, interval: Interval): Promise<StatsData[]> => {
-  const response = await netlifyFetchStatsData(interval, filter)
-  return response as StatsData[]
-}
-
 
 export const getiAssetInfos = async (connection: Connection, program: CloneClient): Promise<{ status: Status, poolIndex: number, poolPrice: number, liquidity: number }[]> => {
   const pythClient = new PythHttpClient(connection, new PublicKey(getPythProgramKeyForCluster(IS_DEV ? "devnet" : "mainnet-beta")));
@@ -122,40 +87,6 @@ export const getAggregatedPoolStats = async (pools: Pools, userAddressForApy?: P
   return result
 }
 
-
-
-export const getDailyPoolPrices30Day = async (poolIndex: number) => {
-  const requestResult = await fetchOHLCV("hour", "month", poolIndex);
-  const now = new Date()
-  const lookback30Day = new Date(now.getTime() - 30 * 86400 * 1000)
-
-  const dates = generateDates(lookback30Day, 'hour')
-  let prices = []
-
-  let resultIndex = 0
-  let datesIndex = 0;
-
-  while (datesIndex < dates.length) {
-    const result = requestResult[resultIndex]
-    const date = dates[datesIndex]
-
-    const resultDate = new Date(result.time_interval)
-
-    const price = (() => {
-      if (date < resultDate) {
-        //Use open
-        return Number(result.open)
-      } else {
-        resultIndex = Math.min(requestResult.length - 1, resultIndex + 1)
-        return Number(result.close)
-      }
-    })()
-    prices.push({ time: date.toUTCString(), value: price })
-    datesIndex++
-  }
-
-  return prices
-}
 
 type BorrowResult = { currentAmount: number, previousAmount: number, currentTVL: number, previousTVL: number }
 

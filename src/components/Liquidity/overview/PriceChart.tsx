@@ -5,7 +5,7 @@ import Image from "next/image"
 import LineChart from "~/components/Charts/LineChart"
 import { usePriceHistoryQuery } from "~/features/Chart/PriceByAsset.query"
 import withSuspense from "~/hocs/withSuspense"
-import { LoadingProgress } from "~/components/Common/Loading"
+import { LoadingProgress, LoadingSkeleton } from "~/components/Common/Loading"
 import AnalyticsIcon from 'public/images/liquidity/analytics-sketch.svg'
 import { PublicKey } from "@solana/web3.js"
 import { formatLocaleAmount } from "~/utils/numbers"
@@ -87,4 +87,4 @@ const DefaultAnalyticsBox = styled(Box)`
   color: ${(props) => props.theme.basis.shadowGloom};
 `
 
-export default withSuspense(PriceChart, <LoadingProgress />)
+export default withSuspense(PriceChart, <Box mt='10px'><LoadingSkeleton /></Box>)
