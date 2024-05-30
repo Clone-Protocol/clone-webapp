@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { PythObj } from '~/pages/api/points_pythlist';
 import { fetchAllUserBonus, fetchAllUserPoints, Tier, UserBonus, UserPointsView } from '~/utils/fetch_netlify'
 
 export const fetchRanking = async () => {

@@ -140,9 +140,9 @@ export const SubNaviMenu = () => {
         pathname?.startsWith(RootLiquidityDir) &&
         <Stack direction='row' alignItems='center' justifyContent='center'>
           <Link href={RouteDir.LIQUIDITY_LIST}>
-            <StyledListItemButton className={pathname === RouteDir.LIQUIDITY_LIST ? 'selected' : ''}>
+            <StyledListItemButton className={pathname === RouteDir.LIQUIDITY_LIST || pathname?.startsWith(RouteDir.NEW_COMET) ? 'selected' : ''}>
               {!isMobileOnSize && <>
-                {pathname === (RouteDir.LIQUIDITY_LIST) ? <Image src={HubIconOn} alt='hub' /> : <Image src={HubIconOff} alt='hub' />}
+                {pathname === (RouteDir.LIQUIDITY_LIST) || pathname?.startsWith(RouteDir.NEW_COMET) ? <Image src={HubIconOn} alt='hub' /> : <Image src={HubIconOff} alt='hub' />}
               </>}
               <Typography variant='p_lg' ml='2px'>Hub</Typography>
             </StyledListItemButton>
@@ -156,9 +156,9 @@ export const SubNaviMenu = () => {
             </StyledListItemButton>
           </Link>
           <Link href={RouteDir.MY_BORROW}>
-            <StyledListItemButton className={pathname?.startsWith(RouteDir.MY_BORROW) ? 'selected' : ''}>
+            <StyledListItemButton className={pathname?.startsWith(RouteDir.NEW_BORROW) || pathname?.startsWith(RouteDir.MY_BORROW) ? 'selected' : ''}>
               {!isMobileOnSize && <>
-                {pathname?.startsWith(RouteDir.MY_BORROW) ? <Image src={BorrowIconOn} alt='borrow' /> : <Image src={BorrowIconOff} alt='borrow' />}
+                {pathname?.startsWith(RouteDir.NEW_BORROW) || pathname?.startsWith(RouteDir.MY_BORROW) ? <Image src={BorrowIconOn} alt='borrow' /> : <Image src={BorrowIconOff} alt='borrow' />}
               </>}
               <Typography variant='p_lg' ml='2px'>Borrow</Typography>
             </StyledListItemButton>
