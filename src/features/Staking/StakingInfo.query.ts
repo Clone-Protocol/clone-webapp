@@ -30,12 +30,14 @@ export const fetchCurrentLevelData = async ({
 	])
 
 	if (clnStakingInfoResult.status === "fulfilled" && clnUserAccountResult.status === "fulfilled") {
-		const currentStake = new BN(clnUserAccountResult.value.stakedTokens.toString())
-		for (let i = 0; i < clnStakingInfoResult.value.numTiers; i++) {
-			let tierInfo = clnStakingInfoResult.value.tiers[i]
-			const stakeRequirement = new BN(tierInfo.stakeRequirement.toString())
-			if (currentStake.gte(stakeRequirement)) {
-				currentLevel = i + 1;
+		if (clnUserAccountResult.value !== undefined) {
+			const currentStake = new BN(clnUserAccountResult.value.stakedTokens.toString())
+			for (let i = 0; i < clnStakingInfoResult.value.numTiers; i++) {
+				let tierInfo = clnStakingInfoResult.value.tiers[i]
+				const stakeRequirement = new BN(tierInfo.stakeRequirement.toString())
+				if (currentStake.gte(stakeRequirement)) {
+					currentLevel = i + 1;
+				}
 			}
 		}
 	}
@@ -94,7 +96,7 @@ export const fetchStakingInfo = async ({
 
 	const scalingFactor = Math.pow(10, -CLN_TOKEN_SCALE)
 
-	if (stakingAccountResult.status === "fulfilled") {
+	if (stakingAccountResult.status === "fulfilled" && stakingAccountResult.value !== undefined) {
 		stakedAmt = Number(stakingAccountResult.value.stakedTokens) * scalingFactor
 		minWithdrawalSlot = Number(stakingAccountResult.value.minSlotWithdrawal)
 	}

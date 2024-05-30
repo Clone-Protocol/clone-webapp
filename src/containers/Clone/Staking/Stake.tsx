@@ -92,7 +92,6 @@ const Stake = () => {
 
   const isValid = invalidMsg() === ''
 
-  //@TODO
   const maxWithdrawable = stakeData?.stakedAmt
   const ableToWithdraw = stakeData?.minWithdrawalSlot !== undefined && stakeData?.currentSlot !== undefined && stakeData?.minWithdrawalSlot - stakeData?.currentSlot <= 0
 
@@ -102,7 +101,6 @@ const Stake = () => {
       let msg = "CLN deposits have a mandatory cooldown period before withdrawals."
       if (stakeData) {
         const cooldownSecs = stakeData.stakingPeriodSlots * stakeData.secsPerSlot
-        console.log("COOLDOWN:", cooldownSecs, stakeData.secsPerSlot)
         const cooldownHours = cooldownSecs / 3600
         const cooldownMinutes = cooldownSecs / 60
         msg += ` Current cooldown is ${stakeData.stakingPeriodSlots} slots (~${cooldownHours.toFixed(0)}h ${cooldownMinutes.toFixed(0)}m).`

@@ -24,11 +24,11 @@ export const callStaking = async ({ program, userPubKey, setTxState, data, feeLe
 
   if (isDeposit) {
     ixns.push(
-      ...createDepositStakeIx(userPubKey, scaledStakeAmount)
+      ...(await createDepositStakeIx(program.provider.connection, userPubKey, scaledStakeAmount))
     )
   } else {
     const stakingAccount = await getStakingAccount(userPubKey, program.provider.connection)
-    const currentStakedAmount = new BN(stakingAccount.stakedTokens)
+    const currentStakedAmount = new BN(stakingAccount!.stakedTokens)
     const withdrawAmount = currentStakedAmount.lte(scaledStakeAmount) ? currentStakedAmount : scaledStakeAmount
     const innerIxs = createWithdrawStakeIx(userPubKey, withdrawAmount)
     ixns.push(

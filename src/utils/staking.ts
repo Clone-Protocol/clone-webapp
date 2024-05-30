@@ -10,6 +10,7 @@ import {
   User as UserStaking,
   createAddStakeInstruction,
   createWithdrawStakeInstruction,
+  createInitializeUserInstruction,
 } from "clone-protocol-sdk/sdk/generated/clone-staking"
 
 export const CLONE_STAKING_PROGRAM_ID = new PublicKey(process.env.NEXT_PUBLIC_CLONE_STAKING_PROGRAM_ID!)
@@ -40,8 +41,12 @@ const getStakingAccountAddress = (userPubkey: PublicKey): PublicKey => {
 export const getStakingAccount = async (
   userPubkey: PublicKey,
   connection: Connection
-): Promise<UserStaking> => {
-  return await UserStaking.fromAccountAddress(connection, getStakingAccountAddress(userPubkey))
+): Promise<UserStaking | undefined> => {
+  try {
+    return await UserStaking.fromAccountAddress(connection, getStakingAccountAddress(userPubkey))
+  } catch (e) {
+    return undefined
+  }
 }
 
 export const getClnStakingInitInfo = async (
@@ -69,14 +74,28 @@ export const getCLNTokenBalance = async (
   return { isAccountInitialized, amount }
 }
 
-export const createDepositStakeIx = (
+export const createDepositStakeIx = async (
+  connection: Connection,
   userPubkey: PublicKey,
   amount: BN // Should be scaled.
-): TransactionInstruction[] => {
+): Promise<TransactionInstruction[]> => {
   const { clnStakingAccountAddress, clnTokenVault } = getCloneStakingAccounts()
   const clnTokenAccountAddress = getAssociatedTokenAddressSync(CLN_TOKEN_MINT, userPubkey, true)
 
   let ixns: TransactionInstruction[] = []
+
+  const stakingAccount = await getStakingAccount(userPubkey, connection)
+
+  if (!stakingAccount) {
+    ixns.push(
+      createInitializeUserInstruction({
+        payer: userPubkey,
+        userAccount: getStakingAccountAddress(userPubkey),
+      }, {
+        user: userPubkey,
+      }, CLONE_STAKING_PROGRAM_ID)
+    )
+  }
 
   ixns.push(
     createAddStakeInstruction(
