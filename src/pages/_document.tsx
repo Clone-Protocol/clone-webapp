@@ -17,6 +17,7 @@ export default function Document() {
           property="og:description"
           content="Designed to bring unprecedented flexibility to trading on Solana, clAssets are optimized to scale Solana DeFi."
         />
+        <meta httpEquiv="X-Frame-Options" content="deny" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <body>
