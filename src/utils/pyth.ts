@@ -4,6 +4,7 @@ import { PublicKey, Connection } from '@solana/web3.js';
 import { ASSETS, assetMapping } from '~/data/assets';
 import { Oracles, OracleSource } from 'clone-protocol-sdk/sdk/generated/clone'
 import { IS_DEV } from '~/data/networks';
+import { fromScale } from 'clone-protocol-sdk/sdk/src/clone'
 
 export type Network = "devnet" | "mainnet-beta" | "pythnet" | "testnet" | "pythtest";
 export type Range = "1H" | "1D" | "1W" | "1M" | "1Y"

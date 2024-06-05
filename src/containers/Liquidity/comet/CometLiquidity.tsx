@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { StyledTabs, CommonTab, LiquidityTab } from '~/components/Common/StyledTab'
+import { StyledTabs, LiquidityTab } from '~/components/Common/StyledTab'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'

@@ -51,16 +51,6 @@ const MoreMenu: React.FC<Props> = ({ anchorEl, onShowTokenFaucet, onClose }) => 
     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
   >
-    {/* {IS_DEV &&
-      <StyledMenuItem onClick={onShowTokenFaucet}>
-        <HoverStack direction='row' alignItems='center'>
-          <Box width='184px'>
-            <Box><Typography variant='p'>Token Faucet</Typography></Box>
-            <Box><Typography variant='p_sm' color='#8988a3'>Get started on Solana {NETWORK_NAME}</Typography></Box>
-          </Box>
-        </HoverStack>
-      </StyledMenuItem>
-    } */}
     <a href={DOCS_URL} target='_blank' rel="noreferrer">
       <StyledMenuItem>
         <HoverStack direction='row' alignItems='center'>

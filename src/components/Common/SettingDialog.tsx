@@ -5,12 +5,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { FadeTransition } from '~/components/Common/Dialog'
 import { CloseButton } from '~/components/Common/CommonButtons'
 import { IndicatorGreen, IndicatorRed, IndicatorStatus, IndicatorYellow } from './StatusIndicator';
-import IconShare from 'public/images/icon-share.svg'
 import { useSnackbar } from 'notistack';
 import { useAtom, useSetAtom } from 'jotai';
 import { priorityFee, priorityFeeIndex, rpcEndpoint, rpcEndpointIndex } from '~/features/globalAtom';
-import { CUSTOM_RPC_INDEX, DEFAULT_PRIORITY_FEE_INDEX, DEVNET_PUBLIC, DEV_RPCs, IS_DEV, MAINNET_PUBLIC, MAIN_RPCs, PRIORITY_FEES } from '~/data/networks';
-import Image from 'next/image';
+import { CUSTOM_RPC_INDEX, DEFAULT_PRIORITY_FEE_INDEX, MAIN_RPCs, PRIORITY_FEES } from '~/data/networks';
 import { measureRPCPings } from '~/utils/network_ping';
 
 const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () => void }) => {
@@ -23,7 +21,7 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
   const [showCustom, setShowCustom] = useState(false)
   const [customUrl, setCustomUrl] = useState('')
   const [errorCustomMsg, setErrorCustomMsg] = useState(false)
-  const RPCs = IS_DEV ? DEV_RPCs : MAIN_RPCs
+  const RPCs = MAIN_RPCs //IS_DEV ? DEV_RPCs : MAIN_RPCs
   const [arrPingTimes, setArrPingTimes] = useState<(number | undefined)[]>([])
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
@@ -47,14 +45,6 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
       setAtomRpcEndpoint(RPCs[rpcIndex].rpc_url)
 
       enqueueSnackbar(`Connected to ${RPCs[rpcIndex].rpc_name}`)
-    }
-  };
-
-  const goNetwork = () => {
-    if (IS_DEV) {
-      window.open(MAINNET_PUBLIC, '_blank')
-    } else {
-      window.open(DEVNET_PUBLIC, '_blank')
     }
   };
 
@@ -163,48 +153,46 @@ const SettingDialog = ({ open, handleClose }: { open: boolean, handleClose: () =
         <DialogContent sx={{ backgroundColor: '#0f0e14', border: '1px solid #414166', borderRadius: '10px', width: { xs: '100%', md: '375px' } }}>
           <BoxWrapper>
             <Typography variant='h3' fontWeight={500}>App Settings</Typography>
-            {!IS_DEV &&
-              <Box>
-                <Box my='20px'>
-                  <Box><Typography variant="p_lg">RPC Endpoint</Typography></Box>
-                  <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8988a3">At anytime, choose the fastest RPC for the most optimal experience!</Typography></Box>
-                  <CommonSelectBox value={atomRpcEndpointIndex} handleChange={handleChangeRpcEndpoint}>
-                    {RPCs.map((rpc, index) => (
-                      <SelectMenuItem key={index} value={index}>
-                        <Stack direction='row' alignItems='center' gap={1}>
-                          <Typography variant='p'>{rpc.rpc_name}</Typography>
-                          <StatusIndicator speed={arrPingTimes[index]} />
-                        </Stack>
-                      </SelectMenuItem>
-                    ))}
-                    <SelectMenuItem value={CUSTOM_RPC_INDEX}><Typography variant='p'>Custom</Typography></SelectMenuItem>
-                  </CommonSelectBox>
-                  {showCustom &&
-                    <Box>
-                      <StyledInput placeholder="Enter custom RPC URL" disableUnderline onChange={handleChangeCustomRPCUrl} sx={{ width: { xs: '100%', md: '322px' } }} />
-                      {errorCustomMsg && <Box><Typography variant='p' color='#ff0084'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
-                      <SaveBtn onClick={saveCustomURL}><Typography variant='p'>Save</Typography></SaveBtn>
-                    </Box>
-                  }
-                </Box>
 
-                <Box my='20px'>
-                  <Box><Typography variant="p_lg">Priority Fee Setting</Typography></Box>
-                  <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8894a3">Expedite your transaction with higher priority fees. Please visit Helius web page to <a href="https://docs.helius.dev/solana-rpc-nodes/alpha-priority-fee-api" target='_blank' style={{ color: '#fff', textDecoration: 'underline' }}>learn more.</a></Typography></Box>
-                  <CommonSelectBox value={atomPriorityFeeIndex} handleChange={handleChangePriorityFee}>
-                    {PRIORITY_FEES.map((fee, index) => (
-                      <SelectMenuItem key={index} value={index}>
-                        <Stack direction='row' alignItems='center' gap={1}>
-                          <Typography variant='p'>{fee.fee_name}</Typography>
-                          {index === DEFAULT_PRIORITY_FEE_INDEX && <Typography variant='p' color='#c4b5fd'>(Recommended)</Typography>}
-                          {/* {fee.fee > 0 && <Typography variant='p_sm' color='#c5c7d9'>{fee.fee} SOL</Typography>} */}
-                        </Stack>
-                      </SelectMenuItem>
-                    ))}
-                  </CommonSelectBox>
-                </Box>
+            <Box>
+              <Box my='20px'>
+                <Box><Typography variant="p_lg">RPC Endpoint</Typography></Box>
+                <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8988a3">At anytime, choose the fastest RPC for the most optimal experience!</Typography></Box>
+                <CommonSelectBox value={atomRpcEndpointIndex} handleChange={handleChangeRpcEndpoint}>
+                  {RPCs.map((rpc, index) => (
+                    <SelectMenuItem key={index} value={index}>
+                      <Stack direction='row' alignItems='center' gap={1}>
+                        <Typography variant='p'>{rpc.rpc_name}</Typography>
+                        <StatusIndicator speed={arrPingTimes[index]} />
+                      </Stack>
+                    </SelectMenuItem>
+                  ))}
+                  <SelectMenuItem value={CUSTOM_RPC_INDEX}><Typography variant='p'>Custom</Typography></SelectMenuItem>
+                </CommonSelectBox>
+                {showCustom &&
+                  <Box>
+                    <StyledInput placeholder="Enter custom RPC URL" disableUnderline onChange={handleChangeCustomRPCUrl} sx={{ width: { xs: '100%', md: '322px' } }} />
+                    {errorCustomMsg && <Box><Typography variant='p' color='#ff0084'>Custom RPC Connection Failed. Try different URL.</Typography></Box>}
+                    <SaveBtn onClick={saveCustomURL}><Typography variant='p'>Save</Typography></SaveBtn>
+                  </Box>
+                }
               </Box>
-            }
+
+              <Box my='20px'>
+                <Box><Typography variant="p_lg">Priority Fee Setting</Typography></Box>
+                <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8894a3">Expedite your transaction with higher priority fees. Please visit Helius web page to <a href="https://docs.helius.dev/solana-rpc-nodes/alpha-priority-fee-api" target='_blank' style={{ color: '#fff', textDecoration: 'underline' }}>learn more.</a></Typography></Box>
+                <CommonSelectBox value={atomPriorityFeeIndex} handleChange={handleChangePriorityFee}>
+                  {PRIORITY_FEES.map((fee, index) => (
+                    <SelectMenuItem key={index} value={index}>
+                      <Stack direction='row' alignItems='center' gap={1}>
+                        <Typography variant='p'>{fee.fee_name}</Typography>
+                        {index === DEFAULT_PRIORITY_FEE_INDEX && <Typography variant='p' color='#c4b5fd'>(Recommended)</Typography>}
+                      </Stack>
+                    </SelectMenuItem>
+                  ))}
+                </CommonSelectBox>
+              </Box>
+            </Box>
             {/* <Box my='20px'>
               <Box><Typography variant="p_lg">Network Switching</Typography></Box>
               <Box lineHeight={1} mb='7px'><Typography variant="p" color="#8988a3">Choose between Solana mainnet and devnet. Learn more <a href="#" target="_blank" style={{ textDecoration: 'underline', color: '#fff' }}>here</a>.</Typography></Box>

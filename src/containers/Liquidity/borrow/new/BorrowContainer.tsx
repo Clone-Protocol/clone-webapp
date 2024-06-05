@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
+import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { LoadingProgress } from '~/components/Common/Loading'

@@ -3,10 +3,9 @@ import { Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import MarketList from '~/containers/Markets/MarketList'
-import GetUSDiBadge from '~/components/Markets/GetUSDiBadge'
 import PortfolioBalance from '~/components/Markets/PortfolioBalance'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
+import { MAIN_RPCs } from '~/data/networks'
 import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import { fetchAssets } from '~/features/Markets/Assets.query'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
@@ -25,7 +24,7 @@ export const getStaticProps = (async () => {
 
   if (IS_NOT_LOCAL_DEVELOPMENT) {
     console.log('prefetch')
-    await queryClient.prefetchQuery({ queryKey: ['assets'], queryFn: () => fetchAssets({ setShowPythBanner: () => { }, mainCloneClient: null, networkEndpoint: IS_DEV ? DEV_RPCs[0].rpc_url : MAIN_RPCs[0].rpc_url }) })
+    await queryClient.prefetchQuery({ queryKey: ['assets'], queryFn: () => fetchAssets({ setShowPythBanner: () => { }, mainCloneClient: null, networkEndpoint: MAIN_RPCs[0].rpc_url }) })
   }
 
   return {
@@ -81,11 +80,6 @@ const Home = ({ dehydratedState }: InferGetStaticPropsType<typeof getStaticProps
               <PortfolioBalance />
 
               <Divider />
-              {IS_DEV &&
-                <Box mb='30px'>
-                  <GetUSDiBadge />
-                </Box>
-              }
             </Box>
           }
           <HydrationBoundary state={dehydratedState}>

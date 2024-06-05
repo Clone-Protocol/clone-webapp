@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import { Handler } from '@netlify/functions'
-import { IS_DEV } from '~/data/networks'
 
 export const handler: Handler = async (event, context) => {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
@@ -8,7 +7,7 @@ export const handler: Handler = async (event, context) => {
     const { data, error } = await supabase
       .from('notices')
       .select()
-      .eq('channel', IS_DEV ? 'markets' : 'markets-main')
+      .eq('channel', 'markets-main')
       .eq('show', true)
 
     return {

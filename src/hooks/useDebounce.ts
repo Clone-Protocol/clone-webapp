@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const useDebounce = (callback: (newData: string) => void, term: number) => {
 	const timer = useRef<ReturnType<typeof setTimeout>>();

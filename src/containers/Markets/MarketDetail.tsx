@@ -9,9 +9,8 @@ import { formatDollarAmount, formatLocaleAmount } from '~/utils/numbers'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useUserBalanceQuery } from '~/features/Portfolio/UserBalance.query'
 import { useEffect, useState } from 'react'
-import { ON_USD, RootMarketsDir } from '~/utils/constants'
+import { ON_USD } from '~/utils/constants'
 import { DEFAULT_ALL_INDEX } from '~/features/Portfolio/filterAtom'
-import { GoBackIcon } from '~/components/Common/SvgIcons'
 import { useRouter } from 'next/router'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 
@@ -65,9 +64,6 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 		<>
 			{asset ? (
 				<Stack mb={2} direction="column" pl={isMobileOnSize ? 0 : 5} pt={isMobileOnSize ? 5 : 1} pb={1} maxWidth={isMobileOnSize ? '100%' : '750px'} px={isMobileOnSize ? 3 : 0}>
-					{/* <GoBackButton onClick={() => router.push(`${RootMarketsDir}`)}>
-						<GoBackIcon /><Typography variant='p'>clAssets</Typography>
-					</GoBackButton> */}
 					<Box>
 						<Box display="inline-flex" alignItems="center">
 							<Image src={asset.tickerIcon} width={30} height={30} alt={asset.tickerSymbol} />
@@ -155,17 +151,6 @@ const StyledDivider = styled(Divider)`
 	margin-bottom: 12px;
 	margin-top: 12px;
 	height: 1px;
-`
-const GoBackButton = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 7px;
-	margin-bottom: 15px;
-  color: ${(props) => props.theme.basis.textRaven};
-  cursor: pointer;
-  &:hover {
-    color: #fff;
-  }
 `
 
 export default withSuspense(MarketDetail, <Box mt='10px'><LoadingSkeleton /></Box>)

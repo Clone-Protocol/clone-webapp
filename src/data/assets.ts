@@ -1,6 +1,5 @@
 import { PublicKey } from "@solana/web3.js"
 import { ON_USD, RootLiquidityDir, RootMarketsDir } from "~/utils/constants"
-import { IS_DEV } from "./networks"
 
 export enum Collateral {
     onUSD,
@@ -193,10 +192,10 @@ export const collateralMapping = (index: number) => {
     let collateralType: number
     switch (index) {
         case Collateral.onUSD:
-            collateralName = IS_DEV ? 'Clone USD' : 'USD Coin'
+            collateralName = 'USD Coin'
             collateralType = Collateral.onUSD
             collateralSymbol = ON_USD
-            collateralIcon = IS_DEV ? '/images/assets/on-usd.svg' : '/images/assets/usdc.svg'
+            collateralIcon = '/images/assets/usdc.svg'
             break
         case Collateral.mockUSDC:
             collateralName = 'USD Coin'

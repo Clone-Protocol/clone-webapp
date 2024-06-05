@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { TimeTabs, TimeTab, FilterTimeMap, FilterTime } from '~/components/Charts/TimeTabs'
 import LineChartAlt from '~/components/Charts/LineChartAlt'
@@ -84,15 +84,5 @@ const Chart = ({ pythSymbol }: { pythSymbol: string }) => {
       </Box> : <></>
   )
 }
-
-const BlankLoadingBox = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 315px;
-  border-radius: 20px;
-  background-color: #16141b;
-`
 
 export default Chart

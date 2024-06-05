@@ -13,7 +13,7 @@ import { useAtomValue } from 'jotai'
 import { rpcEndpoint } from '~/features/globalAtom'
 
 const ClientWalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
-	const network = WalletAdapterNetwork.Devnet //IS_DEV ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet
+	const network = WalletAdapterNetwork.Mainnet //IS_DEV ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet
 	const rpcUrl = useAtomValue(rpcEndpoint)
 
 	// MEMO: it can connect custom RPC endpoint

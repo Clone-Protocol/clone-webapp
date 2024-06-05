@@ -1,5 +1,4 @@
 'use client'
-import React, { useEffect, useState } from 'react'
 import QueryProvider from '~/hocs/QueryClient'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -10,23 +9,19 @@ import ClientWalletProvider from '~/hocs/ClientWalletProvider'
 import { DataLoadingIndicatorProvider } from '~/hocs/DataLoadingIndicatorProvider'
 import { Provider as JotaiProvider } from 'jotai'
 import { TransactionStateProvider } from '~/hocs/TransactionStateProvider'
-import { IS_COMPLETE_INIT } from '~/data/localstorage'
-import useLocalStorage from '~/hooks/useLocalStorage'
-import dynamic from 'next/dynamic'
 import ErrorBoundary from '~/components/ErrorBoundary'
-import { IS_DEV } from '~/data/networks'
 import { styled } from '@mui/material/styles'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [isCompleteInit, _] = useLocalStorage(IS_COMPLETE_INIT, false)
-  const [isOpenInit, setIsOpenInit] = useState(false)
-  const InitEnterScreen = dynamic(() => import('~/components/Common/InitEnterScreen'), { ssr: false })
+  // const [isCompleteInit, _] = useLocalStorage(IS_COMPLETE_INIT, false)
+  // const [isOpenInit, setIsOpenInit] = useState(false)
+  // const InitEnterScreen = dynamic(() => import('~/components/Common/InitEnterScreen'), { ssr: false })
 
-  useEffect(() => {
-    if (!isCompleteInit) {
-      setIsOpenInit(true)
-    }
-  }, [isCompleteInit])
+  // useEffect(() => {
+  //   if (!isCompleteInit) {
+  //     setIsOpenInit(true)
+  //   }
+  // }, [isCompleteInit])
 
   return (
     <QueryProvider>
@@ -49,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       }}>
                       {children}
                     </Box>
-                    {IS_DEV && isOpenInit && <InitEnterScreen onClose={() => setIsOpenInit(false)} />}
+                    {/* {IS_DEV && isOpenInit && <InitEnterScreen onClose={() => setIsOpenInit(false)} />} */}
                   </Box>
                 </ErrorBoundary>
               </DataLoadingIndicatorProvider>

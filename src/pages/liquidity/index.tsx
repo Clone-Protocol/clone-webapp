@@ -1,11 +1,10 @@
 'use client'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
-// import GetUSDiBadge from '~/components/Liquidity/overview/GetUSDiBadge'
 import MainChart from '~/containers/Liquidity/overview/MainChart'
 import AssetList from '~/containers/Liquidity/overview/AssetList'
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react'
-import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
+import { MAIN_RPCs } from '~/data/networks'
 import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { fetchAssets } from '~/features/Liquidity/overview/Assets.query'
@@ -21,7 +20,7 @@ export const getStaticProps = (async () => {
   if (IS_NOT_LOCAL_DEVELOPMENT) {
     console.log('prefetch')
     await queryClient.prefetchQuery({ queryKey: ['totalVolume'], queryFn: () => fetchTotalVolume({ timeframe: '30d' }) })
-    await queryClient.prefetchQuery({ queryKey: ['assets'], queryFn: () => fetchAssets({ setShowPythBanner: () => { }, mainCloneClient: null, networkEndpoint: IS_DEV ? DEV_RPCs[0].rpc_url : MAIN_RPCs[0].rpc_url }) })
+    await queryClient.prefetchQuery({ queryKey: ['assets'], queryFn: () => fetchAssets({ setShowPythBanner: () => { }, mainCloneClient: null, networkEndpoint: MAIN_RPCs[0].rpc_url }) })
   }
 
   return {

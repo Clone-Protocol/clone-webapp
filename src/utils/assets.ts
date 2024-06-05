@@ -3,7 +3,7 @@ import { Pools, Status } from "clone-protocol-sdk/sdk/generated/clone";
 import { MAX_POOLS_FOR_SHOW, assetMapping } from "~/data/assets";
 import { PythHttpClient, getPythProgramKeyForCluster } from "@pythnetwork/client"
 import { Connection, PublicKey } from "@solana/web3.js"
-import { fetchBorrowStats, fetchOHLCV, BorrowStats, fetchPoolApy, fetchUserApy, fetchPoolAnalytics } from "./fetch_netlify";
+import { fetchBorrowStats, BorrowStats, fetchPoolApy, fetchUserApy, fetchPoolAnalytics } from "./fetch_netlify";
 import { IS_DEV } from "~/data/networks";
 
 export type Interval = 'day' | 'hour';

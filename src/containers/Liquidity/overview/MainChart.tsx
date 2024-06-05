@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount } from '~/utils/numbers'
 // import LineChartAlt from '~/components/Charts/LineChartAlt'

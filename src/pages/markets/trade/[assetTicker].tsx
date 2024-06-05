@@ -9,10 +9,9 @@ import { ASSETS, AssetTickers, DEFAULT_ASSET_ID } from '~/data/assets'
 import { DehydratedState, HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import { IS_NOT_LOCAL_DEVELOPMENT } from '~/utils/constants'
 import { fetchMarketDetail } from '~/features/Markets/MarketDetail.query'
-import { DEV_RPCs, IS_DEV, MAIN_RPCs } from '~/data/networks'
+import { MAIN_RPCs } from '~/data/networks'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import ChartSwitch from '~/components/Markets/TradingBox/ChartSwitch';
-import { LoadingSkeleton } from '~/components/Common/Loading';
 import { ShowChartBtn } from '~/components/Common/CommonButtons';
 
 //SSR
@@ -37,7 +36,7 @@ export const getStaticProps = (async (context: any) => {
 
   if (IS_NOT_LOCAL_DEVELOPMENT) {
     console.log('prefetch')
-    await queryClient.prefetchQuery({ queryKey: ['marketDetail', assetId], queryFn: () => fetchMarketDetail({ index: assetId, mainCloneClient: null, networkEndpoint: IS_DEV ? DEV_RPCs[0].rpc_url : MAIN_RPCs[0].rpc_url }) })
+    await queryClient.prefetchQuery({ queryKey: ['marketDetail', assetId], queryFn: () => fetchMarketDetail({ index: assetId, mainCloneClient: null, networkEndpoint: MAIN_RPCs[0].rpc_url }) })
   }
 
   return {
