@@ -19,6 +19,7 @@ import BenefitLevel from '../Staking/BenefitLevel';
 import Image from 'next/image';
 import ArrowTopIcon from 'public/images/arrow-top-right.svg'
 import { LevelInfo } from '~/features/Staking/StakingInfo.query';
+import DiscordAuthButton from '../Account/DiscordAuthButton';
 
 const WalletSelectBox = ({ show, levelData, onHide }: { show: boolean, levelData: LevelInfo, onHide: () => void }) => {
   const { enqueueSnackbar } = useSnackbar()
@@ -86,6 +87,11 @@ const WalletSelectBox = ({ show, levelData, onHide }: { show: boolean, levelData
       <AssetBox>
         <Typography variant='h3'>${formatLocaleAmount(balance?.onusdVal)}</Typography> <Typography variant='p_lg'>{ON_USD}</Typography>
       </AssetBox>
+      {publicKey &&
+        <Box display='flex' justifyContent='center' my='16px'>
+          <DiscordAuthButton />
+        </Box>
+      }
       <Box padding="18px 25px" mb='5px'>
         <BenefitLevel levelData={levelData} />
         <GoStakingButton><Typography variant='p_sm'>Go to Staking</Typography> <Image src={ArrowTopIcon} alt='arrow' /></GoStakingButton>

@@ -31,7 +31,7 @@
     "@netlify/plugin-nextjs": "^5.3.2",
     "@next/bundle-analyzer": "^13.4.6",
     "@pythnetwork/client": "^2.19.0",
-    "@sentry/nextjs": "^7.91.0",
+    "@sentry/nextjs": "^8.8.0",
     "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.4.0",
     "@solana/wallet-adapter-base": "^0.9.23",
@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.7.2",
+    "@pythnetwork/pyth-solana-receiver": "^0.8.0",
     "@types/node": "^14.18.52",
     "@types/react": "^18.2.45",
     "@types/react-copy-to-clipboard": "^5.0.2",
@@ -79,6 +80,7 @@
     "husky": "^8.0.2",
     "lint-staged": "^12.5.0",
     "numbro": "^2.3.2",
+    "rpc-websockets": "7.0.0",
     "prettier": "^2.8.8",
     "ts-loader": "^9.3.1",
     "typescript": "^5.3.3"

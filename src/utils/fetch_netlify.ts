@@ -145,6 +145,13 @@ export const fetchLinkReferralCode = async (userAddress: string, referralCode: s
     return response.data
 }
 
+export const fetchLinkDiscordAccess = async (userAddress: string, signature: string, accessToken: string) => {
+    let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/link-discord-access`;
+    url += `?userAddress=${userAddress}&signature=${signature}&accessToken=${accessToken}`;
+    const response = await axios.get(url)
+    return response.data
+}
+
 export const fetchGeoBlock = async (): Promise<{ result: boolean, whitelistAddr?: string[] }> => {
     const response = await axios.post(`/api/route`)
     return response.data

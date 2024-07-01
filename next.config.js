@@ -1,3 +1,5 @@
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
+
 const cspHeader = `
     // default-src 'self';
     // script-src 'self' 'unsafe-eval' 'unsafe-inline';
@@ -20,6 +22,7 @@ const nextConfig = {
   experimental: {
     externalDir: true,
     appDir: true,
+    instrumentationHook: true,
   },
   typescript: {
     // !! WARN !!
@@ -52,6 +55,10 @@ const nextConfig = {
         },
       ],
     })
+
+    config.plugins.push(sentryWebpackPlugin({
+      applicationKey: "incept-sentry"
+    }))
 
     return config
   },
@@ -103,7 +110,7 @@ module.exports = withSentryConfig(
     transpileClientSDK: true,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    tunnelRoute: "/monitoring-tunnel",
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,

@@ -33,5 +33,7 @@ export const priorityFeeIndex = atom(DEFAULT_PRIORITY_FEE_INDEX)
 
 export const priorityFee = atom<FeeLevel>(PRIORITY_FEES[DEFAULT_PRIORITY_FEE_INDEX].fee_level)
 
+export const discordUsername = atom('')
+
 // for clone specific atoms
 export const cloneClient = atom<CloneClient | null>(null)
