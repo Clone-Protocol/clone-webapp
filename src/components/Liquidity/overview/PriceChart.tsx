@@ -5,12 +5,13 @@ import Image from "next/image"
 import LineChart from "~/components/Charts/LineChart"
 import { usePriceHistoryQuery } from "~/features/Chart/PriceByAsset.query"
 import withSuspense from "~/hocs/withSuspense"
-import { LoadingProgress, LoadingSkeleton } from "~/components/Common/Loading"
+import { LoadingSkeleton } from "~/components/Common/Loading"
 import AnalyticsIcon from 'public/images/liquidity/analytics-sketch.svg'
 import { PublicKey } from "@solana/web3.js"
 import { formatLocaleAmount } from "~/utils/numbers"
 
 interface Props {
+  assetIndex: number
   assetData: PositionInfo
   publicKey: PublicKey
   isOraclePrice?: boolean
@@ -28,9 +29,10 @@ interface PositionInfo {
   centerPrice?: number
 }
 
-const PriceChart: React.FC<Props> = ({ assetData, publicKey, isOraclePrice = false, priceTitle }) => {
+const PriceChart: React.FC<Props> = ({ assetIndex, assetData, publicKey, isOraclePrice = false, priceTitle }) => {
   const { data: priceHistory } = usePriceHistoryQuery({
     timeframe: "24h",
+    assetIndex,
     pythSymbol: assetData?.pythSymbol,
     isOraclePrice,
     refetchOnMount: true,

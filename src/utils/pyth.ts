@@ -4,7 +4,8 @@ import { PublicKey, Connection } from '@solana/web3.js';
 import { ASSETS, assetMapping } from '~/data/assets';
 import { Oracles, OracleSource } from 'clone-protocol-sdk/sdk/generated/clone'
 import { IS_DEV } from '~/data/networks';
-import { fromScale } from 'clone-protocol-sdk/sdk/src/clone'
+import { PythSolanaReceiver } from "@pythnetwork/pyth-solana-receiver";
+import * as anchor from "@coral-xyz/anchor"
 
 export type Network = "devnet" | "mainnet-beta" | "pythnet" | "testnet" | "pythtest";
 export type Range = "1H" | "1D" | "1W" | "1M" | "1Y"
@@ -51,19 +52,44 @@ export const getPythOraclePrices = async (
 // Fetches the latest oracle prices from Pyth ordered by the order of the oracles in the program,
 // If the price isn't found in the pyth data, or the source is not pyth, it will return the last
 // saved oracle price from the onchain account.
-export const fetchPythOraclePrices = async (connection: Connection, oracles: Oracles): Promise<number[]> => {
-    const cluster = IS_DEV ? "devnet" : "mainnet-beta";
-    const pythClient = new PythHttpClient(connection, new PublicKey(getPythProgramKeyForCluster(cluster)));
-    const pythData = await pythClient.getData();
+export const fetchPythOraclePrices = async (
+    provider: anchor.AnchorProvider,
+    oracles: Oracles
+): Promise<number[]> => {
+    // const wallet = new anchor.Wallet(Keypair.generate());
+    const connection = provider.connection
+    const wallet = provider.wallet
+    const client = new PythHttpClient(
+        connection,
+        getPythProgramKeyForCluster("mainnet-beta")
+    );
+    const clientV2 = new PythSolanaReceiver({ connection, wallet });
+    const priceAccounts = oracles.oracles.map((acc, index) => {
+        return { source: acc.source, address: acc.address, index };
+    });
+    let priceData: number[] = oracles.oracles.map((o) => 0);
+    const v1PriceAccounts = priceAccounts.filter(
+        (o) => o.source === OracleSource.PYTH
+    );
+    const v2PriceAccounts = priceAccounts.filter(
+        (o) => o.source === OracleSource.PYTHV2
+    );
+    const priceDataV1 = await client.getAssetPricesFromAccounts(
+        v1PriceAccounts.map((o) => o.address)
+    );
 
-    const pythOraclePrices = oracles.oracles.map((oracle) => {
-        if (oracle.source === OracleSource.PYTH) {
-            const feedAddress = oracle.address.toString()
-            const product = pythData.products.find((p) => p.price_account === feedAddress)!
-            const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
-            return rescaleFactor * (pythData.productPrice.get(product.symbol)?.aggregate.price ?? fromScale(oracle.price, oracle.expo))
-        }
-        return fromScale(oracle.price, oracle.expo)
-    })
-    return pythOraclePrices;
-}
+    for (const [i, acc] of v1PriceAccounts.entries()) {
+        const priceAccount = priceDataV1[i];
+        const scale = Math.pow(10, oracles.oracles[acc.index].rescaleFactor);
+        priceData[acc.index] =
+            Number(priceAccount?.aggregate.price) * scale;
+    }
+    for (const acc of v2PriceAccounts) {
+        const priceAccount = await clientV2.fetchPriceUpdateAccount(acc.address);
+        const scale = Math.pow(10, oracles.oracles[acc.index].rescaleFactor);
+        priceData[acc.index] =
+            Number(priceAccount?.priceMessage.price!) *
+            Math.pow(10, priceAccount?.priceMessage.exponent!) * scale;
+    }
+    return priceData;
+};

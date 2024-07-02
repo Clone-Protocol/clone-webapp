@@ -12,6 +12,62 @@ import { calculatePoolAmounts } from 'clone-protocol-sdk/sdk/src/utils'
 import { AggregatedStats, getAggregatedPoolStats } from '~/utils/assets'
 import { fetchUserApy } from '~/utils/fetch_netlify'
 
+export const fetchPositionsApy = async ({ program, userPubKey }: { program: CloneClient, userPubKey: PublicKey | null }) => {
+	if (!userPubKey) return
+	console.log('fetchTotalApy :: CometInfo.query')
+
+	let totalApy = 0
+
+	const [userAccountData, poolsData] = await Promise.allSettled([
+		program.getUserAccount(), program.getPools()
+	]);
+
+	const apys = []
+	if (userAccountData.status === "fulfilled" && poolsData.status === "fulfilled") {
+		const comet = userAccountData.value.comet
+		const poolStats = await getAggregatedPoolStats(poolsData.value, userPubKey)
+		for (let i = 0; i < comet.positions.length; i++) {
+			const position = comet.positions[i];
+			const poolIndex = Number(position.poolIndex)
+			const apy = poolStats[poolIndex].apy
+			apys.push(apy)
+			totalApy += apy
+		}
+	}
+
+	const result = {
+		totalApy,
+		apys
+	}
+
+	return result
+}
+
+export function usePositionsApyQuery({ userPubKey, refetchOnMount, enabled = true }: GetPoolsProps) {
+	const wallet = useAnchorWallet()
+	const { getCloneApp } = useClone()
+
+	if (wallet) {
+		return useQuery({
+			queryKey: ['positionsApy', wallet, userPubKey],
+			queryFn: async () => fetchPositionsApy({ program: await getCloneApp(wallet), userPubKey }),
+			refetchOnMount,
+			refetchOnWindowFocus: false,
+			enabled,
+		})
+	} else {
+		return useQuery({
+			queryKey: ['positionsApy'],
+			queryFn: () => {
+				return {
+					totalApy: 0,
+					apys: []
+				}
+			}
+		})
+	}
+}
+
 export const fetchInfos = async ({ program, userPubKey }: { program: CloneClient, userPubKey: PublicKey | null }) => {
 	if (!userPubKey) return
 	console.log('fetchInfos :: CometInfo.query')
@@ -20,7 +76,6 @@ export const fetchInfos = async ({ program, userPubKey }: { program: CloneClient
 	let totalCollValue = 0
 	let totalLiquidity = 0
 	let hasNoCollateral = false
-	let totalApy = 0
 	let collaterals: Collateral[] = [];
 	let positions: LiquidityPosition[] = [];
 
@@ -29,12 +84,9 @@ export const fetchInfos = async ({ program, userPubKey }: { program: CloneClient
 	]);
 
 	if (userAccountData.status === "fulfilled" && poolsData.status === "fulfilled" && oraclesData.status === "fulfilled") {
-		const poolStats = await getAggregatedPoolStats(poolsData.value, userPubKey)
-		totalApy = (await fetchUserApy(userPubKey.toString(), userAccountData.value.comet.positions.map(p => p.poolIndex))).apy
-
 		const comet = userAccountData.value.comet
 		collaterals = extractCollateralInfo(program, comet)
-		positions = extractLiquidityPositionsInfo(program, comet, poolsData.value, oraclesData.value, collaterals[0], poolStats)
+		positions = extractLiquidityPositionsInfo(program, comet, poolsData.value, oraclesData.value)
 
 		collaterals.forEach(c => {
 			totalCollValue += c.collAmount * c.collAmountDollarPrice
@@ -52,7 +104,6 @@ export const fetchInfos = async ({ program, userPubKey }: { program: CloneClient
 		totalLiquidity,
 		collaterals,
 		hasNoCollateral,
-		totalApy,
 		positions
 	}
 
@@ -63,7 +114,6 @@ export interface CometInfoStatus {
 	healthScore: number
 	totalCollValue: number
 	totalLiquidity: number
-	totalApy: number
 	collaterals: Collateral[]
 	hasNoCollateral: boolean
 	positions: LiquidityPosition[]
@@ -109,11 +159,11 @@ export interface LiquidityPosition {
 	ildValue: number
 	ildDollarPrice: number
 	rewards: number
-	apy: number
+	apy?: number
 	status: Status
 }
 
-const extractLiquidityPositionsInfo = (program: CloneClient, comet: Comet, pools: Pools, oracles: Oracles, coll: Collateral, poolStats: AggregatedStats[]): LiquidityPosition[] => {
+const extractLiquidityPositionsInfo = (program: CloneClient, comet: Comet, pools: Pools, oracles: Oracles): LiquidityPosition[] => {
 	const result: LiquidityPosition[] = [];
 	const collateral = program.clone.collateral;
 	const ildInfo = getILD(collateral, pools, oracles, comet);
@@ -147,7 +197,6 @@ const extractLiquidityPositionsInfo = (program: CloneClient, comet: Comet, pools
 		const liquidityDollarPrice = fromScale(position.committedCollateralLiquidity, program.clone.collateral.scale) * 2
 		// ildValue is summmed both with onAssetILD and collateralILD
 		const ildDollarPrice = (Math.max(0, ildInfo[i].onAssetILD) * ildInfo[i].oraclePrice) + (Math.max(0, ildInfo[i].collateralILD))
-		const apy = poolStats[poolIndex].apy
 
 		result.push(
 			{
@@ -160,7 +209,6 @@ const extractLiquidityPositionsInfo = (program: CloneClient, comet: Comet, pools
 				poolIndex,
 				ildDollarPrice,
 				rewards,
-				apy,
 				status
 			} as LiquidityPosition
 		)
@@ -213,11 +261,11 @@ export const fetchInitializeCometDetail = async ({ program, index }: { program: 
 		fromScale(oracle.price, oracle.expo) / fromScale(usdcOracle.price, usdcOracle.expo),
 		program.clone.collateral
 	)
-	const price = poolCollateral / poolOnasset
+	const { tickerIcon, tickerName, tickerSymbol, pythSymbol, scalingFactor } = assetMapping(index)
+	const price = (poolCollateral / poolOnasset) * scalingFactor
 	const tightRange = price * 0.1
 	const maxRange = 2 * price
 	const centerPrice = price
-	const { tickerIcon, tickerName, tickerSymbol, pythSymbol } = assetMapping(index)
 
 	return {
 		tickerIcon: tickerIcon,

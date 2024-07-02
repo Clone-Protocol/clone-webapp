@@ -10,6 +10,7 @@ import { fetchBalance } from '~/features/Liquidity/borrow/Balance.query'
 import { calculatePoolAmounts } from 'clone-protocol-sdk/sdk/src/utils'
 import { Comet, Pools, Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import { fetchPythOraclePrices } from '~/utils/pyth'
+import { AnchorProvider } from '@coral-xyz/anchor'
 
 export const fetchLiquidityDetail = async ({
 	program,
@@ -31,7 +32,7 @@ export const fetchLiquidityDetail = async ({
 	if (poolsData.status === 'rejected' || oraclesData.status === 'rejected' || userAccountData.status === 'rejected')
 		return;
 
-	const pythOraclePrices = await fetchPythOraclePrices(program.provider.connection, oraclesData.value)
+	const pythOraclePrices = await fetchPythOraclePrices(program.provider as AnchorProvider, oraclesData.value)
 
 	const pools = poolsData.value
 	const pool = pools.pools[index]
@@ -39,7 +40,7 @@ export const fetchLiquidityDetail = async ({
 
 	const assetId = index
 	const { tickerIcon, tickerName, tickerSymbol } = assetMapping(assetId)
-	const oraclePrice = pythOraclePrices[index];
+	const oraclePrice = pythOraclePrices[pool.assetInfo.oracleInfoIndex];
 	const status = pool.status
 
 	const { poolCollateral, poolOnasset } = calculatePoolAmounts(

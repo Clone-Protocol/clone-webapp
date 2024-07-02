@@ -3,7 +3,7 @@ import { PublicKey } from "@solana/web3.js"
 import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
 import { useClone } from "~/hooks/useClone"
 import { REFETCH_CYCLE } from "~/components/Common/DataLoadingIndicator"
-import { getAggregatedPoolStats, getiAssetInfos } from '~/utils/assets';
+import { getiAssetInfos } from '~/utils/assets';
 import { AssetType, assetMapping } from "~/data/assets"
 import { useAnchorWallet } from "@solana/wallet-adapter-react"
 
@@ -26,10 +26,8 @@ export const fetchPools = async ({
   if (poolsData.status === "rejected" || userAccountData.status === "rejected") {
     throw new Error("Couldn't fetch data!")
   }
-  const pools = poolsData.value
   const comet = userAccountData.value.comet
   const assetInfos = await getiAssetInfos(program.provider.connection, program)
-  const poolStats = await getAggregatedPoolStats(pools, userPubKey)
   const currentPoolSet = new Set()
 
   for (let i = 0; i < Number(comet.positions.length); i++) {
@@ -43,16 +41,12 @@ export const fetchPools = async ({
       continue
     }
     const { tickerIcon, tickerSymbol, tickerName, assetType } = assetMapping(asset.poolIndex)
-    const stats = poolStats[asset.poolIndex]
     result.push({
       id: asset.poolIndex,
       assetType,
       tickerName,
       tickerSymbol,
       tickerIcon,
-      totalLiquidity: asset.liquidity,
-      volume24H: stats.volumeUSD,
-      averageAPY: stats.apy,
       isEnabled: true,
     })
   }
@@ -70,11 +64,10 @@ interface GetPoolsProps {
 
 export interface PoolList {
   id: number
+  assetType: number
+  tickerName: string
   tickerSymbol: string
   tickerIcon: string
-  totalLiquidity: number
-  volume24H: number
-  averageAPY: number
   isEnabled: boolean
 }
 

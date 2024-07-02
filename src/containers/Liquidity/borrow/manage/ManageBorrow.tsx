@@ -83,7 +83,7 @@ const ManageBorrow = ({ assetId }: { assetId: string }) => {
         {showChart &&
           <RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} py={isMobileOnSize ? '0px' : '8px'} zIndex={99}>
             <StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
-              <PriceChart assetData={borrowDetail} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
+              <PriceChart assetIndex={borrowDetail.poolIndex} assetData={borrowDetail} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
               <PositionAnalytics price={borrowDetail.price} tickerSymbol={borrowDetail.tickerSymbol} />
             </StickyBox>
           </RightBoxWrapper>

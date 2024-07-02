@@ -164,7 +164,7 @@ const IldEdit = ({ positionIndex }: { positionIndex: number }) => {
                   tickerSymbol={positionInfo.tickerSymbol}
                   rightHeaderTitle={'Wallet Balance'}
                   value={field.value}
-                  valueDollarPrice={field.value}
+                  valueDollarPrice={field.value * positionInfo.oraclePrice}
                   inputTitle={`${positionInfo.tickerSymbol} ILD Payment`}
                   inputTitleColor="#fff"
                   balance={balanceOnAsset}

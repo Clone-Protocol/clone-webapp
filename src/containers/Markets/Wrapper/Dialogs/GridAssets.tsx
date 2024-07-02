@@ -1,27 +1,23 @@
 import { Box, Typography } from '@mui/material'
 import { GridColDef, GridRenderCellParams, GridRowParams } from '@mui/x-data-grid'
-// import { Grid } from '~/components/Liquidity/comet/DataGrid'
-import { Grid } from '~/components/Markets/TradingBox/Dialogs/DataGrid'
-import withSuspense from '~/hocs/withSuspense'
+import { Grid } from '~/components/Liquidity/comet/DataGrid'
 import Image from 'next/image'
-import { LoadingProgress } from '~/components/Common/Loading'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { useAssetsQuery } from '~/features/Wrapper/Assets.query'
+import { AssetList } from '~/features/Wrapper/Assets.query'
 
 interface Props {
+	assets: AssetList[] | null | undefined
 	onChoose: (id: number) => void
-	searchTerm?: string
 }
 
-const GridAssets: React.FC<Props> = ({ onChoose, searchTerm }) => {
-	const { publicKey } = useWallet()
+const GridAssets: React.FC<Props> = ({ assets, onChoose }) => {
+	// const { publicKey } = useWallet()
 
-	const { data: assets } = useAssetsQuery({
-		userPubKey: publicKey,
-		refetchOnMount: true,
-		searchTerm: searchTerm || '',
-		enabled: publicKey != null
-	})
+	// const { data: assets } = useAssetsQuery({
+	// 	userPubKey: publicKey,
+	// 	refetchOnMount: true,
+	// 	searchTerm: searchTerm || '',
+	// 	enabled: publicKey != null
+	// })
 
 	const handleChoose = (params: GridRowParams) => {
 		const id = params.row.id
@@ -61,4 +57,4 @@ let columns: GridColDef[] = [
 
 columns = columns.map((col) => Object.assign(col, { hideSortIcons: true, filterable: false }))
 
-export default withSuspense(GridAssets, <LoadingProgress />)
+export default GridAssets

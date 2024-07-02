@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import InfoIcon from 'public/images/info-icon.svg'
 import IconAlertComet from 'public/images/alert-comet.svg'
+import { InfoOutlineIcon } from './SvgIcons'
 
 export const InfoMsg = ({ children }: { children?: React.ReactNode }) => {
   return (
@@ -46,3 +47,12 @@ const WarningStack = styled(InfoStack)`
 `
 
 export default WarningMsg
+
+export const InfoMsg2 = ({ children }: { children?: React.ReactNode }) => {
+  return (
+    <InfoStack direction='row' textAlign='left'>
+      <InfoOutlineIcon />
+      <Typography variant='p' maxWidth='309px'>{children}</Typography>
+    </InfoStack>
+  )
+}

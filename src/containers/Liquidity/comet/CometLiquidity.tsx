@@ -1,27 +1,51 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { StyledTabs, LiquidityTab } from '~/components/Common/StyledTab'
-import { useWallet } from '@solana/wallet-adapter-react'
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
-import { useCometInfoQuery } from '~/features/Liquidity/comet/CometInfo.query'
+import { fetchPositionsApy, useCometInfoQuery } from '~/features/Liquidity/comet/CometInfo.query'
 import Collaterals from './Collaterals'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 import LiquidityPositions from './LiquidityPositions'
 import CometLiquidityStatus from './CometLiquidityStatus'
 import Image from 'next/image'
-
-// export const TAB_COLLATERAL = 0
-// export const TAB_POSITIONS = 1
+import { useEffect, useState } from 'react'
+import { useClone } from '~/hooks/useClone'
 
 const CometLiquidity = () => {
-  // const [tab, setTab] = useState(TAB_COLLATERAL)
   const { publicKey } = useWallet()
   const { data: infos, refetch } = useCometInfoQuery({
     userPubKey: publicKey,
     refetchOnMount: "always",
     enabled: publicKey != null
   })
+
+  const [totalApy, setTotalApy] = useState<number | undefined>()
+  const [positionsApys, setPositionsApys] = useState<number[]>([])
+  const wallet = useAnchorWallet()
+  const { getCloneApp } = useClone()
+
+  useEffect(() => {
+    const fetchApy = async () => {
+      if (publicKey && infos?.positions && infos.positions.length > 0) {
+        try {
+          const program = await getCloneApp(wallet)
+          const apyInfo = await fetchPositionsApy({ program, userPubKey: publicKey })
+
+          if (apyInfo && apyInfo.totalApy > 0) {
+            setTotalApy(apyInfo.totalApy)
+            setPositionsApys(apyInfo.apys)
+          }
+        } catch (err) {
+          console.error('e', err)
+        }
+      } else {
+        console.log('no positions')
+      }
+    }
+    fetchApy()
+  }, [publicKey])
 
   return (
     <div>
@@ -38,7 +62,7 @@ const CometLiquidity = () => {
         </Stack>
       </Box>
 
-      <CometLiquidityStatus infos={infos} />
+      <CometLiquidityStatus infos={infos} totalApy={totalApy} />
 
       <Box>
         <StyledTabs value={0} sx={{ maxWidth: '590px', marginTop: '12px' }}>
@@ -56,7 +80,7 @@ const CometLiquidity = () => {
         </StyledTabs>
 
         <PanelBox>
-          <LiquidityPositions hasNoCollateral={infos ? infos.hasNoCollateral : false} positions={infos?.positions || []} onRefetchData={() => refetch()} />
+          <LiquidityPositions hasNoCollateral={infos ? infos.hasNoCollateral : false} positions={infos?.positions || []} positionsApys={positionsApys} onRefetchData={() => refetch()} />
         </PanelBox>
       </Box>
     </div>

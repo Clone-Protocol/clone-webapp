@@ -2,7 +2,6 @@ import { PublicKey, TransactionInstruction } from '@solana/web3.js'
 import { useClone } from '~/hooks/useClone'
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { CloneClient, toScale } from 'clone-protocol-sdk/sdk/src/clone'
-import { getCollateralAccount } from '~/utils/token_accounts'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { funcNoWallet } from '~/features/baseQuery'
 import { TransactionStateType, useTransactionState } from "~/hooks/useTransactionState"
@@ -10,37 +9,43 @@ import { sendAndConfirm } from '~/utils/tx_helper';
 import { useAtomValue } from 'jotai'
 import { priorityFee } from '~/features/globalAtom'
 import { FeeLevel } from '~/data/networks'
+import { createAssociatedTokenAccountIdempotentInstruction, getAssociatedTokenAddressSync } from '@solana/spl-token'
 
 export const callEdit = async ({ program, userPubKey, setTxState, data, feeLevel, queryClient }: CallEditProps) => {
 	if (!userPubKey) throw new Error('no user public key')
 
 	// console.log('edit input data', data)
-
-	const collateralTokenAccountInfo = await getCollateralAccount(program)
+	const collateralTokenAccountAddress = getAssociatedTokenAddressSync(
+		program.clone.collateral.mint, userPubKey, true
+	)
 
 	const { collAmount, editType } = data
 	const oracles = await program.getOracles();
 
-	const ixnCalls: TransactionInstruction[] = [program.updatePricesInstruction(oracles)];
+	const ixns: TransactionInstruction[] = [program.updatePricesInstruction(oracles)];
 	if (editType === 0) {
-		ixnCalls.push(
+		ixns.push(
 			program.addCollateralToCometInstruction(
-				collateralTokenAccountInfo.address,
+				collateralTokenAccountAddress,
 				toScale(collAmount, program.clone.collateral.scale)
 			))
 	} else {
-		ixnCalls.push(
+		ixns.push(
+			createAssociatedTokenAccountIdempotentInstruction(
+				userPubKey,
+				collateralTokenAccountAddress,
+				userPubKey,
+				program.clone.collateral.mint
+			),
 			program.withdrawCollateralFromCometInstruction(
-				collateralTokenAccountInfo.address,
+				collateralTokenAccountAddress,
 				toScale(collAmount, program.clone.collateral.scale)
 			))
 	}
 
-	const ixns = await Promise.all(ixnCalls)
-
 	//socket handler
 	const subscriptionId = program.provider.connection.onAccountChange(
-		collateralTokenAccountInfo.address,
+		collateralTokenAccountAddress,
 		async (updatedAccountInfo) => {
 			console.log("Updated account info: ", updatedAccountInfo)
 
@@ -60,8 +65,6 @@ export const callEdit = async ({ program, userPubKey, setTxState, data, feeLevel
 	console.log('Starting web socket, subscription ID: ', subscriptionId);
 
 	await sendAndConfirm(program.provider, ixns, setTxState, feeLevel)
-
-	//
 
 	return {
 		result: true

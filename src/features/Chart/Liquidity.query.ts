@@ -10,6 +10,8 @@ import { useAtomValue } from "jotai"
 import { cloneClient, rpcEndpoint } from "../globalAtom"
 import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
 import { getCloneClient } from "../baseQuery"
+import { PublicKey } from "@solana/web3.js"
+import { AccountLayout, MintLayout } from "@solana/spl-token"
 
 export interface ChartElem {
   time: string
@@ -144,7 +146,7 @@ export const fetchCurrentTVL = async ({
   mainCloneClient: CloneClient
   networkEndpoint: string
 }) => {
-  let program
+  let program: CloneClient
   if (mainCloneClient) {
     program = mainCloneClient
   } else {
@@ -152,8 +154,39 @@ export const fetchCurrentTVL = async ({
     program = cloneProgram
   }
   const vault = program.clone.collateral.vault
-  const tvl = (await program.provider.connection.getTokenAccountBalance(vault, "confirmed")).value
+  const [tvlResult, pools, oracles] = await Promise.all([
+    program.provider.connection.getTokenAccountBalance(vault, "confirmed"),
+    program.getPools(),
+    program.getOracles(),
+  ])
+  let tvl = tvlResult.value
     .uiAmount!
+
+  let poolVaultsAccounts = await program.provider.connection.getMultipleAccountsInfo(pools.pools.map((pool) => pool.underlyingAssetTokenAccount))
+  let underlyingMints: PublicKey[] = [];
+  let poolVaultBalances = poolVaultsAccounts.map((account) => {
+    if (account === null) return 0;
+
+    let underlyingAccount = AccountLayout.decode(account!.data)
+
+    underlyingMints.push(underlyingAccount.mint)
+
+    return Number(underlyingAccount.amount);
+  })
+
+  let mintDecimals = await program.provider.connection.getMultipleAccountsInfo(underlyingMints).then((accounts) => {
+    return accounts.map((account) => {
+      return MintLayout.decode(account!.data).decimals
+    })
+  })
+
+  poolVaultBalances.forEach((balance, index) => {
+    let oracleIndex = pools.pools[index].assetInfo.oracleInfoIndex
+    let oracle = oracles.oracles[oracleIndex]
+    let oraclePrice = Number(oracle.price) * Math.pow(10, -oracle.expo) * Math.pow(10, oracle.rescaleFactor);
+    tvl += balance * Math.pow(10, -mintDecimals[index]) * oraclePrice
+  })
+
   return tvl
 }
 

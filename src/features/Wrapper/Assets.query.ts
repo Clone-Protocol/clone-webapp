@@ -39,7 +39,7 @@ interface GetAssetsProps {
 	refetchOnMount?: boolean | "always"
 }
 
-interface AssetList {
+export interface AssetList {
 	id: number
 	tickerName: string
 	tickerSymbol: string

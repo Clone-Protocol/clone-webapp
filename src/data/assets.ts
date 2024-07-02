@@ -207,7 +207,7 @@ export const assetMapping = (index: number) => {
             throw new Error('Not supported')
     }
 
-    return { tickerName, tickerSymbol, wrapTickerName, wrapTickerSymbol, wrapPortUrl, tickerIcon, ticker, assetType, pythSymbol, supabaseSymbol, underlyingTokenMint }
+    return { tickerName, tickerSymbol, wrapTickerName, wrapTickerSymbol, wrapPortUrl, tickerIcon, ticker, assetType, pythSymbol, supabaseSymbol, scalingFactor, underlyingTokenMint }
 }
 
 export const collateralMapping = (index: number) => {

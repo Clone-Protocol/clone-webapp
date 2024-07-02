@@ -1,5 +1,6 @@
 import { Borrow, Oracles, Pools, Status } from "clone-protocol-sdk/sdk/generated/clone";
 import { fromScale, fromCloneScale, CloneClient } from "clone-protocol-sdk/sdk/src/clone";
+import { assetMapping } from "~/data/assets";
 
 export interface MintInfo {
   poolIndex: number;
@@ -21,12 +22,13 @@ export const getUserMintInfos = (program: CloneClient, pools: Pools, oracles: Or
   for (let i = 0; i < Number(borrowPositions.length); i++) {
     const borrowPosition = borrowPositions[i];
     const poolIndex = borrowPosition.poolIndex;
+    const { scalingFactor } = assetMapping(poolIndex)
     const pool = pools.pools[poolIndex];
     const oracle = oracles.oracles[Number(pool.assetInfo.oracleInfoIndex)];
     const assetInfo = pool.assetInfo;
     const collateralAmount = fromScale(borrowPosition.collateralAmount, collateral.scale);
     const effectiveCollateralValue = collateralAmount * fromScale(collateral.collateralizationRatio, 2);
-    const price = fromScale(oracle.price, oracle.expo) / usdcPrice;
+    const price = fromScale(oracle.price, oracle.expo) * scalingFactor / usdcPrice;
     const borrowedOnasset = fromCloneScale(borrowPosition.borrowedOnasset);
     const collateralRatio = effectiveCollateralValue / (price * borrowedOnasset);
     const minCollateralRatio = fromScale(assetInfo.minOvercollateralRatio, 2);

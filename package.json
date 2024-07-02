@@ -33,7 +33,7 @@
     "@pythnetwork/client": "^2.19.0",
     "@sentry/nextjs": "^8.8.0",
     "@solana/buffer-layout": "^4.0.0",
-    "@solana/spl-token": "^0.4.0",
+    "@solana/spl-token": "^0.4.6",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-wallets": "0.19.24",
@@ -58,7 +58,9 @@
     "react-hook-form": "^7.31.1",
     "react-otp-input": "^3.1.1",
     "recharts": "^2.4.2",
-    "safe-json-stringify": "^1.2.0"
+    "safe-json-stringify": "^1.2.0",
+    "viem": "2.x",
+    "wagmi": "^2.9.12"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.7.2",

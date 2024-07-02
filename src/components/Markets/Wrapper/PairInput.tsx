@@ -74,7 +74,7 @@ const TickerBox = styled(Box)`
 	padding: 3px 10px 3px 5px;
 	color: #fff;
 	border-radius: 100px;
-	background-color: rgba(65, 65, 102, 0.5);
+	background-color: rgba(65, 75, 102, 0.5);
 `
 
 const SelectTickerButton = styled(Button)`
@@ -82,11 +82,11 @@ const SelectTickerButton = styled(Button)`
 	align-items: center;
 	color: #fff;
 	border-radius: 100px;
-	background-color: rgba(65, 65, 102, 0.5);
+	background-color: rgba(65, 75, 102, 0.5);
 	padding: 3px 0px 3px 5px;
 
 	&:hover {
-		background-color: rgba(65, 65, 102, 0.5);
+		background-color: rgba(65, 75, 102, 0.5);
 		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.shadowGloom} inset;
 	}
 `

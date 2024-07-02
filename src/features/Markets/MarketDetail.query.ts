@@ -3,11 +3,12 @@ import { CloneClient, fromCloneScale, fromScale } from "clone-protocol-sdk/sdk/s
 import { Collateral, Status } from "clone-protocol-sdk/sdk/generated/clone"
 import { assetMapping, ASSETS_DESC } from "src/data/assets"
 import { REFETCH_CYCLE } from "~/components/Markets/TradingBox/RateLoadingIndicator"
-import { getPythOraclePrices } from "~/utils/pyth"
+import { fetchPythOraclePrices } from "~/utils/pyth"
 import { getCloneClient } from "../baseQuery"
 import { useAtomValue } from "jotai"
 import { cloneClient, rpcEndpoint } from "../globalAtom"
 import { fetchPoolAnalytics } from "~/utils/fetch_netlify"
+import { AnchorProvider } from "@coral-xyz/anchor"
 
 export const fetchMarketDetail = async ({
   index,
@@ -36,16 +37,14 @@ export const fetchMarketDetail = async ({
   const pools = await program.getPools()
   const oracles = await program.getOracles()
   const pool = pools.pools[index]
-  const oracle = oracles.oracles[pool.assetInfo.oracleInfoIndex]
   const poolOnassetIld = fromCloneScale(pool.onassetIld)
   const poolCollateralIld = fromCollateralScale(pool.collateralIld)
   const poolCommittedCollateral = fromCollateralScale(pool.committedCollateralLiquidity)
   const liquidityTradingFee = fromScale(pool.liquidityTradingFeeBps, 4)
   const treasuryTradingFee = fromScale(pool.treasuryTradingFeeBps, 4)
-  const oraclePrices = await getPythOraclePrices(program.provider.connection);
-  const rescaleFactor = Math.pow(10, oracle.rescaleFactor);
-  const oracleUsdcPrice = oraclePrices.get("Crypto.USDC/USD")!
-  const oraclePrice = rescaleFactor * oraclePrices.get(pythSymbol)! / oracleUsdcPrice;
+  const pythOraclePrices = await fetchPythOraclePrices(program.provider as AnchorProvider, oracles);
+  const oracleUsdcPrice = pythOraclePrices[0]
+  const oraclePrice = pythOraclePrices[pool.assetInfo.oracleInfoIndex]
   const committedCollateralLiquidity = fromCollateralScale(pool.committedCollateralLiquidity)
   const poolCollateral = committedCollateralLiquidity - fromCollateralScale(pool.collateralIld)
   const poolOnasset = committedCollateralLiquidity / oraclePrice - fromCloneScale(pool.onassetIld)

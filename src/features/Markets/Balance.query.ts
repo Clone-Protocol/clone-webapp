@@ -3,12 +3,13 @@ import { CloneClient, fromCloneScale, fromScale } from 'clone-protocol-sdk/sdk/s
 import { useDataLoading } from '~/hooks/useDataLoading'
 import { REFETCH_CYCLE } from '~/components/Markets/TradingBox/RateLoadingIndicator'
 import { getCollateralAccount, getTokenAccount } from '~/utils/token_accounts'
-import { getPythOraclePrices } from "~/utils/pyth"
+import { fetchPythOraclePrices } from "~/utils/pyth"
 import { assetMapping } from '~/data/assets'
 import { getCloneClient } from '../baseQuery'
 import { useAtomValue } from 'jotai'
 import { cloneClient, rpcEndpoint } from '~/features/globalAtom'
 import { calculatePoolAmounts } from 'clone-protocol-sdk/sdk/src/utils'
+import { AnchorProvider } from '@coral-xyz/anchor'
 
 export const fetchBalance = async ({ index, setStartTimer, mainCloneClient, networkEndpoint }: { index: number, setStartTimer: (start: boolean) => void, mainCloneClient?: CloneClient | null, networkEndpoint: string }) => {
   console.log('fetchBalance')
@@ -45,8 +46,6 @@ export const fetchBalance = async ({ index, setStartTimer, mainCloneClient, netw
   try {
     if (pools.status === 'fulfilled' && oracles.status === 'fulfilled') {
       const pool = pools.value.pools[index]
-      const usdcOracle = oracles.value.oracles[program.clone.collateral.oracleInfoIndex];
-      const oracle = oracles.value.oracles[Number(pool.assetInfo.oracleInfoIndex)];
       const associatedTokenAccountInfo = await getTokenAccount(
         pool.assetInfo.onassetMint,
         program.provider.publicKey!,
@@ -58,11 +57,8 @@ export const fetchBalance = async ({ index, setStartTimer, mainCloneClient, netw
         const onassetBalance = await program.provider.connection.getTokenAccountBalance(associatedTokenAccountInfo.address, "processed")
         onassetVal = Number(onassetBalance.value.amount) / 10000000;
       }
-      const { pythSymbol } = assetMapping(index)
-      const priceMap = await getPythOraclePrices(program.provider.connection);
-      const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
-      const price = priceMap.get(pythSymbol)! / priceMap.get("Crypto.USDC/USD")!;
-      const oraclePrice = rescaleFactor * (price ?? fromScale(oracle.price, oracle.expo) / fromScale(usdcOracle.price, usdcOracle.expo));
+      const pythOraclePrices = await fetchPythOraclePrices(program.provider as AnchorProvider, oracles.value);
+      const oraclePrice = pythOraclePrices[pool.assetInfo.oracleInfoIndex]
       const { poolCollateral, poolOnasset } = calculatePoolAmounts(
         fromScale(pool.collateralIld, collateralScale),
         fromCloneScale(pool.onassetIld),

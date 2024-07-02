@@ -7,11 +7,12 @@ import { funcNoWallet } from '~/features/baseQuery'
 import { TransactionStateType, useTransactionState } from "~/hooks/useTransactionState"
 import { sendAndConfirm } from '~/utils/tx_helper';
 import { getTokenAccount, getCollateralAccount } from '~/utils/token_accounts'
-import { getAssociatedTokenAddress, createAssociatedTokenAccountInstruction } from "@solana/spl-token"
+import { getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createAssociatedTokenAccountIdempotentInstruction, getAssociatedTokenAddressSync } from "@solana/spl-token"
 import { PaymentType } from 'clone-protocol-sdk/sdk/generated/clone'
 import { useAtomValue } from 'jotai'
 import { priorityFee } from '~/features/globalAtom'
 import { FeeLevel } from '~/data/networks'
+import { BN } from "@coral-xyz/anchor"
 
 export const callNew = async ({ program, userPubKey, setTxState, data, feeLevel }: CallNewProps) => {
 	if (!userPubKey) throw new Error('no user public key')
@@ -168,17 +169,16 @@ export function useEditPositionMutation(userPubKey: PublicKey | null) {
 export const callPayILD = async ({ program, userPubKey, setTxState, data, feeLevel }: CallPayILDProps) => {
 	if (!userPubKey) throw new Error('no user public key')
 
-	// NOTE: we shouldn't need to initialize either account here since we're paying from it.
-	const [onassetAssociatedToken, collateralAssociatedTokenAddress] = await Promise.all([
-		getAssociatedTokenAddress(
+	const [onassetAssociatedTokenAddress, collateralAssociatedTokenAddress] = [
+		getAssociatedTokenAddressSync(
 			data.onassetMint,
 			program.provider.publicKey!,
 		),
-		getAssociatedTokenAddress(
+		getAssociatedTokenAddressSync(
 			program.clone.collateral.mint,
 			program.provider.publicKey!,
 		)
-	])
+	];
 
 	const pools = await program.getPools()
 	const oracles = await program.getOracles();
@@ -189,30 +189,42 @@ export const callPayILD = async ({ program, userPubKey, setTxState, data, feeLev
 		program.updatePricesInstruction(oracles)
 	]
 
-	if (toCloneScale(data.onassetILD) > 0) {
+	if (toCloneScale(data.onassetILD).gt(new BN(0))) {
 		ixnCalls.push(
+			createAssociatedTokenAccountIdempotentInstruction(
+				program.provider.publicKey!,
+				collateralAssociatedTokenAddress,
+				program.provider.publicKey!,
+				program.clone.collateral.mint,
+			),
 			program.payCometILDInstruction(
 				pools,
 				userAccount,
 				data.positionIndex,
 				toCloneScale(data.ildAssetAmount),
 				PaymentType.Onasset,
-				onassetAssociatedToken,
+				onassetAssociatedTokenAddress,
 				collateralAssociatedTokenAddress,
 			)
 		)
 	}
 
 	const collateralILD = toScale(data.collateralILD, program.clone.collateral.scale)
-	if (collateralILD > 0) {
+	if (collateralILD.gt(new BN(0))) {
 		ixnCalls.push(
+			createAssociatedTokenAccountIdempotentInstruction(
+				program.provider.publicKey!,
+				onassetAssociatedTokenAddress,
+				program.provider.publicKey!,
+				data.onassetMint,
+			),
 			program.payCometILDInstruction(
 				pools,
 				userAccount,
 				data.positionIndex,
 				collateralILD,
 				PaymentType.CollateralFromWallet,
-				onassetAssociatedToken,
+				onassetAssociatedTokenAddress,
 				collateralAssociatedTokenAddress,
 			)
 		)
@@ -259,17 +271,16 @@ export function usePayILDMutation(userPubKey: PublicKey | null) {
 export const callRewards = async ({ program, userPubKey, setTxState, data, feeLevel }: CallCloseProps) => {
 	if (!userPubKey) throw new Error('no user public key')
 
-	const [onassetAssociatedToken, collateralAssociatedTokenAddress] = await Promise.all([
-		getTokenAccount(
+	const [onassetAssociatedTokenAddress, collateralAssociatedTokenAddress] = [
+		getAssociatedTokenAddressSync(
 			data.onassetMint,
 			program.provider.publicKey!,
-			program.provider.connection
 		),
-		getAssociatedTokenAddress(
+		getAssociatedTokenAddressSync(
 			program.clone.collateral.mint,
 			program.provider.publicKey!,
 		)
-	])
+	];
 
 	const pools = await program.getPools()
 	const oracles = await program.getOracles();
@@ -277,26 +288,27 @@ export const callRewards = async ({ program, userPubKey, setTxState, data, feeLe
 
 	// Pay ILD
 	const ixnCalls: TransactionInstruction[] = [
-		program.updatePricesInstruction(oracles)
+		program.updatePricesInstruction(oracles),
+		createAssociatedTokenAccountIdempotentInstruction(
+			program.provider.publicKey!,
+			onassetAssociatedTokenAddress,
+			program.provider.publicKey!,
+			data.onassetMint,
+		),
+		createAssociatedTokenAccountIdempotentInstruction(
+			program.provider.publicKey!,
+			collateralAssociatedTokenAddress,
+			program.provider.publicKey!,
+			program.clone.collateral.mint,
+		),
 	]
-
-	if (!onassetAssociatedToken.isInitialized) {
-		ixnCalls.push(
-			createAssociatedTokenAccountInstruction(
-				program.provider.publicKey!,
-				onassetAssociatedToken.address,
-				program.provider.publicKey!,
-				data.onassetMint,
-			)
-		)
-	}
 
 	ixnCalls.push(
 		program.collectLpRewardsInstruction(
 			pools,
 			userAccount,
 			collateralAssociatedTokenAddress,
-			onassetAssociatedToken.address,
+			onassetAssociatedTokenAddress,
 			data.positionIndex
 		)
 	)

@@ -39,6 +39,17 @@ export const RiskSubmitButton = styled(SubmitButton)`
   }
 `
 
+export const SubmitEvmButton = styled(SubmitButton)`
+	background-color: #fff;
+	color: #000;
+  &:hover {
+    background-color: #909090;
+  }
+  &:disabled {
+    border: 1px solid #4f4f4f;
+  }
+`
+
 export const ConnectButton = styled(Button)`
   width: 100%;
   height: 52px;

@@ -20,7 +20,9 @@ export const fetchBorrowDetail = async ({ program, userPubKey, index }: { progra
   const pool = pools.pools[index]
   const assetInfo = pool.assetInfo
   const oracle = oracles.oracles[Number(assetInfo.oracleInfoIndex)];
-  const oPrice = fromScale(oracle.price, oracle.expo)
+  const collateralOracle = oracles.oracles[Number(program.clone.collateral.oracleInfoIndex)];
+  const rescaleFactor = Math.pow(10, oracle.rescaleFactor)
+  const oPrice = rescaleFactor * fromScale(oracle.price, oracle.expo) / fromScale(collateralOracle.price, collateralOracle.expo)
   const minCollateralRatio = fromScale(assetInfo.minOvercollateralRatio, 2) * 100;
   const { tickerIcon, tickerName, tickerSymbol, pythSymbol } = assetMapping(index)
   const collateralizationRatio = fromScale(program.clone.collateral.collateralizationRatio, 2)
@@ -82,6 +84,7 @@ const fetchBorrowPosition = async ({ program, userPubKey, index }: { program: Cl
   const maxWithdrawableColl = positionData.collateralAmount - minCollateralAmount;
 
   return {
+    poolIndex,
     tickerIcon: tickerIcon,
     tickerName: tickerName,
     tickerSymbol: tickerSymbol,

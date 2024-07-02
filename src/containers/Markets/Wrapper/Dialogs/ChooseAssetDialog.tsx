@@ -5,9 +5,21 @@ import { FadeTransition } from '~/components/Common/Dialog'
 import GridAssets from './GridAssets'
 import SearchInput from '~/components/Liquidity/overview/SearchInput'
 import { CloseButton } from '~/components/Common/CommonButtons'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useAssetsQuery } from '~/features/Wrapper/Assets.query'
+import { LoadingProgress } from '~/components/Common/Loading'
+import withSuspense from '~/hocs/withSuspense'
 
 const ChooseAssetDialog = ({ open, handleChooseAsset, handleClose }: { open: boolean, handleChooseAsset: (id: number) => void, handleClose: () => void }) => {
+  const { publicKey } = useWallet()
   const [searchTerm, setSearchTerm] = useState('')
+
+  const { data: assets } = useAssetsQuery({
+    userPubKey: publicKey,
+    refetchOnMount: true,
+    searchTerm: searchTerm || '',
+    enabled: publicKey != null
+  })
 
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = e.currentTarget.value
@@ -28,7 +40,7 @@ const ChooseAssetDialog = ({ open, handleChooseAsset, handleClose }: { open: boo
               <SearchInput placeholderTxt='Search Bridged Asset' onChange={handleSearch} />
             </Box>
             <StyledDivider />
-            <GridAssets onChoose={handleChooseAsset} searchTerm={searchTerm} />
+            <GridAssets assets={assets} onChoose={handleChooseAsset} />
 
             <Box sx={{ position: 'absolute', right: '10px', top: '10px' }}>
               <CloseButton handleClose={handleClose} />
@@ -50,5 +62,4 @@ const StyledDivider = styled(Divider)`
   background-color: #414166;
 `
 
-export default ChooseAssetDialog
-
+export default withSuspense(ChooseAssetDialog, <LoadingProgress />)
