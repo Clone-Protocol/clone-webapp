@@ -3,7 +3,6 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { useInitCometDetailQuery } from '~/features/Liquidity/comet/CometInfo.query'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import CometPanel from './CometPanel'
@@ -13,7 +12,7 @@ import PoolAnalytics from '~/components/Liquidity/overview/PoolAnalytics'
 import TipMsg from '~/components/Common/TipMsg'
 import InfoIcon from 'public/images/info-icon.svg'
 import { GoBackButton, ShowChartBtn } from '~/components/Common/CommonButtons'
-import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_LIQUIDITY_ASSET_LINK } from '~/data/assets'
+import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_LIQUIDITY_ASSET_LINK, assetMapping } from '~/data/assets'
 import dynamic from 'next/dynamic'
 import { RootLiquidityDir } from '~/utils/constants'
 
@@ -37,11 +36,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 		}
 	}, [assetTicker])
 
-	const { data: assetData, refetch } = useInitCometDetailQuery({
-		userPubKey: publicKey,
-		index: assetIndex,
-		refetchOnMount: "always",
-	})
+	const assetData = useMemo(() => assetMapping(assetIndex), [assetIndex])
 
 	useEffect(() => {
 		if (!isMobileOnSize) {
@@ -83,7 +78,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 
 					<Box padding='8px 0px' mb={isMobileOnSize ? '150px' : '0px'}>
 						<Box paddingY='15px'>
-							<CometPanel assetIndex={assetIndex} assetData={assetData} openChooseLiquidityDialog={openChooseLiquidityDialog} onRefetchData={() => refetch()} />
+							<CometPanel assetIndex={assetIndex} openChooseLiquidityDialog={openChooseLiquidityDialog} />
 						</Box>
 					</Box>
 				</LeftBoxWrapper>
@@ -91,7 +86,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 				{showChart &&
 					<RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} py={isMobileOnSize ? '0px' : '8px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
 						<StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
-							<PriceChart assetIndex={assetIndex} assetData={assetData} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
+							<PriceChart assetIndex={assetIndex} publicKey={publicKey} priceTitle='Oracle Price' />
 							{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} />}
 						</StickyBox>
 					</RightBoxWrapper>

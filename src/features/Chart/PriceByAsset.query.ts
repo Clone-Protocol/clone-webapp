@@ -1,25 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { ChartElem } from './Liquidity.query'
 import { FilterTime } from '~/components/Charts/TimeTabs'
-import { Range, fetchPythPriceHistory } from '~/utils/pyth'
-import { getDailyPoolPrices30Day } from '~/utils/assets'
+import { Range, fetchPythPriceHistory, getPythOraclePrices } from '~/utils/pyth'
+import { assetMapping } from 'src/data/assets'
 import { useAtomValue } from 'jotai'
-import { rpcEndpoint } from '~/features/globalAtom'
-import { assetMapping } from '~/data/assets'
-
-// type TimeSeriesValue = { time: string, value: number }
-// const filterHistoricalData = (data: TimeSeriesValue[], numDays: number): TimeSeriesValue[] => {
-//   const today = new Date(); // get the current date
-//   const numMilliseconds = numDays * 86400 * 1000; // calculate the number of milliseconds in the specified number of days
-//   const historicalDate = new Date(today.getTime() - numMilliseconds); // calculate the historical date
-
-//   const filteredData = data.filter(({ time }) => {
-//     const currentDatetime = new Date(time);
-//     return currentDatetime >= historicalDate; // include values within the historical range
-//   });
-
-//   return filteredData;
-// };
+import { rpcEndpoint } from '../globalAtom'
+import { Connection } from '@solana/web3.js'
 
 export const fetchOraclePriceHistory = async ({ assetIndex, timeframe, pythSymbol, networkEndpoint }: { assetIndex: number, timeframe: FilterTime, pythSymbol: string | undefined, networkEndpoint: string | undefined }) => {
   if (!pythSymbol) return null
@@ -29,59 +15,57 @@ export const fetchOraclePriceHistory = async ({ assetIndex, timeframe, pythSymbo
   let rateOfPrice
   let percentOfRate
 
-  // MEMO: Always use oracle until we fix the indexing.
-  isOraclePrice = true
+  const range: Range = (() => {
+    switch (timeframe) {
+      case '1y':
+        return "1Y"
+      case '30d':
+        return "1M"
+      case '7d':
+        return "1W"
+      case '24h':
+        return "1D"
+      default:
+        throw new Error(`Unexpected timeframe: ${timeframe}`)
+    }
+  })()
 
-  // oracle price:
-  if (isOraclePrice) {
-    const range: Range = (() => {
-      switch (timeframe) {
-        case '1y':
-          return "1Y"
-        case '30d':
-          return "1M"
-        case '7d':
-          return "1W"
-        case '24h':
-          return "1D"
-        default:
-          throw new Error(`Unexpected timeframe: ${timeframe}`)
-      }
-    })()
+  const rescaleFactor = pythSymbol === "Crypto.PEPE/USD" ? 1_000_000 : 1
 
-    const { scalingFactor } = assetMapping(assetIndex)
-    const history = await fetchPythPriceHistory(pythSymbol, range);
+  const { scalingFactor } = assetMapping(assetIndex)
+  const history = await fetchPythPriceHistory(pythSymbol, range);
+  if (history.length === 0) {
+    return {
+      chartData: [],
+      currentPrice: 0,
+      rateOfPrice: 0,
+      percentOfRate: 0,
+      maxValue: 0,
+      minValue: 0
+    }
+  }
 
-    chartData = history.map((data) => {
-      return { time: data.timestamp, value: data.price }
-    })
+  chartData = history.map((data) => {
+    return { time: data.timestamp, value: rescaleFactor * data.price }
+  })
 
-    const lastEntry = chartData[chartData.length - 1];
-    const firstEntry = chartData[0]
-    const previous24hrPrice = firstEntry.value * scalingFactor
-
-    currentPrice = lastEntry.value * scalingFactor;
-    rateOfPrice = currentPrice - previous24hrPrice
-    percentOfRate = 100 * rateOfPrice / previous24hrPrice
-  } else {
-    // Get pool index from pythSymbol
-    let poolIndex = (() => {
-      for (let i = 0; i < ASSETS.length; i++) {
-        if (ASSETS[i].pythSymbol === pythSymbol) {
-          return i;
-        }
-      }
-      throw new Error(`Couldn't find pool index for ${pythSymbol}`)
-    })()
-
-    chartData = await getDailyPoolPrices30Day(
-      poolIndex,
-    )
+  if (networkEndpoint) {
+    const oraclePrices = await getPythOraclePrices(new Connection(networkEndpoint))
+    const currentOraclePrice = rescaleFactor * oraclePrices.get(pythSymbol)! / oraclePrices.get("Crypto.USDC/USD")!;
+    chartData.push({ time: new Date().toISOString(), value: currentOraclePrice })
   }
 
   const allValues = chartData.map(elem => elem.value!)
   const maxValue = Math.floor(Math.max(...allValues))
   const minValue = Math.floor(Math.min(...allValues))
+
+  const lastEntry = chartData[chartData.length - 1];
+  const firstEntry = chartData[0]
+  const previous24hrPrice = firstEntry.value * scalingFactor
+
+  currentPrice = lastEntry.value * scalingFactor;
+  rateOfPrice = currentPrice - previous24hrPrice
+  percentOfRate = 100 * rateOfPrice / previous24hrPrice
 
   return {
     chartData,
@@ -106,7 +90,6 @@ interface GetProps {
   assetIndex: number
   timeframe: FilterTime
   pythSymbol: string | undefined
-  isOraclePrice?: boolean
   refetchOnMount?: boolean | "always"
   enabled?: boolean
 }

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
-import { CloneClient, fromCloneScale, fromScale } from 'clone-protocol-sdk/sdk/src/clone'
+import { CloneClient, fromScale } from 'clone-protocol-sdk/sdk/src/clone'
 import { Comet, Oracles, Pools, Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import { getHealthScore, getILD } from "clone-protocol-sdk/sdk/src/healthscore"
 import { useClone } from '~/hooks/useClone'
@@ -8,9 +8,7 @@ import { REFETCH_SHORT_CYCLE } from '~/components/Common/DataLoadingIndicator'
 import { assetMapping } from '~/data/assets'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { Collateral as StableCollateral, collateralMapping } from '~/data/assets'
-import { calculatePoolAmounts } from 'clone-protocol-sdk/sdk/src/utils'
-import { AggregatedStats, getAggregatedPoolStats } from '~/utils/assets'
-import { fetchUserApy } from '~/utils/fetch_netlify'
+import { getAggregatedPoolStats } from '~/utils/assets'
 
 export const fetchPositionsApy = async ({ program, userPubKey }: { program: CloneClient, userPubKey: PublicKey | null }) => {
 	if (!userPubKey) return
@@ -245,67 +243,5 @@ export function useCometInfoQuery({ userPubKey, refetchOnMount, enabled = true }
 				}
 			}
 		})
-	}
-}
-
-export const fetchInitializeCometDetail = async ({ program, index }: { program: CloneClient, index: number }) => {
-	const pools = await program.getPools();
-	const pool = pools.pools[index];
-	const oracles = await program.getOracles()
-	const oracle = oracles.oracles[Number(pool.assetInfo.oracleInfoIndex)];
-	const usdcOracle = oracles.oracles[Number(program.clone.collateral.oracleInfoIndex)]
-	const { poolOnasset, poolCollateral } = calculatePoolAmounts(
-		fromCloneScale(pool.collateralIld),
-		fromCloneScale(pool.onassetIld),
-		fromScale(pool.committedCollateralLiquidity, program.clone.collateral.scale),
-		fromScale(oracle.price, oracle.expo) / fromScale(usdcOracle.price, usdcOracle.expo),
-		program.clone.collateral
-	)
-	const { tickerIcon, tickerName, tickerSymbol, pythSymbol, scalingFactor } = assetMapping(index)
-	const price = (poolCollateral / poolOnasset) * scalingFactor
-	const tightRange = price * 0.1
-	const maxRange = 2 * price
-	const centerPrice = price
-
-	return {
-		tickerIcon: tickerIcon,
-		tickerName: tickerName,
-		tickerSymbol: tickerSymbol,
-		pythSymbol,
-		price,
-		tightRange,
-		maxRange,
-		centerPrice,
-	}
-}
-
-const fetchInitCometDetailDefault = () => {
-	const { tickerIcon, tickerName, tickerSymbol, pythSymbol } = assetMapping(0)
-	return (
-		{
-			tickerIcon,
-			tickerName,
-			tickerSymbol,
-			pythSymbol,
-			price: 1.1,
-			tightRange: 0.11,
-			maxRange: 2.2,
-			centerPrice: 1.1,
-		}
-	)
-}
-
-export function useInitCometDetailQuery({ index, refetchOnMount, enabled = true }: GetPoolsProps) {
-	const wallet = useAnchorWallet()
-	const { getCloneApp } = useClone()
-	if (wallet) {
-		return useQuery({
-			queryKey: ['initComet', wallet, index],
-			queryFn: async () => fetchInitializeCometDetail({ program: await getCloneApp(wallet), index }),
-			refetchOnMount,
-			enabled
-		})
-	} else {
-		return useQuery({ queryKey: ['initComet'], queryFn: () => { return fetchInitCometDetailDefault() } })
 	}
 }

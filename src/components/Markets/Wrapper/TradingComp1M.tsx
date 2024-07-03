@@ -13,7 +13,7 @@ import SelectArrowIcon from 'public/images/keyboard-arrow-left.svg'
 import { shortenAddress } from '~/utils/address'
 import { assetMapping } from '~/data/assets_evm'
 import WalletOptionSelect from './WalletOptionSelect'
-import { BaseError, useAccount, useEstimateFeesPerGas, useEstimateGas, useEstimateMaxPriorityFeePerGas, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { BaseError, useAccount, useEstimateFeesPerGas, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { getPEPE1MContractAddress, getPEPEContractAddress } from '~/wrapper/chains'
 import { wrapped1MPEPETokenAbi } from '~/wrapper/contracts/abi/WrappedPepeContract'
 import { PEPETokenAbi } from '~/wrapper/contracts/abi/PepeContract'
@@ -191,14 +191,6 @@ const TradingComp1M: React.FC<Props> = ({ assetIndex, onShowSearchAsset }) => {
 
   const onConfirm = async () => {
     try {
-
-      // await writeContractApprove({
-      //   address: getPEPE1MContractAddress(chain),
-      //   abi: wrapped1MPEPETokenAbi,
-      //   functionName: 'approve',
-      //   args: [getPEPEContractAddress(chain), isWrap ? BigInt(amountWrapAsset * 10 ** SCALE_PEPE) : BigInt(amountUnwrapAsset)],
-      // })
-
       if (isWrap) {
         await writeContractApprove({
           address: getPEPEContractAddress(chain),
@@ -426,10 +418,10 @@ const TradingComp1M: React.FC<Props> = ({ assetIndex, onShowSearchAsset }) => {
               {/* {(isConfirmingApprove || isConfirming) && <><Typography variant='p'>Waiting for confirmation...</Typography></>}
               {(isConfirmedApprove || isConfirmed) && <><Typography variant='p'>Transaction confirmed.</Typography></>} */}
               {errorApprove && (
-                <div>Error: {(errorApprove as BaseError).shortMessage || errorApprove.message}</div>
+                <div><Typography variant='p'>Error: {(errorApprove as BaseError).shortMessage || errorApprove.message}</Typography></div>
               )}
               {error && (
-                <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+                <div><Typography variant='p'>Error: {(error as BaseError).shortMessage || error.message}</Typography></div>
               )}
             </Box>
 

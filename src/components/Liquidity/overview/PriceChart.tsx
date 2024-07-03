@@ -9,32 +9,21 @@ import { LoadingSkeleton } from "~/components/Common/Loading"
 import AnalyticsIcon from 'public/images/liquidity/analytics-sketch.svg'
 import { PublicKey } from "@solana/web3.js"
 import { formatLocaleAmount } from "~/utils/numbers"
+import { assetMapping } from "~/data/assets"
 
 interface Props {
   assetIndex: number
-  assetData: PositionInfo
   publicKey: PublicKey
   isOraclePrice?: boolean
   priceTitle: string
 }
 
-interface PositionInfo {
-  tickerIcon: string
-  tickerName: string
-  tickerSymbol: string | null
-  pythSymbol: string
-  price: number
-  tightRange?: number
-  maxRange?: number
-  centerPrice?: number
-}
-
-const PriceChart: React.FC<Props> = ({ assetIndex, assetData, publicKey, isOraclePrice = false, priceTitle }) => {
+const PriceChart: React.FC<Props> = ({ assetIndex, publicKey, priceTitle }) => {
+  const assetData = assetMapping(assetIndex)
   const { data: priceHistory } = usePriceHistoryQuery({
     timeframe: "24h",
     assetIndex,
     pythSymbol: assetData?.pythSymbol,
-    isOraclePrice,
     refetchOnMount: true,
     enabled: assetData != null && publicKey != null,
   })
@@ -52,16 +41,13 @@ const PriceChart: React.FC<Props> = ({ assetIndex, assetData, publicKey, isOracl
       </Box>
       <Box display="flex" alignItems="center" my='10px'>
         <Typography variant="h2" fontWeight={500}>
-          $
-          {isOraclePrice
-            ? formatLocaleAmount(priceHistory.currentPrice, 3)
-            : formatLocaleAmount(assetData.price)}
+          ${formatLocaleAmount(priceHistory.currentPrice, 3)}
         </Typography>
         <Typography variant="p_lg" color="#8988a3" ml="10px">
           {priceTitle}
         </Typography>
       </Box>
-      {isOraclePrice && priceHistory.rateOfPrice && (
+      {priceHistory.rateOfPrice && (
         <Typography variant="p_lg" color="#c4b5fd">
           {priceHistory.rateOfPrice >= 0 ? "+" : "-"}$
           {Math.abs(priceHistory.rateOfPrice).toFixed(3)} ({priceHistory.percentOfRate?.toFixed(2)}%)

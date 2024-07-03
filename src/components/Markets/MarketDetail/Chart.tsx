@@ -1,9 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import { TimeTabs, TimeTab, FilterTimeMap, FilterTime } from '~/components/Charts/TimeTabs'
 import LineChartAlt from '~/components/Charts/LineChartAlt'
-// import { useTotalPriceQuery } from '~/features/Chart/Prices.query'
 import { formatDollarAmount } from '~/utils/numbers'
 import Image from 'next/image'
 import ArrowUpward from 'public/images/arrow-up.svg'
@@ -12,13 +10,14 @@ import PoweredByPyth from 'public/images/powered_pyth.svg'
 import { usePriceHistoryQuery } from '~/features/Chart/PriceByAsset.query'
 import { ON_USD } from '~/utils/constants'
 
-const Chart = ({ pythSymbol }: { pythSymbol: string }) => {
+const Chart = ({ assetIndex, pythSymbol }: { assetIndex: number, pythSymbol: string }) => {
   const [filterTime, setFilterTime] = useState<FilterTime>('7d')
   const [chartHover, setChartHover] = useState<number | undefined>()
   const [percentOfRateHover, setPercentOfRateHover] = useState<number>(0)
   const { data: priceHistory } = usePriceHistoryQuery({
     timeframe: filterTime,
-    pythSymbol: pythSymbol,
+    assetIndex,
+    pythSymbol,
     refetchOnMount: true,
     enabled: pythSymbol != null
   })
@@ -30,7 +29,7 @@ const Chart = ({ pythSymbol }: { pythSymbol: string }) => {
   useMemo(() => {
     if (priceHistory && priceHistory?.chartData.length > 0) {
       setChartHover(priceHistory?.chartData[priceHistory?.chartData.length - 1].value)
-      setPercentOfRateHover(priceHistory.percentOfRate)
+      setPercentOfRateHover(priceHistory.percentOfRate!)
     }
   }, [priceHistory])
 

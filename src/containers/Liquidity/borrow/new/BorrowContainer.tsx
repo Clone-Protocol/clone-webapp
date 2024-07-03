@@ -67,7 +67,7 @@ const BorrowContainer = () => {
         {showChart &&
           <RightBoxWrapper width={isMobileOnSize ? '100%' : '450px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} py={isMobileOnSize ? '0px' : '8px'} zIndex={99}>
             <StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
-              <PriceChart assetIndex={assetIndex} assetData={borrowAsset} publicKey={publicKey} isOraclePrice={true} priceTitle='Oracle Price' />
+              <PriceChart assetIndex={assetIndex} publicKey={publicKey} priceTitle='Oracle Price' />
               {borrowDetail && <PositionAnalytics price={borrowDetail.oPrice} tickerSymbol={borrowAsset.tickerSymbol} />}
             </StickyBox>
           </RightBoxWrapper>

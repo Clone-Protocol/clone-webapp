@@ -7038,9 +7038,9 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
-"clone-protocol-sdk@git+https://github.com/Clone-Protocol/clone-protocol.git#update-staking-program":
+"clone-protocol-sdk@git+https://github.com/Clone-Protocol/clone-protocol.git#develop":
   version "0.1.0"
-  resolved "git+https://github.com/Clone-Protocol/clone-protocol.git#a1896d932828675a2e0d0985142a58de5d31bdb7"
+  resolved "git+https://github.com/Clone-Protocol/clone-protocol.git#bd0f5353e9626dd2089f479de9428c1bbed21ca6"
   dependencies:
     "@coral-xyz/anchor" "^0.28.0"
     "@metaplex-foundation/solita" "^0.20.1"

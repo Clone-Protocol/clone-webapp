@@ -11,11 +11,9 @@ import { useUserBalanceQuery } from '~/features/Portfolio/UserBalance.query'
 import { useEffect, useState } from 'react'
 import { ON_USD } from '~/utils/constants'
 import { DEFAULT_ALL_INDEX } from '~/features/Portfolio/filterAtom'
-import { useRouter } from 'next/router'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 
 const MarketDetail = ({ assetId }: { assetId: string }) => {
-	const router = useRouter()
 	const { publicKey } = useWallet()
 	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 	const { data: asset } = useMarketDetailQuery({
@@ -76,7 +74,7 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 						</Box>
 					</Box>
 
-					<Chart pythSymbol={asset.pythSymbol} />
+					<Chart assetIndex={parseInt(assetId)} pythSymbol={asset.pythSymbol} />
 
 					<OverviewWrapper>
 						<Typography variant='h3' fontWeight={500}>Market Overview</Typography>

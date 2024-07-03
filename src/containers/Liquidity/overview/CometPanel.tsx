@@ -28,8 +28,9 @@ import { RISK_RATIO_VAL } from '~/data/riskfactors'
 import { useAtomValue } from 'jotai'
 import { isAlreadyInitializedAccountState } from '~/features/globalAtom'
 import { formatLocaleAmount } from '~/utils/numbers'
+import { assetMapping } from '~/data/assets'
 
-const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetchData }: { assetIndex: number, assetData: any, openChooseLiquidityDialog: () => void, onRefetchData: () => void }) => {
+const CometPanel = ({ assetIndex, openChooseLiquidityDialog }: { assetIndex: number, openChooseLiquidityDialog: () => void }) => {
   const { publicKey } = useWallet()
   const { setOpen } = useWalletDialog()
   const router = useRouter()
@@ -41,6 +42,7 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
   const [validMintValue, setValidMintValue] = useState(false)
   const isAlreadyInitializedAccount = useAtomValue(isAlreadyInitializedAccountState)
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+  const assetData = assetMapping(assetIndex)
 
   const { data: positionInfo, refetch } = useLiquidityDetailQuery({
     userPubKey: publicKey,
@@ -62,7 +64,6 @@ const CometPanel = ({ assetIndex, assetData, openChooseLiquidityDialog, onRefetc
 
   const initData = () => {
     setMintRatio(0)
-    onRefetchData()
   }
 
   const {

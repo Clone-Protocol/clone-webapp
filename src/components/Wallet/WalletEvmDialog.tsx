@@ -1,20 +1,8 @@
 import Close from '@mui/icons-material/Close'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
-import {
-	Button,
-	Collapse,
-	Dialog,
-	DialogContent,
-	DialogProps,
-	DialogTitle,
-	IconButton,
-	List,
-	Box,
-	styled,
-	Theme,
-	Typography,
-} from '@mui/material'
+import { Button, Collapse, Dialog, DialogContent, DialogProps, DialogTitle, IconButton, List, Box, Theme, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import React, { FC, ReactElement, SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { WalletEvmListItem } from './WalletListItem'
 import { useSnackbar } from 'notistack'
