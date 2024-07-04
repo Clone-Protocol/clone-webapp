@@ -404,7 +404,7 @@ const TradingComp1M: React.FC<Props> = ({ assetIndex, onShowSearchAsset }) => {
                       <Typography variant='p_xlg'>{isWrap ? 'Wrap' : 'Unwrap'}</Typography>
                       :
                       <Stack direction='row' alignItems='center' gap={2}>
-                        <CircularProgress sx={{ color: '#6cffff' }} size={15} thickness={4} />
+                        <CircularProgress sx={{ color: '#c4b5fd' }} size={15} thickness={4} />
                         <Typography variant='p_xlg' color='#989898'>{isWrap ? 'Wrap' : 'Unwrap'}</Typography>
                       </Stack>}
                   </SubmitEvmButton>
@@ -445,8 +445,8 @@ const SelectPoolBox = styled(Box)`
   margin-top: 5px;
   margin-bottom: 20px;
 	&:hover {
-		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.liquidityBlue} inset;
-		background-color: rgba(37, 141, 237, 0.23);
+		background-color: rgba(65, 75, 102, 0.5);
+		box-shadow: 0 0 0 1px ${(props) => props.theme.basis.shadowGloom} inset;
   }
 `
 const PopoverBox = styled(Box)`
@@ -500,7 +500,7 @@ const SwapButton = styled(IconButton)`
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border: solid 1px ${(props) => props.theme.basis.liquidityBlue};
+    border: solid 1px ${(props) => props.theme.basis.melrose};
   }
 `
 const ConnectButton = styled(Button)`

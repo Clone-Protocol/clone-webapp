@@ -15,7 +15,7 @@ const getTxnURL = (networkScanUrl: string, txnHash: string) => {
 }
 
 const SuccessFailureWrapper = ({ isSuccess, txHash, networkName, networkScanUrl }: { isSuccess: boolean, txHash: string, networkName: string, networkScanUrl: string }) => {
-  const txStatusColor = isSuccess ? '#4fe5ff' : '#ff0084'
+  const txStatusColor = isSuccess ? '#c4b5fd' : '#ff0084'
   return (<Stack direction='row' alignItems='center'>
     <Image src={isSuccess ? SuccessIcon : FailureIcon} alt='icStatus' />
     <Box lineHeight={1.2}>
@@ -70,7 +70,7 @@ const ConfirmingWrapper = ({ txState = TransactionState.PENDING, txHash, isFocus
           <Box><Typography variant='p_xlg'>{txState === TransactionState.PENDING ? 'Confirming transaction...' : 'Preparing transaction...'}</Typography></Box>
           {txState === TransactionState.PENDING &&
             <Box my='6px' lineHeight={1.1}>
-              <Box sx={{ textDecoration: 'underline', color: '#4fe5ff' }}><a href={getTxnURL(networkScanUrl, txHash)} target='_blank' rel="noreferrer"><Typography variant='p' color='#4fe5ff'>View Transaction</Typography></a></Box>
+              <Box sx={{ textDecoration: 'underline', color: '#c4b5fd' }}><a href={getTxnURL(networkScanUrl, txHash)} target='_blank' rel="noreferrer"><Typography variant='p' color='#c4b5fd'>View Transaction</Typography></a></Box>
             </Box>
           }
         </Box>
@@ -83,7 +83,7 @@ const ConfirmingWrapper = ({ txState = TransactionState.PENDING, txHash, isFocus
 const TransactionEvmStateSnackbar = ({ txState, txHash, networkName, networkScanUrl, open, handleClose }: { txState: TransactionState, txHash: string, networkName: string, networkScanUrl: string, open: boolean, handleClose: () => void }) => {
   const [isFocusWarning, setIsFocusWarning] = useState(false)
 
-  const isPending = txState === TransactionState.PENDING || txState === TransactionState.PRE_PENDING
+  const isPending = txState === TransactionState.PENDING
   const hideDuration = txState === TransactionState.PENDING ? 60000 : 6000
 
   return (
@@ -93,7 +93,7 @@ const TransactionEvmStateSnackbar = ({ txState, txHash, networkName, networkScan
         <Snackbar open={open} autoHideDuration={hideDuration} onClose={isPending ? () => { } : handleClose}>
           <Box>
             {txState === TransactionState.SUCCESS &&
-              <BoxWrapper sx={{ border: '1px solid #4fe5ff' }}>
+              <BoxWrapper sx={{ border: '1px solid #c4b5fd' }}>
                 <CloseButton onClick={handleClose}><Image src={CloseIcon} alt='close' /></CloseButton>
                 <SuccessFailureWrapper isSuccess={true} txHash={txHash} networkName={networkName} networkScanUrl={networkScanUrl} />
               </BoxWrapper>

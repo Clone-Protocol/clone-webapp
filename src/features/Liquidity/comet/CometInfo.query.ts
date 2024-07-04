@@ -12,7 +12,7 @@ import { getAggregatedPoolStats } from '~/utils/assets'
 
 export const fetchPositionsApy = async ({ program, userPubKey }: { program: CloneClient, userPubKey: PublicKey | null }) => {
 	if (!userPubKey) return
-	console.log('fetchTotalApy :: CometInfo.query')
+	console.log('fetchPositionsApy :: CometInfo.query')
 
 	let totalApy = 0
 

@@ -58,7 +58,7 @@ const CometLiquidityStatus = ({ infos, totalApy }: { infos: CometInfoStatus | un
                 {totalApy > 0 ?
                   <Box color='#c4b5fd'>
                     <Box display='flex' justifyContent='center' alignItems='center'>
-                      <Typography variant='p_xlg'>{infos.totalApy >= 0.01 ? `+${infos.totalApy?.toFixed(2)}` : '<0.01'}%</Typography>
+                      <Typography variant='p_xlg'>{totalApy >= 0.01 ? `+${totalApy?.toFixed(2)}` : '<0.01'}%</Typography>
                     </Box>
                   </Box>
                   :
