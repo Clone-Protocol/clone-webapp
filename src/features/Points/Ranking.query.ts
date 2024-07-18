@@ -18,7 +18,11 @@ export const fetchRanking = async () => {
       return jupUser.user_address === user.user_address
     })
 
-    const multipleTier = calculateMultiplierForUser(matchJupUser?.tier, matchPythUser?.tier)
+    const matchDriftUser = userBonus.drift.find((driftUser) => {
+      return driftUser.user_address === user.user_address
+    })
+
+    const multipleTier = calculateMultiplierForUser(matchJupUser?.tier, matchPythUser?.tier, matchDriftUser?.tier)
 
     result.push({
       id,
@@ -30,15 +34,16 @@ export const fetchRanking = async () => {
       referralPoints: user.referral_points,
       totalPoints: user.total_points,
       hasPythPoint: matchPythUser !== undefined ? true : false,
-      multipleTier: multipleTier,
       hasJupPoint: matchJupUser !== undefined ? true : false,
+      hasDriftPoint: matchDriftUser !== undefined ? true : false,
+      multipleTier: multipleTier,
     })
   })
 
   return result
 }
 
-export const calculateMultiplierForUser = (jup?: Tier, pyth?: Tier) => {
+export const calculateMultiplierForUser = (jup?: Tier, pyth?: Tier, drift?: Tier) => {
   const multiplier = (t: Tier) => {
     switch (t) {
       case 0: return 20
@@ -50,8 +55,9 @@ export const calculateMultiplierForUser = (jup?: Tier, pyth?: Tier) => {
   }
   const jupMul = jup !== undefined ? multiplier(jup) : 0
   const pythMul = pyth !== undefined ? multiplier(pyth) : 0
+  const driftMul = drift !== undefined ? multiplier(drift) : 0
 
-  return 1 + (jupMul + pythMul) / 100
+  return 1 + (jupMul + pythMul + driftMul) / 100
 }
 
 interface GetProps {
@@ -69,8 +75,9 @@ export interface RankingList {
   totalPoints: number
   referralPoints: number
   hasPythPoint: boolean
-  multipleTier: number
   hasJupPoint: boolean
+  hasDriftPoint: boolean
+  multipleTier: number
 }
 
 export function useRankingQuery({ refetchOnMount, enabled = true }: GetProps) {

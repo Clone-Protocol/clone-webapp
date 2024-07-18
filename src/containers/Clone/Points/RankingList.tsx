@@ -14,6 +14,7 @@ import { PointTextForBonus } from '~/components/Points/PointMultiplierText'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { LightTooltip } from '~/components/Common/InfoTooltip'
 import IconJupSymbol from 'public/images/jup_symbol.svg'
+import IconDriftSymbol from 'public/images/drift_symbol.svg'
 import Image from 'next/image'
 
 const RankingList = () => {
@@ -67,10 +68,11 @@ let columns: GridColDef[] = [
     headerClassName: 'super-app-theme--header',
     cellClassName: 'super-app-theme--cell',
     headerName: `User`,
-    flex: 3,
+    flex: 4,
     renderCell(params: GridRenderCellParams<{ name: string | undefined, address: string }>) {
       const hasPythPoint = params.row.hasPythPoint
       const hasJupPoint = params.row.hasJupPoint
+      const hasDriftPoint = params.row.hasDriftPoint
 
       return <Box display='flex' alignItems='center' gap={1}>
         <a href={`https://solana.fm/address/${params.value!.address.toString()}`} target='_blank' rel='noreferrer' style={{ color: '#fff' }}>
@@ -87,6 +89,13 @@ let columns: GridColDef[] = [
           <LightTooltip title={TooltipTexts.points.jupSymbol} placement="top">
             <Box display='flex' alignContent='center' sx={{ ':hover': { opacity: 0.6 } }}>
               <Image src={IconJupSymbol} alt='jup_symbol' width={20} height={20} />
+            </Box>
+          </LightTooltip>
+        }
+        {hasDriftPoint &&
+          <LightTooltip title={TooltipTexts.points.driftSymbol} placement="top">
+            <Box display='flex' alignContent='center' sx={{ ':hover': { opacity: 0.6 } }}>
+              <Image src={IconDriftSymbol} alt='drift_symbol' width={20} height={20} />
             </Box>
           </LightTooltip>
         }

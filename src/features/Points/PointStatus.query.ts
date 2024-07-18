@@ -29,8 +29,9 @@ export const fetchStatus = async ({ userPubKey }: { userPubKey: PublicKey | null
 
   const matchPythUser = userBonus.pyth?.length > 0 ? userBonus.pyth[0] : undefined;
   const matchJupUser = userBonus.jup?.length > 0 ? userBonus.jup[0] : undefined;
+  const matchDriftUser = userBonus.drift?.length > 0 ? userBonus.drift[0] : undefined;
 
-  const multipleTier = calculateMultiplierForUser(matchJupUser?.tier, matchPythUser?.tier)
+  const multipleTier = calculateMultiplierForUser(matchJupUser?.tier, matchPythUser?.tier, matchDriftUser?.tier)
 
   if (userPoints?.length === 0) return null
 
@@ -42,8 +43,9 @@ export const fetchStatus = async ({ userPubKey }: { userPubKey: PublicKey | null
     socialPoints: userPoints[0].social_points,
     referralPoints: userPoints[0].referral_points,
     hasPythPoint: matchPythUser !== undefined ? true : false,
-    multipleTier: multipleTier,
     hasJupPoint: matchJupUser !== undefined ? true : false,
+    hasDriftPoint: matchDriftUser !== undefined ? true : false,
+    multipleTier: multipleTier,
   }
 }
 
@@ -61,8 +63,9 @@ export interface Status {
   socialPoints: number
   referralPoints: number
   hasPythPoint: boolean
-  multipleTier: number
   hasJupPoint: boolean
+  hasDriftPoint: boolean
+  multipleTier: number
 }
 
 export function usePointStatusQuery({ userPubKey, refetchOnMount, enabled = true }: GetProps) {

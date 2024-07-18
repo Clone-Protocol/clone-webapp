@@ -15,6 +15,12 @@ export const PointTextForBonus = ({ multipleTier }: { multipleTier: number | und
     return <BoxWrapper><MultiplierBox sx={{ backgroundImage: 'linear-gradient(102deg, #e6dafe 3%, #fb49ff 96%)' }}><Typography variant='p_lg' fontWeight={800}>2.0x</Typography></MultiplierBox></BoxWrapper>
   } else if (multipleTier === 2.2) {
     return <BoxWrapper><MultiplierBox sx={{ backgroundImage: 'linear-gradient(102deg, #e6dafe 3%, #ff4949 96%)' }}><Typography variant='p_lg' fontWeight={800}>2.2x</Typography></MultiplierBox></BoxWrapper>
+  } else if (multipleTier === 2.4) {
+    return <BoxWrapper><MultiplierBox sx={{ backgroundImage: 'linear-gradient(102deg, #6aff82 3%, #fbf216 96%)' }}><Typography variant='p_lg' fontWeight={800}>2.4x</Typography></MultiplierBox></BoxWrapper>
+  } else if (multipleTier === 2.6) {
+    return <BoxWrapper><MultiplierBox sx={{ backgroundImage: 'linear-gradient(102deg, #00fff0 3%, #ff51ee 96%)' }}><Typography variant='p_lg' fontWeight={800}>2.6x</Typography></MultiplierBox></BoxWrapper>
+  } else if (multipleTier === 2.8) {
+    return <BoxWrapper><MultiplierBox sx={{ backgroundImage: 'linear-gradient(102deg, #ffaa2c 3%, #ff0000 96%)' }}><Typography variant='p_lg' fontWeight={800}>2.8x</Typography></MultiplierBox></BoxWrapper>
   }
 }
 

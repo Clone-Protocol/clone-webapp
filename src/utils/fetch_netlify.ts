@@ -95,7 +95,8 @@ export type StakersInfo = {
 export type Tier = 0 | 1 | 2
 export type UserBonus = {
     pyth: StakersInfo[],
-    jup: StakersInfo[]
+    jup: StakersInfo[],
+    drift: StakersInfo[],
 }
 export const fetchAllUserBonus = async (): Promise<UserBonus> => {
     let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-users-all-bonus`;
@@ -168,6 +169,13 @@ export const fetchLinkReferralCode = async (userAddress: string, referralCode: s
 
 export const fetchLinkDiscordAccess = async (userAddress: string, signature: string, accessToken: string) => {
     let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/link-discord-access`;
+    url += `?userAddress=${userAddress}&signature=${signature}&accessToken=${accessToken}`;
+    const response = await axios.get(url)
+    return response.data
+}
+
+export const fetchLinkDiscordAccessLedger = async (userAddress: string, signature: string, accessToken: string) => {
+    let url = `${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/link-discord-access-ledger`;
     url += `?userAddress=${userAddress}&signature=${signature}&accessToken=${accessToken}`;
     const response = await axios.get(url)
     return response.data

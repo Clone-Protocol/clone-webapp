@@ -12,8 +12,9 @@ export const TooltipTexts = {
     socialPoints: 'Points earned from participating in Clone’s Zealy campaign.',
     referralPoints: 'Earn 10% of the points earned by each user you refer!',
     pythSymbol: 'We have noticed that you are staking $PYTH, making you a Pythian Cloner and giving you a points multiplier!',
-    multiplier: 'The multiplier you receive for staking $PYTH, $JUP, the more you stake, the higher the multiplier!',
-    jupSymbol: 'We have noticed that you are staking $JUP, making you a Jup Cloner and giving you a points multiplier!'
+    jupSymbol: 'We have noticed that you are staking $JUP, making you a Jup Cloner and giving you a points multiplier!',
+    driftSymbol: 'You are staking $DRIFT, making you a Drift Cloner and giving you a points multiplier!',
+    multiplier: 'The multiplier you receive for staking $PYTH, $JUP, $DRIFT, the more you stake, the higher the multiplier!'
   },
   priceIndicator: `The price of the clAsset on Clone Markets, this value is calculated using the ratio of ${ON_USD} to clAsset in the pool.`,
   totalValue: `Represents the total value of all your positions on Clone Liquidity.`,

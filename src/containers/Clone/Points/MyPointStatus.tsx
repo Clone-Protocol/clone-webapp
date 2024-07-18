@@ -10,8 +10,8 @@ import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { formatLocaleAmount } from '~/utils/numbers'
 import { LoadingProgress } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
-import BoltIcon from '@mui/icons-material/Bolt';
-import PromoteDialog from '~/components/Points/PromoteDialog'
+// import BoltIcon from '@mui/icons-material/Bolt';
+// import PromoteDialog from '~/components/Points/PromoteDialog'
 import { useEffect, useState } from 'react'
 import ContentCopyIcon from 'public/images/content-copy.svg'
 import { PythSymbolIcon } from '~/components/Common/SvgIcons'
@@ -21,13 +21,14 @@ import { ReferralStatus } from '~/utils/constants'
 import { useSnackbar } from 'notistack'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import IconJupSymbol from 'public/images/jup_symbol.svg'
+import IconDriftSymbol from 'public/images/drift_symbol.svg'
 
 const MyPointStatus = () => {
   const { publicKey } = useWallet()
   const { setOpen } = useWalletDialog()
   const { enqueueSnackbar } = useSnackbar()
   const [showReferralPanel, setShowReferralPanel] = useState(false)
-  const [showPromoteDialog, setShowPromoteDialog] = useState(true)
+  // const [showPromoteDialog, setShowPromoteDialog] = useState(true)
   const [referralStatus, setReferralStatus] = useState(ReferralStatus.NotGenerated)
   const [isGeneratingRefCode, setIsGeneratingRefCode] = useState(false)
   const [referralCode, setReferralCode] = useState('000000')
@@ -85,6 +86,8 @@ const MyPointStatus = () => {
     }
   }
 
+  const hasAnyPoint = infos?.hasPythPoint || infos?.hasJupPoint || infos?.hasDriftPoint
+
   return (
     <Wrapper>
       <Stack direction='row' gap={2}>
@@ -102,20 +105,20 @@ const MyPointStatus = () => {
             <InfoTooltip title={TooltipTexts.points.totalPoints} color='#8988a3' />
           </Box>
           <StatusValue>
-            {(infos?.hasPythPoint || infos?.hasJupPoint) &&
+            {hasAnyPoint &&
               <Box width='42px'></Box>
             }
             <Typography variant='h3' fontWeight={500}>
               {infos?.totalPoints ? formatLocaleAmount(infos.totalPoints) : '0'}
             </Typography>
-            {infos?.hasPythPoint &&
+            {hasAnyPoint &&
               <Tooltip title={TooltipTexts.points.multiplier} placement="top">
                 <Box width='42px'><PointTextForBonus multipleTier={infos?.multipleTier} /></Box>
               </Tooltip>
             }
           </StatusValue>
           <BottomSymbolBox>
-            {(infos?.hasPythPoint || infos?.hasJupPoint) &&
+            {infos?.hasPythPoint &&
               <Tooltip title={TooltipTexts.points.pythSymbol} placement="top">
                 <Box width='38px' height='37px' display='flex' alignItems='center' justifyContent='center'>
                   <PythSymbolIcon />
@@ -126,6 +129,13 @@ const MyPointStatus = () => {
               <Tooltip title={TooltipTexts.points.jupSymbol} placement="top">
                 <Box width='38px' height='37px' display='flex' alignItems='center' justifyContent='center'>
                   <Image src={IconJupSymbol} alt='jup_symbol' width={20} height={20} />
+                </Box>
+              </Tooltip>
+            }
+            {infos?.hasDriftPoint &&
+              <Tooltip title={TooltipTexts.points.driftSymbol} placement="top">
+                <Box width='38px' height='37px' display='flex' alignItems='center' justifyContent='center'>
+                  <Image src={IconDriftSymbol} alt='drift_symbol' width={20} height={20} />
                 </Box>
               </Tooltip>
             }
