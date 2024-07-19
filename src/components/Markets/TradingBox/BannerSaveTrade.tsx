@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
+import React from 'react'
+import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import CloseIcon from 'public/images/close-round.svg'
 import Image from 'next/image'

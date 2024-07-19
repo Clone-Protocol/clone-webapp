@@ -12,7 +12,7 @@ import PoolAnalytics from '~/components/Liquidity/overview/PoolAnalytics'
 import TipMsg from '~/components/Common/TipMsg'
 import InfoIcon from 'public/images/info-icon.svg'
 import { GoBackButton, ShowChartBtn } from '~/components/Common/CommonButtons'
-import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, DEFAULT_LIQUIDITY_ASSET_LINK, assetMapping } from '~/data/assets'
+import { ASSETS, AssetTickers, DEFAULT_ASSET_ID, assetMapping } from '~/data/assets'
 import dynamic from 'next/dynamic'
 import { RootLiquidityDir } from '~/utils/constants'
 

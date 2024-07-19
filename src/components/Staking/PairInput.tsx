@@ -2,7 +2,6 @@ import React from 'react';
 import { FormControl, Stack, Box, Button, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { formatLocaleAmount } from '~/utils/numbers';
 
 interface Props {

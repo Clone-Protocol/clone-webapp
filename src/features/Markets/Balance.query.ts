@@ -4,7 +4,6 @@ import { useDataLoading } from '~/hooks/useDataLoading'
 import { REFETCH_CYCLE } from '~/components/Markets/TradingBox/RateLoadingIndicator'
 import { getCollateralAccount, getTokenAccount } from '~/utils/token_accounts'
 import { fetchPythOraclePrices } from "~/utils/pyth"
-import { assetMapping } from '~/data/assets'
 import { getCloneClient } from '../baseQuery'
 import { useAtomValue } from 'jotai'
 import { cloneClient, rpcEndpoint } from '~/features/globalAtom'

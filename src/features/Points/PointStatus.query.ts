@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
-import { fetchAllUserBonus, fetchCheckReferralCode, fetchGenerateReferralCode, fetchStakingUserBonus, fetchUserPoints, UserBonus, UserPointsView } from '~/utils/fetch_netlify'
+import { fetchGenerateReferralCode, fetchStakingUserBonus, fetchUserPoints, UserBonus, UserPointsView } from '~/utils/fetch_netlify'
 import { calculateMultiplierForUser } from './Ranking.query'
 
 export const fetchReferralCode = async ({ userPubKey }: { userPubKey: PublicKey | null }) => {

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, createConfig, http } from 'wagmi'
-import { localhost, arbitrum } from 'wagmi/chains'
-import { injected, metaMask, walletConnect, coinbaseWallet } from 'wagmi/connectors'
+import { arbitrum } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
 import { WalletEvmDialogProvider } from './WalletEvmDialogProvider';
 import { TransactionEvmStateProvider } from './TransactionEvmStateProvider';
 
@@ -17,8 +17,6 @@ export const WagmiConfig = createConfig({
   transports: {
     // [localhost.id]: http(),
     [arbitrum.id]: http(process.env.NEXT_PUBLIC_ARBITRUM_RPC_URL),
-    // [arbitrumSepolia.id]: http(),
-    // [arbitrum.id]: http(process.env.NEXT_PUBLIC_ARBITRUM_RPC_URL)
   }
 });
 

@@ -3,7 +3,6 @@ import { Wallet } from '@solana/wallet-adapter-react'
 import React, { FC, MouseEventHandler } from 'react'
 import { WalletIcon } from './WalletIcon'
 import { Connector } from 'wagmi'
-import Image from 'next/image'
 
 interface WalletListItemProps extends Omit<ListItemProps, 'onClick' | 'button'> {
 	onClick: MouseEventHandler<HTMLButtonElement>
