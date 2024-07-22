@@ -3,7 +3,7 @@ import BalanceView from '~/components/Portfolio/BalanceView'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useBalanceQuery } from '~/features/Portfolio/Balance.query'
 import { Box } from '@mui/material'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import { useUserBalanceQuery } from '~/features/Portfolio/UserBalance.query'
 import StableAssetList from '~/containers/Portfolio/StableAssetList'
 import OnAssetList from './OnAssetList'
@@ -105,4 +105,4 @@ const PortfolioView = () => {
 	)
 }
 
-export default withSuspense(PortfolioView, <LoadingProgress />)
+export default withSuspense(PortfolioView, <LoadingSkeleton />)

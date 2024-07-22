@@ -3,7 +3,7 @@ import { Box, Theme, Typography, useMediaQuery } from '@mui/material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { useAssetsQuery } from '~/features/Markets/Assets.query'
 import { FilterType } from '~/data/filter'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { Grid, CellTicker } from '~/components/Common/DataGrid'
@@ -173,4 +173,4 @@ const MarketList = () => {
 	)
 }
 
-export default withSuspense(MarketList, <LoadingProgress />)
+export default withSuspense(MarketList, <LoadingSkeleton />)

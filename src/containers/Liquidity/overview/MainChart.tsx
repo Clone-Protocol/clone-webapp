@@ -111,4 +111,4 @@ const SelectValue = styled(Box)`
   margin-top: 5px;
 `
 
-export default withSuspense(MainChart, <Box mt='10px'><LoadingSkeleton /></Box>)
+export default withSuspense(MainChart, <Box mt='10px'><LoadingSkeleton height='300px' /></Box>)

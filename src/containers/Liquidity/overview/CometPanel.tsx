@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import withSuspense from '~/hocs/withSuspense'
 import Image from 'next/image'
-import { LoadingButton, LoadingProgress } from '~/components/Common/Loading'
+import { LoadingButton, LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Box, Stack, FormHelperText, Typography, useMediaQuery, Theme } from '@mui/material'
 import { useForm } from 'react-hook-form'
@@ -347,4 +347,4 @@ const DepositCollateralButton = styled(SelectDefaultPool)`
   border-radius: 10px;
   justify-content: center;
 `
-export default withSuspense(CometPanel, <LoadingProgress />)
+export default withSuspense(CometPanel, <LoadingSkeleton />)

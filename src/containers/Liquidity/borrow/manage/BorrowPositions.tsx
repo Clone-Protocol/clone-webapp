@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams, GridColumnHeaderParams } from '@mui/x-data-grid'
 import { CellDigitValue, Grid, CellTicker } from '~/components/Common/DataGrid'
 import withSuspense from '~/hocs/withSuspense'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import { useBorrowQuery } from '~/features/Liquidity/borrow/Borrow.query'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { GridEventListener } from '@mui/x-data-grid'
@@ -202,4 +202,4 @@ const AddButtonNoPosition = styled(AddButton)`
 `
 
 
-export default withSuspense(BorrowPositions, <LoadingProgress />)
+export default withSuspense(BorrowPositions, <LoadingSkeleton />)

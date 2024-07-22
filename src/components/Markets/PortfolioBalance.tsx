@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
 import withSuspense from '~/hocs/withSuspense'
 import { useUserTotalBalanceQuery } from '~/features/Portfolio/UserBalance.query';
@@ -27,4 +27,4 @@ const PortfolioBalance: React.FC = () => {
 	)
 }
 
-export default withSuspense(PortfolioBalance, <LoadingProgress />)
+export default withSuspense(PortfolioBalance, <LoadingSkeleton height='100px' />)

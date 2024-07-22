@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { StyledTabs, LiquidityTab } from '~/components/Common/StyledTab'
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { fetchPositionsApy, useCometInfoQuery } from '~/features/Liquidity/comet/CometInfo.query'
 import Collaterals from './Collaterals'
@@ -92,4 +92,4 @@ const PanelBox = styled(Box)`
   color: #fff;
 `
 
-export default withSuspense(CometLiquidity, <LoadingProgress />)
+export default withSuspense(CometLiquidity, <LoadingSkeleton />)

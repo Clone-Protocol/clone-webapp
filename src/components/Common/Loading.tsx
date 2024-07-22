@@ -39,11 +39,11 @@ export const LoadingButton = ({ width, height, buttonTxt = 'Confirming' }: { wid
   )
 }
 
-export const LoadingSkeleton = () => {
+export const LoadingSkeleton = ({ height = '450px' }: { height?: string }) => {
   const classes = useCircleStyles({});
   return (
     <Box position='relative' sx={{ display: 'flex', alignItems: 'center', width: '100%', backgroundColor: '#16141b' }}>
-      <Skeleton variant="rounded" sx={{ bgcolor: '#16141b', height: { xs: '450px', md: '410px' } }} animation="wave" width={'100%'} />
+      <Skeleton variant="rounded" sx={{ bgcolor: '#16141b', height: { xs: height, md: height } }} animation="wave" width={'100%'} />
       <Box position='absolute' left={'calc(50% - 20px)'} display='flex' justifyContent='center' alignItems='center'>
         <svg width="8" height="6">
           <linearGradient id="linearColors" x1="0" y1="0" x2="1" y2="1">
