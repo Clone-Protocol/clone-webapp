@@ -215,3 +215,8 @@ export const fetchPoolAnalytics = async (): Promise<PoolAnalytics[]> => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-pool-analytics`)
     return response.data as PoolAnalytics[]
 }
+
+export const fetchMetabaseUrl = async (): Promise<{ url: string }> => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_ROOT}/.netlify/functions/get-metabase-url`)
+    return response.data
+}
