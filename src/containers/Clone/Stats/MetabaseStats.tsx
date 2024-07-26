@@ -18,10 +18,11 @@ const MetabaseStats = () => {
 
   return (
     <PanelBox>
+      <Typography variant='h4'>Total Volume</Typography>
       <iframe
         src={iframeUrl}
         frameBorder={0}
-        width={800}
+        width={'100%'}
         height={400}
         allowTransparency
       />

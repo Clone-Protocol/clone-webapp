@@ -11,7 +11,7 @@ export const handler: Handler = async (event, context) => {
   };
   const token = jwt.sign(payload, METABASE_SECRET_KEY!);
   const iframeUrl = METABASE_SITE_URL + "/embed/question/" + token +
-    "#bordered=true&titled=true&theme=night";
+    "#bordered=false&titled=false&theme=transparent";
 
   const data = {
     url: iframeUrl
