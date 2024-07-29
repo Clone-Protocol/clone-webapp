@@ -1,7 +1,7 @@
 import { Box, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { Grid } from '~/components/Common/DataGrid'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
@@ -75,7 +75,7 @@ let columns: GridColDef[] = [
       const hasDriftPoint = params.row.hasDriftPoint
 
       return <Box display='flex' alignItems='center' gap={1}>
-        <a href={`https://solana.fm/address/${params.value!.address.toString()}`} target='_blank' rel='noreferrer' style={{ color: '#fff' }}>
+        <a href={`https://solana.fm/address/${params.value!.address?.toString()}`} target='_blank' rel='noreferrer' style={{ color: '#fff' }}>
           <Typography variant='p_lg' sx={{ ':hover': { color: '#c4b5fd' } }}>{formatUserDisplayName(params.value!)}</Typography>
         </a>
         {hasPythPoint &&
@@ -176,4 +176,4 @@ const PanelBox = styled(Box)`
 
 columns = columns.map((col) => Object.assign(col, { hideSortIcons: true, filterable: false }))
 
-export default withSuspense(RankingList, <LoadingProgress />)
+export default withSuspense(RankingList, <LoadingSkeleton />)

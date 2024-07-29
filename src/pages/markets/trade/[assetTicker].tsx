@@ -81,7 +81,9 @@ const AssetPage = ({ dehydratedState, assetId }: InferGetStaticPropsType<typeof 
             </Box>
           }
           <Box width={isMobileOnSize ? '100%' : '420px'} height='100%' overflow={isMobileOnSize ? 'auto' : 'hidden'} position={isMobileOnSize ? 'fixed' : 'relative'} display={isMobileOnSize ? 'flex' : 'block'} justifyContent={isMobileOnSize ? 'center' : ''} top={isMobileOnSize ? '85px' : 'inherit'} mt='24px' mb={isMobileOnSize ? '180px' : '0px'}>
-            {!isMobileOnSize && <ChartSwitch onChange={() => toggleShowTrading()} checked={showChart} />}
+            {!isMobileOnSize &&
+              <ChartSwitch onChange={() => toggleShowTrading()} checked={showChart} />
+            }
             <TradingBox assetId={assetId} />
           </Box>
         </Stack>

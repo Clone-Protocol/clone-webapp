@@ -1,7 +1,7 @@
 import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import BorrowPanel from './BorrowPanel'
 import PriceChart from '~/components/Liquidity/overview/PriceChart'
@@ -96,4 +96,4 @@ const StickyBox = styled(Box)`
   position: sticky;
   width: 100%;
 `
-export default withSuspense(BorrowContainer, <LoadingProgress />)
+export default withSuspense(BorrowContainer, <LoadingSkeleton />)

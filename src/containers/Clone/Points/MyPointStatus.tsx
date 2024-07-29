@@ -8,7 +8,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { BlackDefault, OpaqueDefault } from '~/components/Common/OpaqueArea'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { formatLocaleAmount } from '~/utils/numbers'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 // import BoltIcon from '@mui/icons-material/Bolt';
 // import PromoteDialog from '~/components/Points/PromoteDialog'
@@ -55,7 +55,7 @@ const MyPointStatus = () => {
       setIsGeneratingRefCode(true)
       const result = await fetchReferralCode({ userPubKey: publicKey })
       if (result?.referralCode) {
-        setReferralCode(result.referralCode.toString().padStart(6, '0'))
+        setReferralCode(result.referralCode?.toString().padStart(6, '0'))
         setReferralStatus(ReferralStatus.Generated)
       }
     } catch (e) {
@@ -371,4 +371,4 @@ const ReferralButton = styled(Button)`
   }
 `
 
-export default withSuspense(MyPointStatus, <LoadingProgress />)
+export default withSuspense(MyPointStatus, <LoadingSkeleton />)

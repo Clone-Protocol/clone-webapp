@@ -1,5 +1,6 @@
 import { Stack, Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 
 const CustomSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase': {
@@ -28,8 +29,9 @@ const label = { inputProps: { 'aria-label': 'ChartSwitch' } };
 export default function ChartSwitch({ checked = false, onChange }: { checked?: boolean, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
   {
     return (
-      <CustomStack direction='row' justifyContent='center' alignContent='center' gap='3px' pt='5px'>
+      <CustomStack direction='row' justifyContent='center' alignContent='center' pt='5px'>
         <CustomSwitch size='small' checked={checked} onChange={onChange} {...label} color="default" />
+        <EqualizerOutlinedIcon sx={{ color: '#c4b5fd', width: '18px' }} />
       </CustomStack>
     );
   }

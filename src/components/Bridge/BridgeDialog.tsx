@@ -19,9 +19,9 @@ const BridgeDialog = ({ open, handleClose }: { open: boolean, handleClose: () =>
   return (
     <>
       <Dialog open={open} onClose={close} TransitionComponent={FadeTransition} sx={{ overflowX: 'hidden' }}>
-        <DialogContent sx={{ backgroundColor: '#201c27', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: isInitStep ? '500px' : '540px', overflow: 'hidden', width: { xs: '100%', md: '350px' } }}>
+        <DialogContent sx={{ backgroundColor: '#201c27', borderRadius: '10px', paddingY: '15px', paddingX: '0px', height: isInitStep ? '500px' : '540px', overflow: 'hidden', width: { xs: '100%', md: '380px' } }}>
           <BoxWrapper>
-            <Box position='absolute' top='0px' width='100%' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#201c27' }}>
+            <Box position='absolute' top='0px' width='350px' paddingTop='15px' zIndex={999} sx={{ backgroundColor: '#201c27' }}>
               <Stack direction='row' justifyContent='space-between' >
                 {isInitStep ?
                   <TitleBox ml='25px' mt='10px'><Typography variant='p_lg'>Bridge</Typography></TitleBox>

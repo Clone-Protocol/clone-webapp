@@ -3,7 +3,7 @@ import { Stack, Box, Typography, useMediaQuery, Theme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { TabPanelForEdit, StyledTabs, CommonTab } from '~/components/Common/StyledTab'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import EditPanel from '~/containers/Liquidity/borrow/manage/EditPanel'
 import ClosePanel from '~/containers/Liquidity/borrow/manage/ClosePanel'
@@ -107,4 +107,4 @@ const StickyBox = styled(Box)`
   width: 100%;
 `
 
-export default withSuspense(ManageBorrow, <LoadingProgress />)
+export default withSuspense(ManageBorrow, <LoadingSkeleton />)
