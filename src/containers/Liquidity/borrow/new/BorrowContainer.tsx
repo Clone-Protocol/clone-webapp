@@ -1,7 +1,7 @@
 import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import BorrowPanel from './BorrowPanel'
 import PriceChart from '~/components/Liquidity/overview/PriceChart'
