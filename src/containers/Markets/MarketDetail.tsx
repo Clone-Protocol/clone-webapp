@@ -2,7 +2,7 @@ import { Box, Stack, Divider, Typography, useMediaQuery, Theme } from '@mui/mate
 import { styled } from '@mui/material/styles'
 import Chart from '~/components/Markets/MarketDetail/Chart'
 import Image from 'next/image'
-import { useMarketDetailQuery } from '~/features/Markets/MarketDetail.query'
+import { MarketDetail } from '~/features/Markets/MarketDetail.query'
 import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount, formatLocaleAmount } from '~/utils/numbers'
@@ -13,14 +13,10 @@ import { ON_USD } from '~/utils/constants'
 import { DEFAULT_ALL_INDEX } from '~/features/Portfolio/filterAtom'
 import LearnMoreIcon from 'public/images/learn-more.svg'
 
-const MarketDetail = ({ assetId }: { assetId: string }) => {
+const MarketDetail = ({ assetId, assetData }: { assetId: number, assetData: MarketDetail }) => {
 	const { publicKey } = useWallet()
 	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-	const { data: asset } = useMarketDetailQuery({
-		index: parseInt(assetId),
-		refetchOnMount: true,
-		enabled: true
-	})
+
 	const [myData, setMyData] = useState({
 		balance: 0,
 		value: 0,
@@ -38,7 +34,7 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 		if (myAssets && myAssets.length > 0) {
 			let foundItem = false
 			myAssets.forEach((myAsset) => {
-				if (myAsset.id === parseInt(assetId)) {
+				if (myAsset.id === assetId) {
 					setMyData({
 						balance: myAsset.assetBalance,
 						value: myAsset.onusdBalance,
@@ -60,21 +56,21 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 
 	return (
 		<>
-			{asset ? (
+			{assetData ? (
 				<Stack mb={2} direction="column" pl={isMobileOnSize ? 0 : 5} pt={isMobileOnSize ? 5 : 1} pb={1} maxWidth={isMobileOnSize ? '100%' : '750px'} px={isMobileOnSize ? 3 : 0}>
 					<Box>
 						<Box display="inline-flex" alignItems="center">
-							<Image src={asset.tickerIcon} width={30} height={30} alt={asset.tickerSymbol} />
+							<Image src={assetData.tickerIcon} width={30} height={30} alt={assetData.tickerSymbol} />
 							<Box ml='8px'>
-								<Typography variant="h3" fontWeight={500}>{asset.tickerName}</Typography>
+								<Typography variant="h3" fontWeight={500}>{assetData.tickerName}</Typography>
 							</Box>
 							<Box ml='8px'>
-								<Typography variant='h3' fontWeight={500} color='#8988a3'>{asset.tickerSymbol}</Typography>
+								<Typography variant='h3' fontWeight={500} color='#8988a3'>{assetData.tickerSymbol}</Typography>
 							</Box>
 						</Box>
 					</Box>
 
-					<Chart assetIndex={parseInt(assetId)} pythSymbol={asset.pythSymbol} />
+					<Chart assetIndex={assetId} pythSymbol={assetData.pythSymbol} />
 
 					<OverviewWrapper>
 						<Typography variant='h3' fontWeight={500}>Market Overview</Typography>
@@ -82,13 +78,13 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 							<Box width='160px'>
 								<Box><Typography variant='p' color='#8988a3'>Volume (24h)</Typography></Box>
 								<Box mt='8px'>
-									<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>${formatLocaleAmount(asset.volume)} {ON_USD}</Typography>
+									<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>${formatLocaleAmount(assetData.volume)} {ON_USD}</Typography>
 								</Box>
 							</Box>
 							<Box width='160px'>
 								<Box><Typography variant='p' color='#8988a3'>Current Liquidity (24h)</Typography></Box>
 								<Box mt='8px'>
-									<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>{formatDollarAmount(asset.avgLiquidity, 3)} {ON_USD}</Typography>
+									<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>{formatDollarAmount(assetData.avgLiquidity, 3)} {ON_USD}</Typography>
 								</Box>
 							</Box>
 						</Stack>
@@ -99,12 +95,12 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 							<StyledDivider />
 
 							<Box padding='10px'>
-								<Typography variant='h3' fontWeight={500}>My {asset.tickerSymbol}</Typography>
+								<Typography variant='h3' fontWeight={500}>My {assetData.tickerSymbol}</Typography>
 								<Stack direction={isMobileOnSize ? "column" : "row"} justifyContent="flex-start" spacing={isMobileOnSize ? 3 : 9} mt='25px'>
 									<Box width='160px'>
 										<Box><Typography variant='p' color='#8988a3'>Balance</Typography></Box>
 										<Box mt='8px'>
-											<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>{formatLocaleAmount(myData.balance, 4)} {asset.tickerSymbol}</Typography>
+											<Typography variant='h3' fontWeight={500} whiteSpace='nowrap'>{formatLocaleAmount(myData.balance, 4)} {assetData.tickerSymbol}</Typography>
 										</Box>
 									</Box>
 									<Box width='160px'>
@@ -127,9 +123,9 @@ const MarketDetail = ({ assetId }: { assetId: string }) => {
 					<StyledDivider />
 
 					<Box marginBottom='40px' padding='10px'>
-						<Typography variant='h3' fontWeight={500}>About {asset.tickerSymbol}</Typography>
-						<Box lineHeight={1} mt='8px'><Typography variant='p_lg'>{asset.detailOverview}</Typography></Box>
-						<a href={`https://docs.clone.so/clone-mainnet-guide/classets/${asset.tickerSymbol.toLowerCase()}`} target='_blank' rel="noreferrer"><Typography variant='p_lg' color='#c4b5fd' sx={{ ':hover': { textDecoration: 'underline' } }}>...read more</Typography> <Image src={LearnMoreIcon} alt='learnMore' style={{ marginBottom: '-3px' }} /></a>
+						<Typography variant='h3' fontWeight={500}>About {assetData.tickerSymbol}</Typography>
+						<Box lineHeight={1} mt='8px'><Typography variant='p_lg'>{assetData.detailOverview}</Typography></Box>
+						<a href={`https://docs.clone.so/clone-mainnet-guide/classets/${assetData.tickerSymbol.toLowerCase()}`} target='_blank' rel="noreferrer"><Typography variant='p_lg' color='#c4b5fd' sx={{ ':hover': { textDecoration: 'underline' } }}>...read more</Typography> <Image src={LearnMoreIcon} alt='learnMore' style={{ marginBottom: '-3px' }} /></a>
 					</Box>
 				</Stack>
 			) : (

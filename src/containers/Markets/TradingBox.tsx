@@ -8,17 +8,19 @@ import { SLIPPAGE } from '~/data/localstorage'
 import { ASSETS } from '~/data/assets'
 import dynamic from 'next/dynamic'
 import { RootMarketsDir } from '~/utils/constants'
+import { DefaultBalance, MarketDetail } from '~/features/Markets/MarketDetail.query'
 
 interface Props {
 	assetId: number
+	assetData: MarketDetail
+	defaultBalance: DefaultBalance
 }
 
-const TradingBox: React.FC<Props> = ({ assetId }) => {
+const TradingBox: React.FC<Props> = ({ assetId, assetData, defaultBalance }) => {
 	const router = useRouter()
 	const [showSearchAssetDlog, setShowSearchAssetDlog] = useState(false)
 	const [showOrderSetting, setShowOrderSetting] = useState(false)
 	const [slippage, setLocalSlippage] = useLocalStorage(SLIPPAGE, 0.5)
-	const assetIndex = assetId
 
 	const SearchAssetDialog = dynamic(() => import('~/components/Markets/TradingBox/Dialogs/SearchAssetDialog'), { ssr: false })
 	const SwapSettingDialog = dynamic(() => import('~/components/Markets/TradingBox/Dialogs/SwapSettingDialog'), { ssr: false })
@@ -36,7 +38,9 @@ const TradingBox: React.FC<Props> = ({ assetId }) => {
 	return (
 		<StyledPaper>
 			<TradingComp
-				assetIndex={assetIndex}
+				assetIndex={assetId}
+				assetData={assetData}
+				defaultBalance={defaultBalance}
 				slippage={slippage}
 				onShowOption={() => setShowOrderSetting(true)}
 				onShowSearchAsset={() => setShowSearchAssetDlog(true)}

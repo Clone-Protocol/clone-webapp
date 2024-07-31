@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useSuspenseQueries } from "@tanstack/react-query"
 import { CloneClient, fromCloneScale, fromScale } from "clone-protocol-sdk/sdk/src/clone"
 import { Collateral, Status } from "clone-protocol-sdk/sdk/generated/clone"
 import { assetMapping, ASSETS_DESC } from "src/data/assets"
@@ -9,6 +9,91 @@ import { useAtomValue } from "jotai"
 import { cloneClient, rpcEndpoint } from "../globalAtom"
 import { fetchPoolAnalytics } from "~/utils/fetch_netlify"
 import { AnchorProvider } from "@coral-xyz/anchor"
+import { useDataLoading } from "~/hooks/useDataLoading"
+import { getCollateralAccount, getTokenAccount } from "~/utils/token_accounts"
+import { calculatePoolAmounts } from "clone-protocol-sdk/sdk/src/utils"
+
+export const fetchDefaultBalance = async ({ index, setStartTimer, mainCloneClient, networkEndpoint }: { index: number, setStartTimer?: (start: boolean) => void, mainCloneClient?: CloneClient | null, networkEndpoint: string }) => {
+  console.log('fetchDefaultBalance')
+  // start timer in data-loading-indicator
+  if (setStartTimer) {
+    setStartTimer(false);
+    setStartTimer(true);
+  }
+
+  let program
+  if (mainCloneClient) {
+    program = mainCloneClient
+  } else {
+    const { cloneClient: cloneProgram } = await getCloneClient(networkEndpoint)
+    program = cloneProgram
+  }
+
+  let onusdVal = 0.0
+  let onassetVal = 0.0
+  let ammOnassetValue;
+  let ammCollateralValue;
+
+  const [pools, oracles, collateralAtaResult] = await Promise.allSettled([
+    program.getPools(), program.getOracles(), getCollateralAccount(program)
+  ]);
+
+  try {
+    if (collateralAtaResult.status === 'fulfilled' && collateralAtaResult.value.isInitialized) {
+      const onusdBalance = await program.provider.connection.getTokenAccountBalance(collateralAtaResult.value.address, "processed")
+      onusdVal = Number(onusdBalance.value.amount) / 10000000;
+    }
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
+    if (pools.status === 'fulfilled' && oracles.status === 'fulfilled') {
+      const pool = pools.value.pools[index]
+      const associatedTokenAccountInfo = await getTokenAccount(
+        pool.assetInfo.onassetMint,
+        program.provider.publicKey!,
+        program.provider.connection
+      );
+      const collateralScale = program.clone.collateral.scale
+
+      if (associatedTokenAccountInfo.isInitialized) {
+        const onassetBalance = await program.provider.connection.getTokenAccountBalance(associatedTokenAccountInfo.address, "processed")
+        onassetVal = Number(onassetBalance.value.amount) / 10000000;
+      }
+      const pythOraclePrices = await fetchPythOraclePrices(program.provider as AnchorProvider, oracles.value);
+      const oraclePrice = pythOraclePrices[pool.assetInfo.oracleInfoIndex]
+      const { poolCollateral, poolOnasset } = calculatePoolAmounts(
+        fromScale(pool.collateralIld, collateralScale),
+        fromCloneScale(pool.onassetIld),
+        fromScale(pool.committedCollateralLiquidity, collateralScale),
+        oraclePrice,
+        program.clone.collateral
+      )
+
+      ammOnassetValue = poolOnasset
+      ammCollateralValue = poolCollateral
+    }
+  } catch (e) {
+    console.error(e)
+  }
+
+  return {
+    onusdVal,
+    onassetVal,
+    ammOnassetValue,
+    ammCollateralValue
+  } as DefaultBalance
+}
+
+export interface DefaultBalance {
+  onusdVal: number
+  onassetVal: number
+  ammOnassetValue: number
+  ammCollateralValue: number
+}
+
+
 
 export const fetchMarketDetail = async ({
   index,
@@ -107,7 +192,6 @@ export const fetchMarketDetailDefault = (): MarketDetail => {
 interface GetProps {
   index: number
   refetchOnMount?: boolean | "always"
-  enabled?: boolean
 }
 
 export interface MarketDetail {
@@ -137,23 +221,36 @@ export interface PairData {
   tickerSymbol: string
 }
 
-export function useMarketDetailQuery({ index, refetchOnMount, enabled = true }: GetProps) {
+export function useMarketDetailQuery({ index, refetchOnMount }: GetProps) {
+  const { setStartTimer } = useDataLoading()
   const mainCloneClient = useAtomValue(cloneClient)
   const networkEndpoint = useAtomValue(rpcEndpoint)
-  let queryFunc
-  try {
-    queryFunc = () => fetchMarketDetail({ index, mainCloneClient, networkEndpoint })
-  } catch (e) {
-    console.error(e)
-    queryFunc = () => fetchMarketDetailDefault()
+  // let queryFunc
+  // try {
+  //   queryFunc = () => fetchMarketDetail({ index, mainCloneClient, networkEndpoint })
+  // } catch (e) {
+  //   console.error(e)
+  //   queryFunc = () => fetchMarketDetailDefault()
+  // }
+
+  let queryFuncs = []
+  queryFuncs.push({ queryKey: ["marketDetail", index], queryFn: () => fetchMarketDetail({ index, mainCloneClient, networkEndpoint }), refetchOnMount, refetchInterval: REFETCH_CYCLE, refetchIntervalInBackground: true })
+  queryFuncs.push({ queryKey: ["defaultBalance", index], queryFn: () => fetchDefaultBalance({ index, setStartTimer, mainCloneClient, networkEndpoint }), refetchOnMount, refetchInterval: REFETCH_CYCLE, refetchIntervalInBackground: true })
+
+  const data = useSuspenseQueries({
+    queries: queryFuncs,
+  })
+
+  return {
+    marketDetailSuspenseQuery: data[0],
+    defaultBalanceSuspenseQuery: data[1]
   }
 
-  return useQuery({
-    queryKey: ["marketDetail", index],
-    queryFn: queryFunc,
-    refetchOnMount,
-    refetchInterval: REFETCH_CYCLE,
-    refetchIntervalInBackground: true,
-    enabled,
-  })
+  // return useSuspenseQuery({
+  //   queryKey: ["marketDetail", index],
+  //   queryFn: queryFunc,
+  //   refetchOnMount,
+  //   refetchInterval: REFETCH_CYCLE,
+  //   refetchIntervalInBackground: true
+  // })
 }

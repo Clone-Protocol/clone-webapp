@@ -11,11 +11,10 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import OrderDetails from './OrderDetails'
 import RateLoadingIndicator from './RateLoadingIndicator'
 import { useTradingMutation } from '~/features/Markets/Trading.mutation'
-import { useBalanceQuery } from '~/features/Markets/Balance.query'
 import { useBalanceQuery as useMyBalanceQuery } from '~/features/Portfolio/Balance.query'
 import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp';
 import KeyboardArrowUpSharpIcon from '@mui/icons-material/KeyboardArrowUpSharp';
-import { PairData, useMarketDetailQuery } from '~/features/Markets/MarketDetail.query'
+import { DefaultBalance, MarketDetail, PairData } from '~/features/Markets/MarketDetail.query'
 import { CLONE_TOKEN_SCALE } from 'clone-protocol-sdk/sdk/src/clone'
 import { Collateral as StableCollateral, collateralMapping } from '~/data/assets'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
@@ -43,6 +42,8 @@ export interface TradingData {
 
 interface Props {
   assetIndex: number
+  assetData: MarketDetail
+  defaultBalance: DefaultBalance
   slippage: number
   onShowOption: () => void
   onShowSearchAsset: () => void
@@ -53,7 +54,7 @@ const round = (n: number, decimals: number) => {
   return Math.round(n * factor) / factor
 }
 
-const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onShowSearchAsset }) => {
+const TradingComp: React.FC<Props> = ({ assetIndex, assetData, defaultBalance, slippage, onShowOption, onShowSearchAsset }) => {
   const [loading, setLoading] = useState(false)
   const { publicKey } = useWallet()
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -73,18 +74,6 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
     tickerName: onUSDInfo.collateralName,
     tickerSymbol: onUSDInfo.collateralSymbol,
   }
-
-  const { data: balance } = useBalanceQuery({
-    index: assetIndex,
-    refetchOnMount: true,
-    enabled: true
-  });
-
-  const { data: assetData, refetch: refetchDetail } = useMarketDetailQuery({
-    index: assetIndex,
-    refetchOnMount: true,
-    enabled: true
-  })
 
   const { data: myBalance, refetch } = useMyBalanceQuery({
     userPubKey: publicKey,
@@ -129,7 +118,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
     setOpenOrderDetails(false)
     initData()
     refetch()
-    refetchDetail()
+    // refetchDetail()
     trigger()
   }
 
@@ -137,7 +126,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
     setOpenOrderDetails(false)
     initData()
     refetch()
-    refetchDetail()
+    // refetchDetail()
     trigger()
   }, [assetIndex])
 
@@ -189,8 +178,8 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   }
 
   const getDefaultPrice = () => {
-    const ammCollateralValue = balance?.ammCollateralValue!
-    const ammOnassetValue = balance?.ammOnassetValue!
+    const ammCollateralValue = defaultBalance?.ammCollateralValue!
+    const ammOnassetValue = defaultBalance?.ammOnassetValue!
     return ammCollateralValue / ammOnassetValue
   }
 
@@ -206,7 +195,7 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
   const refreshBalance = () => {
     if (isEnabledRestart) {
       refetch();
-      refetchDetail()
+      // refetchDetail()
       setRestartTimer(!restartTimer);
 
       setIsEnabledRestart(false)
@@ -278,7 +267,6 @@ const TradingComp: React.FC<Props> = ({ assetIndex, slippage, onShowOption, onSh
                         ticker={fromPair.tickerSymbol}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                           const usdiAmt = parseFloat(event.currentTarget.value)
-                          // console.log('d', event.currentTarget.value)
                           field.onChange(usdiAmt)
                           calculateTotalAmountByFrom(usdiAmt)
                         }}
