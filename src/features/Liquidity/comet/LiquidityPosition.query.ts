@@ -125,7 +125,6 @@ interface GetProps {
 export function useLiquidityDetailQuery({ userPubKey, index, refetchOnMount, enabled = true }: GetProps) {
 	const wallet = useAnchorWallet()
 	const { getCloneApp } = useClone()
-	// console.log('useLiquidityDetailQuery start')
 	if (wallet) {
 		return useQuery({
 			queryKey: ['liquidityPosition', wallet, userPubKey, index],

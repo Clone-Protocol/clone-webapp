@@ -18,8 +18,7 @@ const GridAssets: React.FC<Props> = ({ onChoose, searchTerm }) => {
 		filter: 'all',
 		refetchOnMount: true,
 		searchTerm: searchTerm || '',
-		filterPoolStatus: true,
-		enabled: true
+		filterPoolStatus: true
 	})
 
 	const handleChoose = useCallback((params: GridRowParams) => {

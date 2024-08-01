@@ -33,7 +33,7 @@ const OnAssetList: React.FC<Props> = ({ assets }) => {
       router.push(`${RootMarketsDir}/trade/${ASSETS[params.row.id].ticker}`)
     }
   }, [])
-  const totalAsset = assets.reduce((acc, item) => acc + item.onusdBalance, 0)
+  const totalAsset = assets?.reduce((acc, item) => acc + item.onusdBalance, 0)
 
   let columns: GridColDef[] = [
     {

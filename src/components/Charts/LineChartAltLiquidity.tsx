@@ -57,7 +57,6 @@ const LineChartAlt: React.FC<LineChartProps> = ({
       }
 
       const formattedTime = dayjs(payload[0].payload.time).format('MMM D, h:mm A')
-      // if (setLabel && label !== formattedTime) setLabel(formattedTime)
       return (
         <Box sx={{ fontSize: '12px', color: '#8988a3' }}>
           <p>{`${formattedTime}`}</p>
@@ -97,15 +96,6 @@ const LineChartAlt: React.FC<LineChartProps> = ({
                 <stop offset="100%" stopColor={darken(0.29, color)} stopOpacity={0.5} />
               </linearGradient>
             </defs>
-            {/* <XAxis
-            dataKey="time"
-            axisLine={false}
-            tickLine={false}
-            color="#4fe5ff"
-            fontSize="8px"
-            tickFormatter={(time) => dayjs(time).format('DD')}
-            minTickGap={10}
-          /> */}
             <YAxis
               type="number"
               fontSize="10px"

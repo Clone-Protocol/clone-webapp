@@ -20,7 +20,7 @@ const QueryProvider = ({ children }: { children: any }) => {
 		defaultOptions: {
 			queries: {
 				staleTime: 1000 * 60 * 5,
-				suspense: true,
+				// suspense: true,
 			},
 		},
 	}))

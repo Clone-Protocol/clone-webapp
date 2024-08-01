@@ -225,13 +225,6 @@ export function useMarketDetailQuery({ index, refetchOnMount }: GetProps) {
   const { setStartTimer } = useDataLoading()
   const mainCloneClient = useAtomValue(cloneClient)
   const networkEndpoint = useAtomValue(rpcEndpoint)
-  // let queryFunc
-  // try {
-  //   queryFunc = () => fetchMarketDetail({ index, mainCloneClient, networkEndpoint })
-  // } catch (e) {
-  //   console.error(e)
-  //   queryFunc = () => fetchMarketDetailDefault()
-  // }
 
   let queryFuncs = []
   queryFuncs.push({ queryKey: ["marketDetail", index], queryFn: () => fetchMarketDetail({ index, mainCloneClient, networkEndpoint }), refetchOnMount, refetchInterval: REFETCH_CYCLE, refetchIntervalInBackground: true })
@@ -245,12 +238,4 @@ export function useMarketDetailQuery({ index, refetchOnMount }: GetProps) {
     marketDetailSuspenseQuery: data[0],
     defaultBalanceSuspenseQuery: data[1]
   }
-
-  // return useSuspenseQuery({
-  //   queryKey: ["marketDetail", index],
-  //   queryFn: queryFunc,
-  //   refetchOnMount,
-  //   refetchInterval: REFETCH_CYCLE,
-  //   refetchIntervalInBackground: true
-  // })
 }

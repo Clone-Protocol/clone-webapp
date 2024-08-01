@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import CometPanel from './CometPanel'
 import { useRouter } from 'next/navigation'
@@ -22,8 +22,8 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 	const [assetIndex, setAssetIndex] = useState(0)
 	const [showChart, setShowChart] = useState(true)
 	const [openChooseLiquidity, setOpenChooseLiquidity] = useState(false)
-	const ChooseLiquidityPoolsDialog = dynamic(() => import('./Dialogs/ChooseLiquidityPoolsDialog'), { ssr: false })
 	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+	const ChooseLiquidityPoolsDialog = dynamic(() => import('./Dialogs/ChooseLiquidityPoolsDialog'), { ssr: false })
 
 	useMemo(() => {
 		if (assetTicker) {
@@ -31,7 +31,6 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 				setAssetIndex(AssetTickers[assetTicker as keyof typeof AssetTickers])
 			} else {
 				setAssetIndex(DEFAULT_ASSET_ID)
-				// router.replace(DEFAULT_LIQUIDITY_ASSET_LINK)
 			}
 		}
 	}, [assetTicker])
@@ -87,7 +86,7 @@ const AssetView = ({ assetTicker }: { assetTicker: string }) => {
 					<RightBoxWrapper width={isMobileOnSize ? '100%' : '472px'} py={isMobileOnSize ? '0px' : '8px'} bgcolor={isMobileOnSize ? '#0f0e14' : 'transparent'} zIndex={99}>
 						<StickyBox top={isMobileOnSize ? '0px' : '100px'} px={isMobileOnSize ? '15px' : '0px'} py='10px'>
 							<PriceChart assetIndex={assetIndex} publicKey={publicKey} priceTitle='Oracle Price' />
-							{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} />}
+							{publicKey && assetData && <PoolAnalytics tickerSymbol={assetData.tickerSymbol} publicKey={publicKey} />}
 						</StickyBox>
 					</RightBoxWrapper>
 				}
@@ -116,4 +115,4 @@ const StickyBox = styled(Box)`
   position: sticky;
 `
 
-export default withSuspense(AssetView, <LoadingProgress />)
+export default withSuspense(AssetView, <LoadingSkeleton />)

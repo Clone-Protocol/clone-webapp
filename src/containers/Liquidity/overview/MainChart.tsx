@@ -4,7 +4,6 @@ import { Box } from '@mui/material'
 import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount } from '~/utils/numbers'
-// import LineChartAlt from '~/components/Charts/LineChartAlt'
 import { StyledTabs, StyledTab } from '~/components/Charts/StyledTab'
 import { TimeTabs, TimeTab, FilterTimeMap, FilterTime } from '~/components/Charts/TimeTabs'
 import { useTotalLiquidityQuery, useTotalValueLockedQuery, useTotalVolumeQuery } from '~/features/Chart/Liquidity.query'
@@ -19,6 +18,7 @@ const MainChart: React.FC = () => {
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue)
+    refetchLiquidity()
   }
   const handleFilterChange = (event: React.SyntheticEvent, newValue: FilterTime) => {
     setFilterTime(newValue)
@@ -30,7 +30,7 @@ const MainChart: React.FC = () => {
     enabled: tab === 0
   })
 
-  const { data: totalLiquidityDay } = useTotalLiquidityQuery({
+  const { data: totalLiquidityDay, refetch: refetchLiquidity } = useTotalLiquidityQuery({
     timeframe: filterTime,
     refetchOnMount: false,
     enabled: tab === 1

@@ -10,6 +10,8 @@ import { Connection } from '@solana/web3.js'
 export const fetchOraclePriceHistory = async ({ assetIndex, timeframe, pythSymbol, networkEndpoint }: { assetIndex: number, timeframe: FilterTime, pythSymbol: string | undefined, networkEndpoint: string | undefined }) => {
   if (!pythSymbol) return null
 
+  console.log('fetchOraclePriceHistory')
+
   let chartData = []
   let currentPrice
   let rateOfPrice

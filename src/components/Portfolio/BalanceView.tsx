@@ -16,7 +16,6 @@ interface Props {
 const BalanceView: React.FC<Props> = ({ data }) => {
 	const [selectedFilter, setSelectedFilter] = useAtom(filterState)
 	const [selectedTitle, setSelectedTitle] = useState('Portfolio')
-	// const [selectedIdx, setSelectedIdx] = useState(DEFAULT_ALL_INDEX)
 	const [selectedonusdAmount, setSelectedonusdAmount] = useState(0)
 
 	const newData = data.filter((item) => item !== undefined)
@@ -24,14 +23,12 @@ const BalanceView: React.FC<Props> = ({ data }) => {
 	useEffect(() => {
 		if (selectedFilter === DEFAULT_ALL_INDEX) {
 			setSelectedTitle('Portfolio')
-			// setSelectedIdx(DEFAULT_ALL_INDEX)
 			const totaliAsset = newData.reduce((acc, item) => acc + item.onusdAmount, 0)
 			setSelectedonusdAmount(totaliAsset);
 		} else {
 			newData.forEach((item, index) => {
 				if (item.key === selectedFilter) {
 					setSelectedTitle(item.name)
-					// setSelectedIdx(item.key)
 					setSelectedonusdAmount(item.onusdAmount)
 					return;
 				}
@@ -71,17 +68,6 @@ const BalanceView: React.FC<Props> = ({ data }) => {
 						})}
 					</>
 				}
-				{/* <Box sx={{ opacity: '0.5', lineHeight: '1.2', }}>
-					{Object.keys(FilterTypeMap).filter((v, index) => index !== 0).map((key: string) => (
-							<Stack direction='row' gap={3} key={key}>
-								<Box display="flex" alignItems='center' gap={2} width='120px'>
-									<ColorIndicator sx={{ backgroundColor: FilterTypeColorMap[key] }} />
-									<Typography variant='p_lg' mt='4px'>{FilterTypeMap[key]}</Typography>
-								</Box>
-								<Box mt='4px'><Typography variant='p_lg'>0%</Typography></Box>
-							</Stack>
-						))}
-				</Box> */}
 			</Box>
 		</StyledPaper>
 	)

@@ -8,7 +8,7 @@ import { Pools, Status } from 'clone-protocol-sdk/sdk/generated/clone'
 import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { showPoolStatus } from '~/components/Common/PoolStatus'
 
-const fetchIassetBalances = async (program: CloneClient, pools: Pools): Promise<number[]> => {
+const fetchAssetBalances = async (program: CloneClient, pools: Pools): Promise<number[]> => {
 	const balancesQueries = await Promise.allSettled(
 		pools.pools.slice(0, MAX_POOLS_FOR_SHOW).map(async (pool) => {
 			const ata = await getAssociatedTokenAddress(
@@ -35,7 +35,7 @@ export const fetchAssets = async ({ program, userPubKey }: { program: CloneClien
 	console.log('fetchAssets - Borrow')
 
 	const pools = await program.getPools()
-	const balances = await fetchIassetBalances(program, pools);
+	const balances = await fetchAssetBalances(program, pools);
 
 	const result: AssetList[] = []
 	for (let index = 0; index < MAX_POOLS_FOR_SHOW; index++) {

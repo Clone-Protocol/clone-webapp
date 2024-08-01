@@ -44,6 +44,7 @@ export const fetchTotalLiquidity = async ({
   timeframe: FilterTime
   networkEndpoint: string
 }) => {
+  console.log('fetchTotalLiquidity')
   let program
   if (mainCloneClient) {
     program = mainCloneClient
@@ -97,6 +98,8 @@ export const fetchTotalLiquidity = async ({
 }
 
 export const fetchTotalVolume = async ({ timeframe }: { timeframe: FilterTime }) => {
+  console.log('fetchTotalVolume')
+
   const [daysLookback, filter, interval, intervalMs] = getTimeFrames(timeframe)
   const nowInMs = new Date().getTime()
   const lookbackInMs = nowInMs - daysLookback * 86400000
@@ -146,6 +149,7 @@ export const fetchCurrentTVL = async ({
   mainCloneClient: CloneClient
   networkEndpoint: string
 }) => {
+  console.log('fetchCurrentTVL')
   let program: CloneClient
   if (mainCloneClient) {
     program = mainCloneClient

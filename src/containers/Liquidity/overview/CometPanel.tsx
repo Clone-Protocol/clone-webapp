@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import withSuspense from '~/hocs/withSuspense'
 import Image from 'next/image'
-import { LoadingButton, LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingButton, LoadingSkeleton } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Box, Stack, FormHelperText, Typography, useMediaQuery, Theme } from '@mui/material'
 import { useForm } from 'react-hook-form'
@@ -88,19 +88,6 @@ const CometPanel = ({ assetIndex, openChooseLiquidityDialog }: { assetIndex: num
       setMintRatio(newValue)
     }
   }
-
-  // const validateMintAmount = () => {
-  //   if (!isDirty) {
-  //     clearErrors('mintAmount')
-  //     return
-  //   }
-
-  //   if (!mintAmount || mintAmount <= 0) {
-  //     return 'Mint amount should be above zero'
-  //   } else if (mintAmount >= maxMintable) {
-  //     return 'Mint amount cannot exceed the max mintable amount'
-  //   }
-  // }
 
   useEffect(() => {
     if (positionInfo) {

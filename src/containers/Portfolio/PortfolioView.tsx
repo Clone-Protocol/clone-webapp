@@ -22,7 +22,7 @@ interface ResultAsset {
 const PortfolioView = () => {
 	const { publicKey } = useWallet()
 	const [selectedFilter, setSelectedFilter] = useAtom(filterState)
-	const filterType = selectedFilter //as FilterType
+	const filterType = selectedFilter
 	const [dataPie, setDataPie] = useState<PieItem[]>([])
 
 	const { data: balance } = useBalanceQuery({
@@ -33,7 +33,6 @@ const PortfolioView = () => {
 
 	const { data: assets } = useUserBalanceQuery({
 		userPubKey: publicKey,
-		// filter: filterType,
 		selectedFilter,
 		refetchOnMount: 'always',
 		enabled: publicKey != null
@@ -46,24 +45,17 @@ const PortfolioView = () => {
 			const result: ResultAsset[] = []
 			let totalBalance = onusdBalance
 			assets?.filter(asset => !showPoolStatus(asset.status)).forEach((asset) => {
-				// if (result[asset.assetType]) {
-				// 	result[asset.assetType].val += asset.onusdBalance
-				// } else {
 				result[asset.id] = {
 					id: asset.id,
 					name: asset.tickerSymbol,
 					val: asset.onusdBalance
 				}
-				// }
 				totalBalance += asset.onusdBalance
 			})
 
 			const ordered = result.sort((a, b) => a.val < b.val ? 1 : -1)
 			const finalPie = ordered.map((item) => {
 				const percentVal = totalBalance > 0 ? Math.round(item.val * 100 / totalBalance) : 0
-				// if (item.id === AssetType.Crypto) {
-				// 	return { key: 'onCrypto', name: FilterTypeMap.onCrypto, value: percentVal, onusdAmount: item.val } as PieItem
-				// }
 				return { key: item.id, name: item.name, value: percentVal, onusdAmount: item.val } as PieItem
 			})
 
@@ -72,7 +64,6 @@ const PortfolioView = () => {
 					{ key: STABLE_COIN_INDEX, name: FilterTypeMap.stableCoin, value: Math.round(100 * onusdBalance / totalBalance), onusdAmount: onusdBalance } as PieItem
 				)
 			}
-			// console.log('f', finalPie)
 			setDataPie(finalPie)
 		}
 	}, [assets, balance?.onusdVal])

@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import { useDataLoading } from '~/hooks/useDataLoading'
 
 export const REFETCH_CYCLE = 60000
-export const REFETCH_SHORT_CYCLE = 12000
+export const REFETCH_SHORT_CYCLE = 13000
 
 const RateLoadingIndicator = ({ restartTimer }: { restartTimer: boolean }) => {
   const { startTimer } = useDataLoading()

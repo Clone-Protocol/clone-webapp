@@ -5,9 +5,10 @@ import InfoTooltip from '~/components/Common/InfoTooltip'
 import { TooltipTexts } from '~/data/tooltipTexts'
 import { ON_USD } from '~/utils/constants'
 import { formatLocaleAmount } from '~/utils/numbers'
+import { PublicKey } from '@solana/web3.js'
 
-const TxtPriceRate = ({ rate }: { rate: number }) => {
-  if (isFinite(rate)) {
+const TxtPriceRate = ({ rate }: { rate: number | undefined }) => {
+  if (rate !== undefined && isFinite(rate)) {
     return (
       <Typography variant="p" color={rate >= 0 ? '#c4b5fd' : '#258ded'} ml='5px'>  {rate >= 0 ? '+' : '-'}{Math.abs(rate).toLocaleString()}%</Typography>
     )
@@ -16,11 +17,11 @@ const TxtPriceRate = ({ rate }: { rate: number }) => {
   }
 }
 
-const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
+const PoolAnalytics = ({ tickerSymbol, publicKey }: { tickerSymbol: string, publicKey: PublicKey }) => {
   const { data: resultData } = usePoolAnalyticsQuery({
     tickerSymbol,
     refetchOnMount: true,
-    enabled: tickerSymbol != null
+    enabled: tickerSymbol != null && publicKey != null
   })
 
   return (
@@ -31,13 +32,13 @@ const PoolAnalytics = ({ tickerSymbol }: { tickerSymbol: string }) => {
           <Typography variant="p" color='#8988a3'>Total Liquidity</Typography>
           <InfoTooltip title={TooltipTexts.totalLiquidity} color='#8988a3' />
         </Box>
-        <Box mt='-4px'><Typography variant="p_xlg">${formatLocaleAmount(resultData?.totalLiquidity)} USD</Typography> <TxtPriceRate rate={resultData!.liquidityGainPct} /></Box>
+        <Box mt='-4px'><Typography variant="p_xlg">${formatLocaleAmount(resultData?.totalLiquidity)} USD</Typography> <TxtPriceRate rate={resultData?.liquidityGainPct} /></Box>
       </DataBox>
       <DataBox>
         <Box>
           <Typography variant="p" color='#8988a3'>24h Trading Volume</Typography>
         </Box>
-        <Box><Typography variant="p_xlg">${formatLocaleAmount(resultData?.tradingVol24h)} USD</Typography> <TxtPriceRate rate={resultData!.tradingVolGainPct} /></Box>
+        <Box><Typography variant="p_xlg">${formatLocaleAmount(resultData?.tradingVol24h)} USD</Typography> <TxtPriceRate rate={resultData?.tradingVolGainPct} /></Box>
       </DataBox>
       <DataBox>
         <Box>

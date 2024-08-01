@@ -3,7 +3,7 @@ import { Box, Theme, Typography, useMediaQuery } from '@mui/material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { useAssetsQuery } from '~/features/Markets/Assets.query'
 import { FilterType } from '~/data/filter'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { Grid, CellTicker } from '~/components/Common/DataGrid'
@@ -20,15 +20,13 @@ import { PoolStatusButton, showPoolStatus } from '~/components/Common/PoolStatus
 
 const MarketList = () => {
 	const router = useRouter()
-	// const [filter, setFilter] = useState<FilterType>('all')
 	const filter: FilterType = 'all'
 
 	const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 	const { data: assets } = useAssetsQuery({
 		filter,
 		refetchOnMount: true,
-		searchTerm: '',
-		enabled: true
+		searchTerm: ''
 	})
 
 	const Change24hComp = ({ change24h }: { change24h: number }) => {
