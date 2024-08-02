@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { CloneClient, fromCloneScale, fromScale } from 'clone-protocol-sdk/sdk/src/clone'
 import { ASSETS, assetMapping } from 'src/data/assets'
@@ -118,24 +118,24 @@ export interface PositionInfo {
 interface GetProps {
 	userPubKey: PublicKey | null
 	index: number
+	open?: boolean
 	refetchOnMount?: boolean | "always"
 	enabled?: boolean
 }
 
-export function useLiquidityDetailQuery({ userPubKey, index, refetchOnMount, enabled = true }: GetProps) {
+export function useLiquidityDetailQuery({ userPubKey, index, open = false, refetchOnMount, enabled = true }: GetProps) {
 	const wallet = useAnchorWallet()
 	const { getCloneApp } = useClone()
-	if (wallet) {
-		return useQuery({
+	if (wallet && open) {
+		return useSuspenseQuery({
 			queryKey: ['liquidityPosition', wallet, userPubKey, index],
 			queryFn: async () => fetchLiquidityDetail({ program: await getCloneApp(wallet), userPubKey, index }),
 			refetchOnMount,
 			refetchInterval: REFETCH_CYCLE,
 			refetchIntervalInBackground: true,
-			enabled,
 		})
 	} else {
-		return useQuery({ queryKey: ['liquidityPosition'], queryFn: () => { return null } })
+		return useSuspenseQuery({ queryKey: ['liquidityPosition'], queryFn: () => { return null } })
 	}
 }
 

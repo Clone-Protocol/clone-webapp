@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import { useWallet } from '@solana/wallet-adapter-react'
 import withSuspense from '~/hocs/withSuspense'
 import { useUserTotalBalanceQuery } from '~/features/Portfolio/UserBalance.query';

@@ -55,7 +55,6 @@ const LineChartAlt: React.FC<LineChartProps> = ({
       }
 
       const formattedTime = dayjs(payload[0].payload.time).format('MMM D, h:mm A')
-      // if (setLabel && label !== formattedTime) setLabel(formattedTime)
       return (
         <Box sx={{ fontSize: '12px', color: '#8988a3' }}>
           <p className="label">{`${formattedTime}`}</p>

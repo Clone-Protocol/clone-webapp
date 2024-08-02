@@ -20,7 +20,6 @@ const GridLiquidityPool: React.FC<Props> = ({ onChoose, noFilter, searchTerm }) 
 		userPubKey: publicKey,
 		refetchOnMount: "always",
 		searchTerm: searchTerm || '',
-		enabled: publicKey != null,
 		noFilter: false
 	})
 

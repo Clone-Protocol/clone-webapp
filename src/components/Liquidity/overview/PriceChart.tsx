@@ -24,11 +24,10 @@ const PriceChart: React.FC<Props> = ({ assetIndex, publicKey, priceTitle }) => {
     timeframe: "24h",
     assetIndex,
     pythSymbol: assetData?.pythSymbol,
-    refetchOnMount: true,
-    enabled: assetData != null && publicKey != null,
+    refetchOnMount: true
   })
 
-  return priceHistory ? (
+  return publicKey ? (
     <>
       <Box display="flex" alignItems='center'>
         <Image src={assetData.tickerIcon} width={30} height={30} alt={assetData.tickerSymbol!} />
@@ -41,20 +40,20 @@ const PriceChart: React.FC<Props> = ({ assetIndex, publicKey, priceTitle }) => {
       </Box>
       <Box display="flex" alignItems="center" my='10px'>
         <Typography variant="h2" fontWeight={500}>
-          ${formatLocaleAmount(priceHistory.currentPrice, 3)}
+          ${priceHistory ? formatLocaleAmount(priceHistory.currentPrice, 3) : 0.0}
         </Typography>
         <Typography variant="p_lg" color="#8988a3" ml="10px">
           {priceTitle}
         </Typography>
       </Box>
-      {priceHistory.rateOfPrice && (
+      {priceHistory?.rateOfPrice && (
         <Typography variant="p_lg" color="#c4b5fd">
           {priceHistory.rateOfPrice >= 0 ? "+" : "-"}$
           {Math.abs(priceHistory.rateOfPrice).toFixed(3)} ({priceHistory.percentOfRate?.toFixed(2)}%)
           past 24h
         </Typography>
       )}
-      <LineChart data={priceHistory.chartData} />
+      <LineChart data={priceHistory?.chartData} />
     </>
   ) : (
     <DefaultAnalyticsBox>
@@ -75,4 +74,4 @@ const DefaultAnalyticsBox = styled(Box)`
   color: ${(props) => props.theme.basis.shadowGloom};
 `
 
-export default withSuspense(PriceChart, <Box mt='10px'><LoadingSkeleton /></Box>)
+export default withSuspense(PriceChart, <LoadingSkeleton height='300px' />)

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { PublicKey } from "@solana/web3.js"
 import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
 import { useClone } from "~/hooks/useClone"
@@ -74,7 +74,6 @@ export interface PoolList {
 export function useLiquidityPoolsQuery({
   userPubKey,
   refetchOnMount,
-  enabled = true,
   searchTerm,
   noFilter = true,
 }: GetPoolsProps) {
@@ -82,13 +81,12 @@ export function useLiquidityPoolsQuery({
   const { getCloneApp } = useClone()
 
   if (wallet) {
-    return useQuery({
+    return useSuspenseQuery({
       queryKey: ["liquidityPools", wallet, userPubKey],
       queryFn: async () => fetchPools({ program: await getCloneApp(wallet), userPubKey, noFilter }),
       refetchOnMount,
       refetchInterval: REFETCH_CYCLE,
       refetchIntervalInBackground: true,
-      enabled,
       select: (assets) => {
         let filteredAssets = assets
         if (filteredAssets) {
@@ -105,6 +103,6 @@ export function useLiquidityPoolsQuery({
     }
     )
   } else {
-    return useQuery({ queryKey: ["liquidityPools"], queryFn: () => [] })
+    return useSuspenseQuery({ queryKey: ["liquidityPools"], queryFn: () => [] })
   }
 }

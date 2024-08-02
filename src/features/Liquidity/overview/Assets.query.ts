@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { CloneClient } from "clone-protocol-sdk/sdk/src/clone"
 import { assetMapping, AssetType, MAX_POOLS_FOR_SHOW } from '~/data/assets'
 import { FilterType } from '~/data/filter'
@@ -87,7 +87,6 @@ interface GetAssetsProps {
 	filter: FilterType
 	searchTerm: string
 	refetchOnMount?: boolean | "always"
-	enabled?: boolean
 }
 
 export interface AssetList {
@@ -106,7 +105,7 @@ export interface AssetList {
 	status: Status
 }
 
-export function useAssetsQuery({ filter, searchTerm, refetchOnMount, enabled = true }: GetAssetsProps) {
+export function useAssetsQuery({ filter, searchTerm, refetchOnMount }: GetAssetsProps) {
 	const setShowPythBanner = useSetAtom(showPythBanner)
 	const mainCloneClient = useAtomValue(cloneClient)
 	const networkEndpoint = useAtomValue(rpcEndpoint)
@@ -119,13 +118,12 @@ export function useAssetsQuery({ filter, searchTerm, refetchOnMount, enabled = t
 		queryFunc = () => []
 	}
 
-	return useQuery({
+	return useSuspenseQuery({
 		queryKey: ['assets'],
 		queryFn: queryFunc,
 		refetchOnMount,
 		refetchInterval: REFETCH_CYCLE,
 		refetchIntervalInBackground: true,
-		enabled,
 		select: (assets) => {
 			let filteredAssets = assets
 

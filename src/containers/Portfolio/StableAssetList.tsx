@@ -2,7 +2,7 @@ import { Box, Stack, Button, Typography, useMediaQuery, Theme } from '@mui/mater
 import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { Grid, CellTicker, CustomNoOnAssetOverlay, CustomNoRowsOverlay } from '~/components/Common/DataGrid'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { Balance } from '~/features/Portfolio/Balance.query'
 import { useWallet } from '@solana/wallet-adapter-react'
@@ -148,4 +148,4 @@ const GetUSDButton = styled(Button)`
 
 columns = columns.map((col) => Object.assign(col, { hideSortIcons: true, filterable: false }))
 
-export default withSuspense(StableAssetList, <LoadingProgress />)
+export default withSuspense(StableAssetList, <LoadingSkeleton />)

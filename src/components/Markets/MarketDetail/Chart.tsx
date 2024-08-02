@@ -9,6 +9,8 @@ import ArrowDownward from 'public/images/arrow-down-red.svg'
 import PoweredByPyth from 'public/images/powered_pyth.svg'
 import { usePriceHistoryQuery } from '~/features/Chart/PriceByAsset.query'
 import { ON_USD } from '~/utils/constants'
+import { LoadingSkeleton } from '~/components/Common/Loading'
+import withSuspense from '~/hocs/withSuspense'
 
 const Chart = ({ assetIndex, pythSymbol }: { assetIndex: number, pythSymbol: string }) => {
   const [filterTime, setFilterTime] = useState<FilterTime>('7d')
@@ -18,8 +20,7 @@ const Chart = ({ assetIndex, pythSymbol }: { assetIndex: number, pythSymbol: str
     timeframe: filterTime,
     assetIndex,
     pythSymbol,
-    refetchOnMount: true,
-    enabled: pythSymbol != null
+    refetchOnMount: true
   })
 
   const handleFilterChange = useCallback((event: React.SyntheticEvent, newValue: FilterTime) => {
@@ -45,43 +46,43 @@ const Chart = ({ assetIndex, pythSymbol }: { assetIndex: number, pythSymbol: str
 
 
   return (
-    priceHistory ?
-      <Box position='relative'>
-        <LineChartAlt
-          data={priceHistory.chartData}
-          value={chartHover}
-          setValue={setChartHover}
-          maxY={priceHistory?.maxValue}
-          minY={priceHistory?.minValue}
-          topLeft={
-            <Box mb='25px'>
-              <Box display='flex' alignItems='baseline'>
-                <Typography variant='h1' fontWeight={500}>{formatDollarAmount(chartHover, 3, true)}</Typography>
-                <Typography variant='p_xlg' ml='8px'>{ON_USD}</Typography>
-              </Box>
-              <Box display='flex' alignItems='center' gap={1}>
-                <Box display='flex' alignItems='center'>
-                  <Typography variant='p_xlg' color={percentOfRateHover >= 0 ? '#c4b5fd' : '#ff0084'}>{percentOfRateHover >= 0 ? '+' : ''}{percentOfRateHover?.toFixed(2)}%</Typography>
-                  <Image src={percentOfRateHover >= 0 ? ArrowUpward : ArrowDownward} alt='arrow' />
-                </Box>
+
+    <Box position='relative'>
+      <LineChartAlt
+        data={priceHistory?.chartData}
+        value={chartHover}
+        setValue={setChartHover}
+        maxY={priceHistory?.maxValue}
+        minY={priceHistory?.minValue}
+        topLeft={
+          <Box mb='25px'>
+            <Box display='flex' alignItems='baseline'>
+              <Typography variant='h1' fontWeight={500}>{formatDollarAmount(chartHover, 3, true)}</Typography>
+              <Typography variant='p_xlg' ml='8px'>{ON_USD}</Typography>
+            </Box>
+            <Box display='flex' alignItems='center' gap={1}>
+              <Box display='flex' alignItems='center'>
+                <Typography variant='p_xlg' color={percentOfRateHover >= 0 ? '#c4b5fd' : '#ff0084'}>{percentOfRateHover >= 0 ? '+' : ''}{percentOfRateHover?.toFixed(2)}%</Typography>
+                <Image src={percentOfRateHover >= 0 ? ArrowUpward : ArrowDownward} alt='arrow' />
               </Box>
             </Box>
-          }
-          topRight={
-            <div style={{ marginTop: '25px', marginBottom: '30px' }}>
-              <TimeTabs value={filterTime} onChange={handleFilterChange}>
-                {Object.keys(FilterTimeMap).map((f) => (
-                  <TimeTab key={f} value={f} label={FilterTimeMap[f as FilterTime]} />
-                ))}
-              </TimeTabs>
-            </div>
-          }
-        />
-        <Box position='absolute' bottom='0px' right='20px'>
-          <Image src={PoweredByPyth} alt='powered_by_pyth' />
-        </Box>
-      </Box> : <></>
+          </Box>
+        }
+        topRight={
+          <div style={{ marginTop: '25px', marginBottom: '30px' }}>
+            <TimeTabs value={filterTime} onChange={handleFilterChange}>
+              {Object.keys(FilterTimeMap).map((f) => (
+                <TimeTab key={f} value={f} label={FilterTimeMap[f as FilterTime]} />
+              ))}
+            </TimeTabs>
+          </div>
+        }
+      />
+      <Box position='absolute' bottom='0px' right='20px'>
+        <Image src={PoweredByPyth} alt='powered_by_pyth' />
+      </Box>
+    </Box>
   )
 }
 
-export default Chart
+export default withSuspense(Chart, <LoadingSkeleton height='300px' />)

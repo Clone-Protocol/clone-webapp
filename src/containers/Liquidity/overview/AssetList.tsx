@@ -28,8 +28,7 @@ const AssetList: React.FC = () => {
 	const { data: assets } = useAssetsQuery({
 		filter: 'all',
 		searchTerm,
-		refetchOnMount: true,
-		enabled: true
+		refetchOnMount: true
 	})
 
 	const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

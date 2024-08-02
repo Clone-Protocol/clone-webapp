@@ -21,8 +21,9 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
   const { data: positionInfo } = useLiquidityDetailQuery({
     userPubKey: publicKey,
     index: poolIndex,
+    open,
     refetchOnMount: "always",
-    enabled: open && publicKey != null,
+    // enabled: open && publicKey != null,
   })
 
   const moveTab = (index: number) => {
@@ -31,8 +32,8 @@ const EditLiquidityDialog = ({ open, positionIndex, poolIndex, handleClose }: { 
 
   return positionInfo ? (
     <>
-      <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ backgroundColor: '#16141b', width: '100%', minHeight: '450px' }}>
+      <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition}>
+        <DialogContent sx={{ backgroundColor: '#16141b', width: { xs: '100%', md: '560px' }, minHeight: '450px' }}>
           <BoxWrapper sx={{ padding: { xs: '4px 0px', md: '4px 18px' } }}>
             <Box>
               <Typography variant='h3'>Manage Liquidity</Typography>

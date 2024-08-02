@@ -3,8 +3,6 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Image from 'next/image'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { LoadingSkeleton } from '~/components/Common/Loading'
-import withSuspense from '~/hocs/withSuspense'
 import CometPanel from './CometPanel'
 import { useRouter } from 'next/navigation'
 import PriceChart from '~/components/Liquidity/overview/PriceChart'
@@ -115,4 +113,4 @@ const StickyBox = styled(Box)`
   position: sticky;
 `
 
-export default withSuspense(AssetView, <LoadingSkeleton />)
+export default AssetView

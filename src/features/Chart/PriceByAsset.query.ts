@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { ChartElem } from './Liquidity.query'
 import { FilterTime } from '~/components/Charts/TimeTabs'
 import { Range, fetchPythPriceHistory, getPythOraclePrices } from '~/utils/pyth'
@@ -6,6 +6,7 @@ import { assetMapping } from 'src/data/assets'
 import { useAtomValue } from 'jotai'
 import { rpcEndpoint } from '../globalAtom'
 import { Connection } from '@solana/web3.js'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 export const fetchOraclePriceHistory = async ({ assetIndex, timeframe, pythSymbol, networkEndpoint }: { assetIndex: number, timeframe: FilterTime, pythSymbol: string | undefined, networkEndpoint: string | undefined }) => {
   if (!pythSymbol) return null
@@ -96,14 +97,22 @@ interface GetProps {
   enabled?: boolean
 }
 
-export function usePriceHistoryQuery({ assetIndex, timeframe, pythSymbol, refetchOnMount, enabled = true }: GetProps) {
+export function usePriceHistoryQuery({ assetIndex, timeframe, pythSymbol, refetchOnMount }: GetProps) {
+  const { connected } = useWallet()
   const networkEndpoint = useAtomValue(rpcEndpoint)
-  return useQuery({
-    queryKey: ['oraclePriceHistory', timeframe, pythSymbol],
-    queryFn: () => fetchOraclePriceHistory({ assetIndex, timeframe, pythSymbol, networkEndpoint }),
-    refetchOnMount,
-    enabled
-  })
+
+  if (connected) {
+    return useSuspenseQuery({
+      queryKey: ['oraclePriceHistory', timeframe, pythSymbol],
+      queryFn: () => fetchOraclePriceHistory({ assetIndex, timeframe, pythSymbol, networkEndpoint }),
+      refetchOnMount,
+    })
+  } else {
+    return useSuspenseQuery({
+      queryKey: ['oraclePriceHistory'],
+      queryFn: () => ({ chartData: [], currentPrice: 0, rateOfPrice: 0, percentOfRate: 0, maxValue: 0, minValue: 0 }),
+    })
+  }
 }
 
 

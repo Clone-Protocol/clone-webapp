@@ -155,7 +155,7 @@ const EditCollateralDialog = ({ open, isNewDeposit, handleClose }: { open: boole
   return collData ? (
     <>
       <Dialog open={open} onClose={handleClose} TransitionComponent={FadeTransition}>
-        <DialogContent sx={{ backgroundColor: '#16141b' }}>
+        <DialogContent sx={{ backgroundColor: '#16141b', width: { xs: '100%', md: '400px' } }}>
           <BoxWrapper>
             <Box mb='20px'>
               <Typography variant='h3'>Manage Collateral</Typography>

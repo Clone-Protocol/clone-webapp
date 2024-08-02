@@ -47,8 +47,8 @@ const CometPanel = ({ assetIndex, openChooseLiquidityDialog }: { assetIndex: num
   const { data: positionInfo, refetch } = useLiquidityDetailQuery({
     userPubKey: publicKey,
     index: assetIndex,
-    refetchOnMount: "always",
-    enabled: publicKey != null && isAlreadyInitializedAccount
+    open: isAlreadyInitializedAccount,
+    refetchOnMount: "always"
   })
 
   useEffect(() => {

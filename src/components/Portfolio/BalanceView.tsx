@@ -73,8 +73,6 @@ const BalanceView: React.FC<Props> = ({ data }) => {
 	)
 }
 
-export default BalanceView
-
 const StyledPaper = styled(Paper)`
   display: flex;
 	width: 100%;
@@ -88,3 +86,5 @@ const ColorIndicator = styled(Box)`
 	margin-top: 2px;
 	border-radius: 120px;
 `
+
+export default BalanceView

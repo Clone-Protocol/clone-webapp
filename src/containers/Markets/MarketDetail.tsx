@@ -3,8 +3,6 @@ import { styled } from '@mui/material/styles'
 import Chart from '~/components/Markets/MarketDetail/Chart'
 import Image from 'next/image'
 import { MarketDetail } from '~/features/Markets/MarketDetail.query'
-import { LoadingSkeleton } from '~/components/Common/Loading'
-import withSuspense from '~/hocs/withSuspense'
 import { formatDollarAmount, formatLocaleAmount } from '~/utils/numbers'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useUserBalanceQuery } from '~/features/Portfolio/UserBalance.query'
@@ -147,4 +145,4 @@ const StyledDivider = styled(Divider)`
 	height: 1px;
 `
 
-export default withSuspense(MarketDetail, <Box mt='10px'><LoadingSkeleton /></Box>)
+export default MarketDetail

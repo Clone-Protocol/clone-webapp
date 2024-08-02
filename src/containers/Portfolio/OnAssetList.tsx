@@ -5,7 +5,7 @@ import { BalanceList } from '~/features/Portfolio/UserBalance.query'
 import { Grid, CellTicker, CustomNoOnAssetOverlay, CustomNoRowsOverlay } from '~/components/Common/DataGrid'
 import { GridEventListener } from '@mui/x-data-grid'
 import Image from 'next/image'
-import { LoadingProgress } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import PercentSlider from '~/components/Portfolio/PercentSlider'
 import ArrowUpward from 'public/images/arrow-up.svg'
@@ -117,7 +117,7 @@ const OnAssetList: React.FC<Props> = ({ assets }) => {
     <>
       <TopBox>
         <Box><Typography variant='p' color='#8988a3'>clAsset</Typography></Box>
-        <Box><Typography variant='h3' fontWeight={500}>${totalAsset.toFixed(2)}</Typography></Box>
+        <Box><Typography variant='h3' fontWeight={500}>${totalAsset ? totalAsset.toFixed(2) : 0.00}</Typography></Box>
       </TopBox>
       <Grid
         headers={columns}
@@ -128,19 +128,18 @@ const OnAssetList: React.FC<Props> = ({ assets }) => {
         rows={assets || []}
         minHeight={110}
         isBorderTopRadius={false}
-        noAutoHeight={!publicKey || assets.length === 0}
-        customNoResultsOverlay={() => !publicKey ? CustomNoRowsOverlay('Please connect wallet.') : CustomNoOnAssetOverlay()}
+        noAutoHeight={!publicKey || assets?.length === 0}
+        customNoResultsOverlay={() => (publicKey && assets && assets.length === 0) ? CustomNoOnAssetOverlay() : publicKey ? <LoadingSkeleton /> : CustomNoRowsOverlay('Please connect wallet.')}
         onRowClick={handleRowClick}
       />
     </>
   )
 }
 
-
 const TopBox = styled(Box)`
   height: 87px;
   border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
+  border-top-right-radius: 20px;
   border-left: solid 1px rgba(196, 181, 253, 0.25);
   border-right: solid 1px rgba(196, 181, 253, 0.25);
   border-top: solid 1px rgba(196, 181, 253, 0.25);
@@ -150,4 +149,4 @@ const TopBox = styled(Box)`
   padding-left: 29px;
 `
 
-export default withSuspense(OnAssetList, <LoadingProgress />)
+export default OnAssetList
