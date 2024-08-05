@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
 import { fetchGenerateReferralCode, fetchStakingUserBonus, fetchUserPoints, UserBonus, UserPointsView } from '~/utils/fetch_netlify'
@@ -68,20 +68,17 @@ export interface Status {
   multipleTier: number
 }
 
-export function usePointStatusQuery({ userPubKey, refetchOnMount, enabled = true }: GetProps) {
+export function usePointStatusQuery({ userPubKey, refetchOnMount }: GetProps) {
   const wallet = useAnchorWallet()
 
   if (wallet) {
-    return useQuery({
+    return useSuspenseQuery({
       queryKey: ['statusData', wallet, userPubKey],
       queryFn: async () => fetchStatus({ userPubKey }),
       refetchOnMount,
-      // refetchInterval: REFETCH_CYCLE,
-      // refetchIntervalInBackground: true,
-      enabled
     })
   } else {
-    return useQuery({
+    return useSuspenseQuery({
       queryKey: ['statusData'],
       queryFn: () => { return null }
     })

@@ -28,7 +28,6 @@ const BorrowContainer = () => {
     userPubKey: publicKey,
     index: assetIndex,
     refetchOnMount: "always",
-    enabled: publicKey != null
   })
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { fetchAllUserBonus, fetchAllUserPoints, Tier, UserBonus, UserPointsView } from '~/utils/fetch_netlify'
 
 export const fetchRanking = async () => {
@@ -80,7 +80,7 @@ export interface RankingList {
   multipleTier: number
 }
 
-export function useRankingQuery({ refetchOnMount, enabled = true }: GetProps) {
+export function useRankingQuery({ refetchOnMount }: GetProps) {
   let queryFunc
   try {
     queryFunc = () => fetchRanking()
@@ -89,5 +89,5 @@ export function useRankingQuery({ refetchOnMount, enabled = true }: GetProps) {
     queryFunc = () => []
   }
 
-  return useQuery({ queryKey: ['ranks'], queryFn: queryFunc, enabled, refetchOnMount })
+  return useSuspenseQuery({ queryKey: ['ranks'], queryFn: queryFunc, refetchOnMount })
 }

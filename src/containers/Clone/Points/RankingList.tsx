@@ -1,7 +1,7 @@
 import { Box, Theme, Typography, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 import { Grid } from '~/components/Common/DataGrid'
 import { CustomNoRowsOverlay } from '~/components/Common/DataGrid'
@@ -20,8 +20,7 @@ import Image from 'next/image'
 const RankingList = () => {
   const isMobileOnSize = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { data: rankList } = useRankingQuery({
-    refetchOnMount: true,
-    enabled: true
+    refetchOnMount: true
   })
 
   return (

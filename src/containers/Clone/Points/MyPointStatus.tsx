@@ -8,7 +8,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { BlackDefault, OpaqueDefault } from '~/components/Common/OpaqueArea'
 import { useWalletDialog } from '~/hooks/useWalletDialog'
 import { formatLocaleAmount } from '~/utils/numbers'
-import { LoadingProgress, LoadingSkeleton } from '~/components/Common/Loading'
+import { LoadingSkeleton } from '~/components/Common/Loading'
 import withSuspense from '~/hocs/withSuspense'
 // import BoltIcon from '@mui/icons-material/Bolt';
 // import PromoteDialog from '~/components/Points/PromoteDialog'
@@ -37,8 +37,7 @@ const MyPointStatus = () => {
 
   const { data: infos } = usePointStatusQuery({
     userPubKey: publicKey,
-    refetchOnMount: true,
-    enabled: publicKey != null
+    refetchOnMount: true
   })
 
   useEffect(() => {

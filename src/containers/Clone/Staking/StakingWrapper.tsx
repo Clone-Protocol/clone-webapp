@@ -16,8 +16,7 @@ const StakingWrapper = () => {
 
   const { data: levelData } = useCurrentLevelQuery({
     userPubKey: publicKey,
-    refetchOnMount: true,
-    enabled: publicKey != null
+    refetchOnMount: true
   })
 
   return (

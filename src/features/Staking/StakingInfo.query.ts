@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { CloneClient } from 'clone-protocol-sdk/sdk/src/clone'
 import { useClone } from '~/hooks/useClone'
@@ -51,20 +51,19 @@ export interface LevelInfo {
 	currentLevel: number
 }
 
-export function useCurrentLevelQuery({ userPubKey, refetchOnMount, enabled = true }: GetProps) {
+export function useCurrentLevelQuery({ userPubKey, refetchOnMount }: GetProps) {
 	const wallet = useAnchorWallet()
 	const { getCloneApp } = useClone()
 	if (wallet) {
-		return useQuery({
+		return useSuspenseQuery({
 			queryKey: ['currentLevel', wallet, userPubKey],
 			queryFn: async () => fetchCurrentLevelData({ program: await getCloneApp(wallet), userPubKey }),
 			refetchOnMount,
 			refetchInterval: REFETCH_CYCLE,
 			refetchIntervalInBackground: true,
-			enabled,
 		})
 	} else {
-		return useQuery({ queryKey: ['currentLevel'], queryFn: () => { return null } })
+		return useSuspenseQuery({ queryKey: ['currentLevel'], queryFn: () => { return null } })
 	}
 }
 

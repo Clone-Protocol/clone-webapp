@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { PublicKey } from '@solana/web3.js'
 import { CloneClient, fromScale } from "clone-protocol-sdk/sdk/src/clone"
 import { assetMapping } from 'src/data/assets'
@@ -134,35 +134,33 @@ export interface PairData {
   tickerSymbol: string
 }
 
-export function useBorrowDetailQuery({ userPubKey, index, refetchOnMount, enabled = true }: GetProps) {
+export function useBorrowDetailQuery({ userPubKey, index, refetchOnMount }: GetProps) {
   const wallet = useAnchorWallet()
   const { getCloneApp } = useClone()
   if (wallet) {
-    return useQuery({
+    return useSuspenseQuery({
       queryKey: ['borrowDetail', userPubKey, index],
       queryFn: async () => fetchBorrowDetail({ program: await getCloneApp(wallet), userPubKey, index }),
       refetchOnMount,
-      enabled
     })
   } else {
-    return useQuery({ queryKey: ['borrowDetail'], queryFn: () => { return null } })
+    return useSuspenseQuery({ queryKey: ['borrowDetail'], queryFn: () => { return null } })
   }
 }
 
-export function useBorrowPositionQuery({ userPubKey, index, refetchOnMount, enabled = true }: GetProps) {
+export function useBorrowPositionQuery({ userPubKey, index, refetchOnMount }: GetProps) {
   const wallet = useAnchorWallet()
   const { getCloneApp } = useClone()
 
   if (wallet) {
-    return useQuery({
+    return useSuspenseQuery({
       queryKey: ['borrowPosition', userPubKey, index],
       queryFn: async () => fetchBorrowPosition({ program: await getCloneApp(wallet), userPubKey, index }),
       refetchOnMount,
       refetchInterval: REFETCH_SHORT_CYCLE,
       refetchIntervalInBackground: true,
-      enabled
     })
   } else {
-    return useQuery({ queryKey: ['borrowPosition'], queryFn: () => { return null } })
+    return useSuspenseQuery({ queryKey: ['borrowPosition'], queryFn: () => { return null } })
   }
 }

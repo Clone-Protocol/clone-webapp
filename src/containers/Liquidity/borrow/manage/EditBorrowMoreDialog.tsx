@@ -127,7 +127,7 @@ const EditBorrowMoreDialog = ({ borrowId, borrowDetail, initEditType, open, onHi
   return (
     <>
       <Dialog open={open} onClose={onHideEditForm} TransitionComponent={FadeTransition} maxWidth={600}>
-        <DialogContent sx={{ background: '#16141b', width: '100%' }}>
+        <DialogContent sx={{ background: '#16141b', width: { xs: '100%', md: '560px' } }}>
           <BoxWrapper>
             <Typography variant='h3'>Manage Borrow Position: Borrowed Amount</Typography>
 

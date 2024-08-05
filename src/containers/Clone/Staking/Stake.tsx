@@ -73,6 +73,7 @@ const Stake = () => {
   const initData = () => {
     setValue('stakeAmt', NaN)
     reset()
+    refetch()
   }
 
   const invalidMsg = () => {
