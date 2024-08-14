@@ -184,14 +184,14 @@ export const SubNaviMenu = () => {
               <Typography variant="p_lg" ml='2px'>Staking</Typography>
             </StyledListItemButton>
           </Link>
-          {/* <Link href={RouteDir.Stats}>
+          <Link href={RouteDir.Stats}>
             <StyledListItemButton className={pathname?.startsWith(RouteDir.Stats) ? 'selected' : ''}>
               {!isMobileOnSize && <>
                 {pathname?.startsWith(RouteDir.Stats) ? <Image src={PointsIconOn} alt='stats' /> : <Image src={PointsIconOff} alt='stats' />}
               </>}
               <Typography variant="p_lg" ml='2px'>Stats</Typography>
             </StyledListItemButton>
-          </Link> */}
+          </Link>
         </Stack>
       }
     </List >
